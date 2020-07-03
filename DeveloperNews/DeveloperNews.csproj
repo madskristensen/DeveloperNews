@@ -94,6 +94,10 @@
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.7.2046" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="registry.pkgdef">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Icon.png">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>

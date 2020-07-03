@@ -79,8 +79,7 @@ namespace DeveloperNews.ToolWindows
 		{
 			ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
 			{
-				var store = new FeedStore();
-				var feed = await store.GetFeedAsync(true);
+				var feed = await DeveloperNewsPackage.Store.GetFeedAsync(true);
 
 				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 				BindPosts(feed);

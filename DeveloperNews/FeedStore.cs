@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -14,19 +16,21 @@ namespace DeveloperNews
 	{
 		private static readonly string _folder = Path.Combine(Path.GetTempPath(), Vsix.Name);
 		private static readonly string _feed = Path.Combine(_folder, "feed.xml");
+		private readonly RegistryKey _rootKey;
+
+		public FeedStore(RegistryKey rootKey)
+		{
+			_rootKey = rootKey;
+		}
 
 		public async Task<SyndicationFeed> GetFeedAsync(bool forceOnline = false)
 		{
-			var file = new FileInfo(_feed);
-
-			if (!file.Exists || forceOnline)
+			if (forceOnline || !File.Exists(_feed) || File.GetLastWriteTime(_feed) > DateTime.Now.AddHours(4))
 			{
 				await CreateFeedAsync();
 			}
-			
-			file.Refresh();
 
-			if (file.Exists)
+			if (File.Exists(_feed))
 			{
 				using (XmlReader reader = XmlReader.Create(_feed))
 				{
@@ -40,10 +44,12 @@ namespace DeveloperNews
 		private async Task CreateFeedAsync()
 		{
 			SyndicationFeed rss = new SyndicationFeed(Vsix.Name, Vsix.Description, null);
+			var urls = GetFeedUrls();
 
-			foreach (string key in new List<string> { "https://go.microsoft.com/fwlink/?linkid=2066144", "https://devblogs.microsoft.com/visualstudio/rss" })
+			foreach (string key in urls)
 			{
 				SyndicationFeed feed = await DownloadFeedAsync(key);
+
 				rss.Items = rss.Items
 					.Union(feed.Items)
 					.GroupBy(i => i.Title.Text)
@@ -57,6 +63,18 @@ namespace DeveloperNews
 			{
 				rss.Items = rss.Items.Take(20);
 				rss.SaveAsRss20(writer);
+			}
+		}
+
+		private IEnumerable<string> GetFeedUrls()
+		{
+			using (var key = _rootKey.OpenSubKey("DeveloperNews\\Feeds"))
+			{
+				var names = key.GetValueNames();
+				foreach (var name in names)
+				{
+					yield return key.GetValue(name)?.ToString();
+				}
 			}
 		}
 

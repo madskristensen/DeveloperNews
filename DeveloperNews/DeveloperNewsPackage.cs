@@ -19,6 +19,8 @@ namespace DeveloperNews
 	[ProvideToolWindow(typeof(NewsWindow), Style = VsDockStyle.Tabbed, Width = 300, Height = 600, Window = "3ae79031-e1bc-11d0-8f78-00a0c9110057")]
 	public sealed class DeveloperNewsPackage : AsyncPackage
 	{
+		public static FeedStore Store { get; private set; }
+
 		protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
 		{
 			await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
@@ -47,8 +49,8 @@ namespace DeveloperNews
 
 		protected override async Task<object> InitializeToolWindowAsync(Type toolWindowType, int id, CancellationToken cancellationToken)
 		{
-			FeedStore store = new FeedStore();
-			return await store.GetFeedAsync();
+			Store = new FeedStore(ApplicationRegistryRoot);
+			return await Store.GetFeedAsync();
 		}
 	}
 }
