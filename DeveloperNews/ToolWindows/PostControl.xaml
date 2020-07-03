@@ -73,7 +73,9 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Row="0" Grid.Column="0" Style="{DynamicResource PostControl.Style}" BorderThickness="0"
+        <Button Grid.Row="0" Grid.Column="0" Style="{DynamicResource PostControl.Style}" 
+                BorderThickness="0 0 0 1"
+                BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ButtonFaceKey}}"
                 Background="Transparent" 
                 Padding="0 5"
                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">

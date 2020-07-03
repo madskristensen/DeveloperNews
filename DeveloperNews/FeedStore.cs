@@ -44,7 +44,11 @@ namespace DeveloperNews
 			foreach (string key in new List<string> { "https://go.microsoft.com/fwlink/?linkid=2066144", "https://devblogs.microsoft.com/visualstudio/rss" })
 			{
 				SyndicationFeed feed = await DownloadFeedAsync(key);
-				rss.Items = rss.Items.Union(feed.Items).GroupBy(i => i.Title.Text).Select(i => i.First()).OrderByDescending(i => i.PublishDate.Date);
+				rss.Items = rss.Items
+					.Union(feed.Items)
+					.GroupBy(i => i.Title.Text)
+					.Select(i => i.First())
+					.OrderByDescending(i => i.PublishDate.Date);
 			}
 
 			Directory.CreateDirectory(_folder);
