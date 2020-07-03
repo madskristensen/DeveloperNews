@@ -1,10 +1,10 @@
-﻿namespace DeveloperNews.ToolWindows
-{
-	using System.Linq;
-	using System.ServiceModel.Syndication;
-	using System.Windows;
-	using System.Windows.Controls;
+﻿using System.Linq;
+using System.ServiceModel.Syndication;
+using System.Windows;
+using System.Windows.Controls;
 
+namespace DeveloperNews.ToolWindows
+{
 	public partial class NewsWindowControl : UserControl
 	{
 		public NewsWindowControl(SyndicationFeed feed)

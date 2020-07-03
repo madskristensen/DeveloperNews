@@ -1,6 +1,6 @@
-﻿using EnvDTE;
-using Microsoft.VisualStudio.Shell;
+﻿using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -14,14 +14,14 @@ namespace DeveloperNews.ToolWindows
 	public partial class PostControl : UserControl
 	{
 		private static readonly Regex _regex = new Regex(@"</?\w+((\s+\w+(\s*=\s*(?:"".*?""|'.*?'|[^'"">\s]+))?)+\s*|\s*)/?>", RegexOptions.Singleline);
-		private Uri _url;
+		private readonly Uri _url;
 
 		public PostControl(SyndicationItem item)
 		{
 			_url = item.Links.FirstOrDefault().Uri;
 
 			InitializeComponent();
-						
+
 			lblTitle.Text = item.Title.Text;
 			lblSummary.Text = TruncateHtml(item.Summary.Text);
 		}
@@ -30,15 +30,8 @@ namespace DeveloperNews.ToolWindows
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 
-			try
-			{
-				var service = Package.GetGlobalService(typeof(DTE)) as DTE;
-				service.ItemOperations.Navigate(_url.OriginalString, vsNavigateOptions.vsNavigateOptionsDefault);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex);
-			}
+			var service = Package.GetGlobalService(typeof(IVsWebBrowsingService)) as IVsWebBrowsingService;
+			service.Navigate(_url.OriginalString, (uint)__VSWBNAVIGATEFLAGS.VSNWB_WebURLOnly, out _);
 		}
 
 		public static string TruncateHtml(string input, int length = 200, string ommission = "...")

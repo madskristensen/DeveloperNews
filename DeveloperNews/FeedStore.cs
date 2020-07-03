@@ -13,7 +13,6 @@ namespace DeveloperNews
 	public class FeedStore
 	{
 		private static readonly string _folder = Path.Combine(Path.GetTempPath(), Vsix.Name);
-		private static readonly string _master = Path.Combine(_folder, "master.xml");
 		private static readonly string _feed = Path.Combine(_folder, "feed.xml");
 
 		public async Task<SyndicationFeed> GetFeedAsync()
