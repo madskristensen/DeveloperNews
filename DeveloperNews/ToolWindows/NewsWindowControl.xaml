@@ -23,20 +23,23 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
         <Label Name="lblTotal" Grid.Row="0" Grid.Column="0" Content="6 total" Padding="5 6 0 0" />
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="0 0 5 0 ">
+        <VirtualizingStackPanel VirtualizationMode="Recycling" 
+                                Orientation="Horizontal" 
+                                Grid.Row="0" 
+                                Grid.Column="1">
             <Label>
                 <Hyperlink Click="RefreshClick">Refresh</Hyperlink>
             </Label>
             <Label>
                 <Hyperlink Click="MarkAllReadClick">Mark all read</Hyperlink>
             </Label>
-            <imaging:CrispImage Width="14" Height="14" Moniker="{x:Static catalog:KnownMonikers.Settings}" />
-        </StackPanel>
+            <imaging:CrispImage Margin="5 0 2 0" Width="14" Height="14" Moniker="{x:Static catalog:KnownMonikers.Settings}" />
+        </VirtualizingStackPanel>
 
         <Border Grid.Row="0" 
                 Grid.ColumnSpan="2" 
@@ -45,9 +48,8 @@
                 VerticalAlignment="Bottom"/>
 
 
-        <ScrollViewer Grid.Row="1" 
-                    Grid.ColumnSpan="2">
-        <StackPanel x:Name="pnlPosts" />
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" Padding="5">
+            <StackPanel x:Name="pnlPosts" />
         </ScrollViewer>
     </Grid>
 </UserControl>

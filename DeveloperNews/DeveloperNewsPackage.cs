@@ -16,7 +16,7 @@ namespace DeveloperNews
 	[PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
 	[Guid(PackageGuids.guidDeveloperNewsPackageString)]
 	[ProvideMenuResource("Menus.ctmenu", 1)]
-	[ProvideToolWindow(typeof(NewsWindow), Style = VsDockStyle.Tabbed, Window = "E13EEDEF-B531-4afe-9725-28A69FA4F896")]
+	[ProvideToolWindow(typeof(NewsWindow), Style = VsDockStyle.Tabbed, Width = 300, Height = 600, Window = "3ae79031-e1bc-11d0-8f78-00a0c9110057")]
 	public sealed class DeveloperNewsPackage : AsyncPackage
 	{
 		protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)

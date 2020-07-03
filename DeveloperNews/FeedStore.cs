@@ -18,12 +18,16 @@ namespace DeveloperNews
 
 		public async Task<SyndicationFeed> GetFeedAsync()
 		{
-			if (!File.Exists(_feed))
+			var file = new FileInfo(_feed);
+
+			if (!file.Exists)
 			{
 				await CreateFeedAsync();
 			}
+			
+			file.Refresh();
 
-			if (File.Exists(_feed))
+			if (file.Exists)
 			{
 				using (XmlReader reader = XmlReader.Create(_feed))
 				{
@@ -38,7 +42,7 @@ namespace DeveloperNews
 		{
 			SyndicationFeed rss = new SyndicationFeed(Vsix.Name, Vsix.Description, null);
 
-			foreach (string key in new List<string> { "https://go.microsoft.com/fwlink/?linkid=2066144" })
+			foreach (string key in new List<string> { "https://go.microsoft.com/fwlink/?linkid=2066144", "https://devblogs.microsoft.com/visualstudio/rss" })
 			{
 				SyndicationFeed feed = await DownloadFeedAsync(key);
 				rss.Items = rss.Items.Union(feed.Items).GroupBy(i => i.Title.Text).Select(i => i.First()).OrderByDescending(i => i.PublishDate.Date);
@@ -46,14 +50,9 @@ namespace DeveloperNews
 
 			Directory.CreateDirectory(_folder);
 
-			using (XmlWriter writer = XmlWriter.Create(_master))
-			{
-				rss.SaveAsRss20(writer);
-			}
-
 			using (XmlWriter writer = XmlWriter.Create(_feed))
 			{
-				rss.Items = rss.Items.Take(10);
+				rss.Items = rss.Items.Take(20);
 				rss.SaveAsRss20(writer);
 			}
 		}

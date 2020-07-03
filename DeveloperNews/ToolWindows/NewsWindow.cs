@@ -9,7 +9,7 @@ namespace DeveloperNews.ToolWindows
 	[Guid(WindowGuidString)]
 	public class NewsWindow : ToolWindowPane
 	{
-		public const string WindowGuidString = "7b3eb750-0ca7-4a08-b0a7-b48c654b741f";
+		public const string WindowGuidString = "7b3eb750-0ca7-4a08-b0a7-b48c654b741a";
 
 		public const string Title = "News";
 
