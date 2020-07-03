@@ -15,11 +15,11 @@ namespace DeveloperNews
 		private static readonly string _folder = Path.Combine(Path.GetTempPath(), Vsix.Name);
 		private static readonly string _feed = Path.Combine(_folder, "feed.xml");
 
-		public async Task<SyndicationFeed> GetFeedAsync()
+		public async Task<SyndicationFeed> GetFeedAsync(bool forceOnline = false)
 		{
 			var file = new FileInfo(_feed);
 
-			if (!file.Exists)
+			if (!file.Exists || forceOnline)
 			{
 				await CreateFeedAsync();
 			}

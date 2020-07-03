@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using Microsoft.VisualStudio.Shell;
+
+using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Windows;
 using System.Windows.Controls;
@@ -47,6 +49,7 @@ namespace DeveloperNews.ToolWindows
 				Content = timestamp,
 				FontWeight = FontWeights.Medium,
 				Opacity = 0.8,
+				Margin = new Thickness(0, 3, 0, 0),
 			};
 
 			pnlPosts.Children.Add(time);
@@ -74,7 +77,14 @@ namespace DeveloperNews.ToolWindows
 
 		private void RefreshClick(object sender, RoutedEventArgs e)
 		{
+			ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+			{
+				var store = new FeedStore();
+				var feed = await store.GetFeedAsync(true);
 
+				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+				BindPosts(feed);
+			});
 		}
 	}
 }

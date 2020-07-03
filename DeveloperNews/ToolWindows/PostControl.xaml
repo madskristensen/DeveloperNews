@@ -50,7 +50,7 @@
                                 <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="Background" TargetName="border" Value="{DynamicResource {x:Static vsshell:VsBrushes.StartPageButtonMouseOverBackgroundKey}}"/>
                                 <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
@@ -77,7 +77,7 @@
                 BorderThickness="0 0 0 1"
                 BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ButtonFaceKey}}"
                 Background="Transparent" 
-                Padding="0 5"
+                Padding="0 5 0 7"
                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
             <StackPanel Orientation="Vertical" Margin="0 5">
                 <Label Name="Title" 
