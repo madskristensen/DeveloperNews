@@ -5,6 +5,7 @@
         <DisplayName>Daily News</DisplayName>
         <Description xml:space="preserve">Shows the developer news from the Visual Studio blog and other sources in a tool window inside Visual Studio.</Description>
         <MoreInfo>https://github.com/madskristensen/DeveloperNews</MoreInfo>
+        <License>Resources\LICENSE</License>
         <Icon>Resources\Icon.png</Icon>
         <PreviewImage>Resources\Icon.png</PreviewImage>
         <Tags>news, rss, feed</Tags>
