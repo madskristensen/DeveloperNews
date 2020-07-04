@@ -45,7 +45,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="FeedStore.cs" />
+    <Compile Include="Feed\FeedDownloader.cs" />
+    <Compile Include="Feed\FeedInfo.cs" />
+    <Compile Include="Feed\FeedOrchestrator.cs" />
+    <Compile Include="Feed\FeedStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DeveloperNewsPackage.cs" />
     <Compile Include="Settings\BaseOptionModel.cs" />
