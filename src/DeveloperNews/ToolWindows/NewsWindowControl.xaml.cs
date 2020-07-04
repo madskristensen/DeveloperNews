@@ -2,6 +2,7 @@
 using System.ServiceModel.Syndication;
 using System.Windows;
 using System.Windows.Controls;
+using DeveloperNews.Resources;
 using Microsoft.VisualStudio.Shell;
 
 namespace DeveloperNews.ToolWindows
@@ -40,7 +41,7 @@ namespace DeveloperNews.ToolWindows
                 }
             }
 
-            lblTotal.Content = $"{feed.Items.Count()} total";
+            lblTotal.Content = string.Format(Text.Totalcount, feed.Items.Count());
         }
 
         private void AddTimeLabel(string timestamp)
@@ -65,18 +66,18 @@ namespace DeveloperNews.ToolWindows
 
             if (item.PublishDate.Date >= System.DateTime.Now.AddDays(-1))
             {
-                return "Today";
+                return Text.Timeline_today;
             }
             else if (item.PublishDate.Date >= System.DateTime.Now.AddDays(-2))
             {
-                return "Yesterday";
+                return Text.Timeline_today;
             }
             else if (item.PublishDate.Date >= System.DateTime.Now.AddDays(-7))
             {
-                return "Past week";
+                return Text.Timeline_pastweek;
             }
 
-            return "Older";
+            return Text.Timeline_older;
         }
 
         private void RefreshClick(object sender, RoutedEventArgs e)

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:resources="clr-namespace:DeveloperNews.Resources"
              xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
              xmlns:catalog="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.ImageCatalog"
              xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
@@ -105,10 +106,10 @@
 
             <Button.ContextMenu>
                 <ContextMenu Name="ctxMenu">
-                    <MenuItem Header="Open in Visual Studio" Click="OpenInVsClick" />
-                    <MenuItem Header="Open in Default Browser" Click="OpenInDefaultBrowserClick" />
+                    <MenuItem Header="{x:Static resources:Text.Menu_OpenInVisualStudio}" Click="OpenInVsClick" />
+                    <MenuItem Header="{x:Static resources:Text.Menu_OpenInDefaultBrowser}" Click="OpenInDefaultBrowserClick" />
                     <Separator/>
-                    <MenuItem Header="Copy URL" Click="CopyUrlClick">
+                    <MenuItem Header="{x:Static resources:Text.Menu_CopyUrl}" Click="CopyUrlClick">
                         <MenuItem.Icon>
                             <imaging:CrispImage Moniker="{x:Static catalog:KnownMonikers.Copy}" />
                         </MenuItem.Icon>

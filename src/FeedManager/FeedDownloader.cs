@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -29,16 +30,7 @@ namespace FeedManager
 
                 if (feed != null)
                 {
-                    Directory.CreateDirectory(_folder);
-
-                    using (var writer = XmlWriter.Create(file))
-                    {
-                        feed.Items = feed.Items.Take(20);
-                        feed.SaveAsRss20(writer);
-                    }
-
-                    File.SetLastWriteTime(file, feed.LastUpdatedTime.DateTime);
-
+                    WriteFeedToDisk(file, feed);
                     return feed;
                 }
             }
@@ -54,6 +46,20 @@ namespace FeedManager
             return null;
         }
 
+        private void WriteFeedToDisk(string file, SyndicationFeed feed)
+        {
+            Directory.CreateDirectory(_folder);
+
+            using (var writer = XmlWriter.Create(file))
+            {
+                // Limit feed items to something reasonable for perf reasons
+                feed.Items = feed.Items.Take(100);
+                feed.SaveAsRss20(writer);
+            }
+
+            File.SetLastWriteTime(file, feed.LastUpdatedTime.DateTime);
+        }
+
         private async Task<SyndicationFeed> DownloadFeedAsync(string url, DateTime lastModified)
         {
             try
@@ -61,32 +67,39 @@ namespace FeedManager
                 using (var client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.IfModifiedSince = lastModified;
+                    client.DefaultRequestHeaders.Add("User-Agent", "Developer News for Visual Studio");
+
                     HttpResponseMessage result = await client.GetAsync(url);
 
                     if (result.IsSuccessStatusCode)
                     {
-                        Stream stream = await result.Content.ReadAsStreamAsync();
-
-                        using (var reader = XmlReader.Create(stream))
-                        {
-                            var feed = SyndicationFeed.Load(reader);
-
-                            if (result.Content.Headers.TryGetValues("last-modified", out IEnumerable<string> values))
-                            {
-                                feed.LastUpdatedTime = DateTime.Parse(values.First());
-                            }
-
-                            return feed;
-                        }
+                        return await ProcessResultAsync(result);
                     }
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.Write(ex);
+                Debug.Write(ex);
             }
 
             return null;
+        }
+
+        private static async Task<SyndicationFeed> ProcessResultAsync(HttpResponseMessage result)
+        {
+            Stream stream = await result.Content.ReadAsStreamAsync();
+
+            using (var reader = XmlReader.Create(stream))
+            {
+                var feed = SyndicationFeed.Load(reader);
+
+                if (result.Content.Headers.TryGetValues("last-modified", out IEnumerable<string> values))
+                {
+                    feed.LastUpdatedTime = DateTime.Parse(values.First());
+                }
+
+                return feed;
+            }
         }
     }
 }

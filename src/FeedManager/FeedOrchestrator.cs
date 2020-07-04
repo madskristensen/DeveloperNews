@@ -34,7 +34,7 @@ namespace FeedManager
 
             if (!force &&
                 File.Exists(_combinedFile) &&
-                File.GetLastWriteTime(_combinedFile) >= DateTime.Now.AddHours(-4))
+                File.GetLastWriteTime(_combinedFile) > DateTime.Now.AddHours(-4))
             {
                 using (var reader = XmlReader.Create(_combinedFile))
                 {
@@ -73,7 +73,7 @@ namespace FeedManager
 
             using (var writer = XmlWriter.Create(_combinedFile))
             {
-                feed.Items = feed.Items.Take(20);
+                feed.Items = feed.Items.Take(100);
                 feed.SaveAsRss20(writer);
             }
 

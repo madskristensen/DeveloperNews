@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:DeveloperNews.ToolWindows"
+             xmlns:resources="clr-namespace:DeveloperNews.Resources"
              xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
              xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
              xmlns:catalog="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.ImageCatalog"
@@ -33,11 +34,17 @@
                      Grid.Row="0" 
                      Grid.Column="1">
 
-            <Label ToolTip="Fetches the latest news online and refreshes the list">
-                <Hyperlink Click="RefreshClick">Refresh</Hyperlink>
+            <Label ToolTip="{x:Static resources:Text.Tooltip_Refresh}">
+                <Hyperlink Name="lnkRefresh" Click="RefreshClick">
+                    <TextBlock Text="{x:Static resources:Text.Refresh}"/>
+                </Hyperlink>
             </Label>
 
-            <imaging:CrispImage Margin="3 0 1 0" ToolTip="Opens and closes the settings" Cursor="Hand" MouseUp="CrispImage_MouseUp" Moniker="{x:Static catalog:KnownMonikers.Settings}" />
+            <imaging:CrispImage Margin="3 0 1 0" 
+                                ToolTip="{x:Static resources:Text.Tooltip_Settings}" 
+                                Cursor="Hand" 
+                                MouseUp="CrispImage_MouseUp" 
+                                Moniker="{x:Static catalog:KnownMonikers.Settings}" />
         </StackPanel>
 
         <Border Grid.Row="0" 
@@ -47,7 +54,7 @@
                 VerticalAlignment="Bottom"/>
 
         <StackPanel Name="pnlSettings" Grid.Row="1" Grid.ColumnSpan="2" Margin="8" Visibility="Collapsed">
-            <CheckBox Name="cbOpenInVS" Click="OpenInVS_Click">Open in default browser</CheckBox>
+            <CheckBox Name="cbOpenInVS" Click="OpenInVS_Click" Content="{x:Static resources:Text.OpenInDefaultBrowser}" />
         </StackPanel>
 
         <ScrollViewer Grid.Row="2" IsDeferredScrollingEnabled="True" Grid.ColumnSpan="2" Padding="5">
