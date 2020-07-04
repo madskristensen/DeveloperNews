@@ -50,7 +50,7 @@ namespace DeveloperNews.ToolWindows
 			{
 				Content = timestamp,
 				FontWeight = FontWeights.Medium,
-				Opacity = 0.8,
+				Opacity = 0.7,
 				Margin = new Thickness(0, 3, 0, 0),
 			};
 

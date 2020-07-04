@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="DeveloperNews.ToolWindows.NewsWindowControl"
+﻿    <UserControl x:Class="DeveloperNews.ToolWindows.NewsWindowControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -45,7 +45,6 @@
                 BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ButtonFaceKey}}" 
                 BorderThickness="0 1 0 0" 
                 VerticalAlignment="Bottom"/>
-
 
         <StackPanel Name="pnlSettings" Grid.Row="1" Grid.ColumnSpan="2" Margin="8" Visibility="Collapsed">
             <CheckBox Name="cbOpenInVS" Click="OpenInVS_Click">Open in default browser</CheckBox>

@@ -22,11 +22,11 @@ namespace DeveloperNews.ToolWindows
 
 			InitializeComponent();
 
-			lblTitle.Text = item.Title.Text;
+			lblTitle.Content = item.Title.Text;
 			lblSummary.Text = TruncateHtml(item.Summary.Text);
 		}
 
-		protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
+		private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 

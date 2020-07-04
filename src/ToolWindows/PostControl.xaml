@@ -46,8 +46,12 @@
                                 <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{DynamicResource {x:Static vsshell:VsBrushes.CommandBarHoverKey}}"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                                <Setter Property="Background" TargetName="border" Value="{DynamicResource {x:Static vsshell:VsBrushes.DropDownDisabledBackgroundKey}}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static vsshell:VsBrushes.ActiveBorderKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{DynamicResource {x:Static vsshell:VsBrushes.DropDownDisabledBackgroundKey}}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static vsshell:VsBrushes.ActiveBorderKey}}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
                                 <Setter Property="Background" TargetName="border" Value="{DynamicResource {x:Static vsshell:VsBrushes.StartPageButtonMouseOverBackgroundKey}}"/>
@@ -73,20 +77,25 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Row="0" Grid.Column="0" Style="{DynamicResource PostControl.Style}" 
+        <Button Grid.Row="0" Grid.Column="0" 
+                Click="Button_Click"
+                IsTabStop="True" 
+                FocusVisualStyle="{x:Null}"
+                Style="{DynamicResource PostControl.Style}" 
                 BorderThickness="0 0 0 1"
                 BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.ButtonFaceKey}}"
                 Background="Transparent" 
                 Padding="0 5 0 7"
-                HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                HorizontalAlignment="Stretch" 
+                HorizontalContentAlignment="Stretch">
+            
             <StackPanel Orientation="Vertical" Margin="0 5">
-                <Label Name="Title" 
-               Padding="5 0"
-               Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ControlLinkTextKey}}">
-                    <Hyperlink TextDecorations="none" FontWeight="SemiBold">
-                        <TextBlock Name="lblTitle"/>
-                    </Hyperlink>
-                </Label>
+                <Label Name="lblTitle" 
+                       Padding="5 0" 
+                       IsTabStop="False" 
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ControlLinkTextKey}}" />
+
 
                 <Label Padding="5 0">
                     <TextBlock Name="lblSummary" TextWrapping="WrapWithOverflow" />
