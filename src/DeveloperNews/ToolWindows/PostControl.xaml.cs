@@ -43,9 +43,9 @@ namespace FeedManager.ToolWindows
 
 		public static string TruncateHtml(string input, int length = 200, string ommission = "...")
 		{
-			string clearText = _regex.Replace(input, "");
+			var clearText = _regex.Replace(input, "");
 
-			int nextSpace = clearText.LastIndexOf(" ", Math.Min(length, clearText.Length));
+			var nextSpace = clearText.LastIndexOf(" ", Math.Min(length, clearText.Length));
 
 			return string.Format("{0}" + ommission,
 								  clearText.Substring(0, (nextSpace > 0) ? nextSpace : length).Trim());

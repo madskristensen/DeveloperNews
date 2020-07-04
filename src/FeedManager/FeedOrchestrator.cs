@@ -36,7 +36,7 @@ namespace FeedManager
 				File.Exists(_combinedFile) && 
 				File.GetLastWriteTime(_combinedFile) >= DateTime.Now.AddHours(-4))
 			{
-				using (XmlReader reader = XmlReader.Create(_combinedFile))
+				using (var reader = XmlReader.Create(_combinedFile))
 				{
 					return SyndicationFeed.Load(reader);
 				}
@@ -58,9 +58,9 @@ namespace FeedManager
 			var downloader = new FeedDownloader(_folder);
 			var feed = new SyndicationFeed(_name, _description, null);
 
-			foreach (var feedInfo in feedInfos)
+			foreach (FeedInfo feedInfo in feedInfos)
 			{
-				var fetchedFeed = await downloader.FetchAsync(feedInfo, force);
+                SyndicationFeed fetchedFeed = await downloader.FetchAsync(feedInfo, force);
 
 				feed.Items = feed.Items
 					.Union(fetchedFeed.Items)
@@ -71,7 +71,7 @@ namespace FeedManager
 
 			Directory.CreateDirectory(_folder);
 
-			using (XmlWriter writer = XmlWriter.Create(_combinedFile))
+			using (var writer = XmlWriter.Create(_combinedFile))
 			{
 				feed.Items = feed.Items.Take(20);
 				feed.SaveAsRss20(writer);

@@ -18,14 +18,14 @@ namespace FeedManager
 		public async Task<SyndicationFeed> GetFeedAsync(bool force = false)
 		{
 			var orchestrator = new FeedOrchestrator(Vsix.Name, Vsix.Description);
-			var feedInfos = GetFeedInfos();
+            IEnumerable<FeedInfo> feedInfos = GetFeedInfos();
 
 			return await orchestrator.GetFeedsAsync(feedInfos, force);
 		}
 
 		private IEnumerable<FeedInfo> GetFeedInfos()
 		{
-			using (var key = _rootKey.OpenSubKey("DeveloperNews\\Feeds"))
+			using (RegistryKey key = _rootKey.OpenSubKey("DeveloperNews\\Feeds"))
 			{
 				var names = key.GetValueNames();
 

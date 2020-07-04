@@ -1,0 +1,7 @@
+# EditorConfig is awesome:http://EditorConfig.org
+
+[*.{cs,vb}]
+# Naming rules - async methods to be prefixed with Async
+dotnet_naming_rule.async_methods_must_end_with_async.severity   = none
+dotnet_naming_rule.async_methods_must_end_with_async.symbols    = method_symbols
+dotnet_naming_rule.async_methods_must_end_with_async.style      = end_in_async_style

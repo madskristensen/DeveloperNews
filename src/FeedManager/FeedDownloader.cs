@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -19,18 +20,18 @@ namespace FeedManager
 
 		public async Task<SyndicationFeed> FetchAsync(FeedInfo feedInfo, bool force = false)
 		{
-			string file = Path.Combine(_folder, feedInfo.Name + ".xml");
-			var lastModified = File.Exists(file) ? File.GetLastWriteTime(file) : DateTime.MinValue;
+			var file = Path.Combine(_folder, feedInfo.Name + ".xml");
+            DateTime lastModified = File.Exists(file) ? File.GetLastWriteTime(file) : DateTime.MinValue;
 
 			if (force || lastModified < DateTime.Now.AddHours(-4))
 			{
-				var feed = await DownloadFeedAsync(feedInfo.Url, lastModified);
+                SyndicationFeed feed = await DownloadFeedAsync(feedInfo.Url, lastModified);
 
 				if (feed != null)
 				{
 					Directory.CreateDirectory(_folder);
 
-					using (XmlWriter writer = XmlWriter.Create(file))
+					using (var writer = XmlWriter.Create(file))
 					{
 						feed.Items = feed.Items.Take(20);
 						feed.SaveAsRss20(writer);
@@ -44,7 +45,7 @@ namespace FeedManager
 
 			if (File.Exists(file))
 			{
-				using (XmlReader reader = XmlReader.Create(file))
+				using (var reader = XmlReader.Create(file))
 				{
 					return SyndicationFeed.Load(reader);
 				}
@@ -60,17 +61,17 @@ namespace FeedManager
 				using (var client = new HttpClient())
 				{
 					client.DefaultRequestHeaders.IfModifiedSince = lastModified;
-					var result = await client.GetAsync(url);
+                    HttpResponseMessage result = await client.GetAsync(url);
 
 					if (result.IsSuccessStatusCode)
 					{
-						var stream = await result.Content.ReadAsStreamAsync();
+                        Stream stream = await result.Content.ReadAsStreamAsync();
 
 						using (var reader = XmlReader.Create(stream))
 						{
 							var feed = SyndicationFeed.Load(reader);
 
-							if (result.Content.Headers.TryGetValues("last-modified", out var values))
+							if (result.Content.Headers.TryGetValues("last-modified", out IEnumerable<string> values))
 							{
 								feed.LastUpdatedTime = DateTime.Parse(values.First());
 							}
