@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace DeveloperNews
+namespace FeedManager
 {
     internal class GeneralOptions : BaseOptionModel<GeneralOptions>
     {

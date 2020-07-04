@@ -6,16 +6,35 @@ using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace DeveloperNews
+namespace FeedManager
 {
 	public class FeedOrchestrator
 	{
-		private static readonly string _folder = Path.Combine(Path.GetTempPath(), Vsix.Name);
-		private static readonly string _combinedFile = Path.Combine(_folder, "_feed.xml");
+		private readonly string _folder;
+		private readonly string _combinedFile;
+		
+		private readonly string _name;
+		private readonly string _description;
+
+		public FeedOrchestrator(string name, string description)
+		{
+			_name = name;
+			_description = description;
+
+			_folder = Path.Combine(Path.GetTempPath(), name);
+			_combinedFile= Path.Combine(_folder, "_feed.xml");
+		}
 
 		public async Task<SyndicationFeed> GetFeedsAsync(IEnumerable<FeedInfo> feedInfos, bool force = false)
 		{
-			if (!force && File.Exists(_combinedFile) && File.GetLastWriteTime(_combinedFile) >= DateTime.Now.AddHours(-4))
+			if (feedInfos == null)
+			{
+				return new SyndicationFeed(_name, _description, null);
+			}
+
+			if (!force && 
+				File.Exists(_combinedFile) && 
+				File.GetLastWriteTime(_combinedFile) >= DateTime.Now.AddHours(-4))
 			{
 				using (XmlReader reader = XmlReader.Create(_combinedFile))
 				{
@@ -26,10 +45,18 @@ namespace DeveloperNews
 			return await CreateNewCombinedFeedAsync(feedInfos, force);
 		}
 
+		public void ClearCache()
+		{
+			if (Directory.Exists(_folder))
+			{
+				Directory.Delete(_folder, true);
+			}
+		}
+
 		private async Task<SyndicationFeed> CreateNewCombinedFeedAsync(IEnumerable<FeedInfo> feedInfos, bool force)
 		{
 			var downloader = new FeedDownloader(_folder);
-			var feed = new SyndicationFeed(Vsix.Name, Vsix.Description, null);
+			var feed = new SyndicationFeed(_name, _description, null);
 
 			foreach (var feedInfo in feedInfos)
 			{

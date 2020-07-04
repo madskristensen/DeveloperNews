@@ -1,4 +1,4 @@
-﻿using DeveloperNews.ToolWindows;
+﻿using FeedManager.ToolWindows;
 
 using Microsoft.VisualStudio.Shell;
 
@@ -7,7 +7,7 @@ using System.ComponentModel.Design;
 
 using Task = System.Threading.Tasks.Task;
 
-namespace DeveloperNews
+namespace FeedManager
 {
 	internal sealed class NewsWindowCommand
 	{

@@ -1,4 +1,4 @@
-﻿namespace DeveloperNews
+﻿namespace FeedManager
 {
 	public class FeedInfo
 	{

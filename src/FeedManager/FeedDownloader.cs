@@ -6,7 +6,7 @@ using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace DeveloperNews
+namespace FeedManager
 {
 	public class FeedDownloader
 	{
@@ -34,8 +34,9 @@ namespace DeveloperNews
 					{
 						feed.Items = feed.Items.Take(20);
 						feed.SaveAsRss20(writer);
-						File.SetLastWriteTime(file, feed.LastUpdatedTime.DateTime);
 					}
+
+					File.SetLastWriteTime(file, feed.LastUpdatedTime.DateTime);
 
 					return feed;
 				}
@@ -67,7 +68,14 @@ namespace DeveloperNews
 
 						using (var reader = XmlReader.Create(stream))
 						{
-							return SyndicationFeed.Load(reader);
+							var feed = SyndicationFeed.Load(reader);
+
+							if (result.Content.Headers.TryGetValues("last-modified", out var values))
+							{
+								feed.LastUpdatedTime = DateTime.Parse(values.First());
+							}
+
+							return feed;
 						}
 					}
 				}

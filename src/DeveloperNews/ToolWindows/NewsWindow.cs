@@ -4,7 +4,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.ServiceModel.Syndication;
 
-namespace DeveloperNews.ToolWindows
+namespace FeedManager.ToolWindows
 {
 	[Guid(WindowGuidString)]
 	public class NewsWindow : ToolWindowPane

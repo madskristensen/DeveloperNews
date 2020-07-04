@@ -5,7 +5,7 @@ using System.ServiceModel.Syndication;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DeveloperNews.ToolWindows
+namespace FeedManager.ToolWindows
 {
 	public partial class NewsWindowControl : UserControl
 	{

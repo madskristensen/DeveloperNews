@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace DeveloperNews.ToolWindows
+namespace FeedManager.ToolWindows
 {
 	public partial class PostControl : UserControl
 	{

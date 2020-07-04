@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 
-namespace DeveloperNews
+namespace FeedManager
 {
 	public class FeedStore
 	{
@@ -17,7 +17,7 @@ namespace DeveloperNews
 
 		public async Task<SyndicationFeed> GetFeedAsync(bool force = false)
 		{
-			var orchestrator = new FeedOrchestrator();
+			var orchestrator = new FeedOrchestrator(Vsix.Name, Vsix.Description);
 			var feedInfos = GetFeedInfos();
 
 			return await orchestrator.GetFeedsAsync(feedInfos, force);

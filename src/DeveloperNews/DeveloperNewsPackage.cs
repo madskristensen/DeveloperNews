@@ -1,4 +1,4 @@
-﻿using DeveloperNews.ToolWindows;
+﻿using FeedManager.ToolWindows;
 
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 using Task = System.Threading.Tasks.Task;
 
-namespace DeveloperNews
+namespace FeedManager
 {
 	[InstalledProductRegistration(Vsix.Name, Vsix.Description, Vsix.Version)]
 	[PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]

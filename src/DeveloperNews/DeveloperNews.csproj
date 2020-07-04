@@ -45,10 +45,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Feed\FeedDownloader.cs" />
-    <Compile Include="Feed\FeedInfo.cs" />
-    <Compile Include="Feed\FeedOrchestrator.cs" />
-    <Compile Include="Feed\FeedStore.cs" />
+    <Compile Include="FeedStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DeveloperNewsPackage.cs" />
     <Compile Include="Settings\BaseOptionModel.cs" />
@@ -74,7 +71,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\LICENSE">
+    <Content Include="..\..\LICENSE">
       <Link>Resources\LICENSE</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -116,7 +113,12 @@
       <LastGenOutput>VSPackage.cs</LastGenOutput>
     </VSCTCompile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\FeedManager\FeedManager.csproj">
+      <Project>{9190cc19-1eb6-4103-b401-fc10c6ccd1c6}</Project>
+      <Name>FeedManager</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="ToolWindows\NewsWindowControl.xaml">
       <SubType>Designer</SubType>

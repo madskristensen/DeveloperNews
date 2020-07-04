@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DeveloperNews.ToolWindows
+namespace FeedManager.ToolWindows
 {
 	public static class VsTheme
 	{
