@@ -9,6 +9,8 @@ or get the [CI build](https://www.vsixgallery.com/extension/36cfa8d9-bd14-4d32-a
 
 ----------------------------------------------
 
+![Full screen](art/full-screen.png)
+
 ## Settings
 
 Decide if you want the news to open inside Visual Studio or in your default browser.
