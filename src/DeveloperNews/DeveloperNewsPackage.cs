@@ -2,9 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-
 using DeveloperNews.ToolWindows;
-
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;

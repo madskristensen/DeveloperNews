@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.ServiceModel.Syndication;
-
 using Microsoft.VisualStudio.Shell;
 
 namespace DeveloperNews.ToolWindows

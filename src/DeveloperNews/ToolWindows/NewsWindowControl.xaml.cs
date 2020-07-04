@@ -2,7 +2,6 @@
 using System.ServiceModel.Syndication;
 using System.Windows;
 using System.Windows.Controls;
-
 using Microsoft.VisualStudio.Shell;
 
 namespace DeveloperNews.ToolWindows

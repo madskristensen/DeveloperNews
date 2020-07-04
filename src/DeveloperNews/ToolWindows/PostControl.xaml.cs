@@ -5,7 +5,6 @@ using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
