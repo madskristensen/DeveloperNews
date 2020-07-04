@@ -9,5 +9,17 @@ or get the [CI build](https://www.vsixgallery.com/extension/36cfa8d9-bd14-4d32-a
 
 ----------------------------------------------
 
+## Settings
+
+Decide if you want the news to open inside Visual Studio or in your default browser.
+
+![Settings](art/settings.png)
+
+## Blue theme
+![Blue theme](art/feed-blue-theme.png)
+
+## Dark theme
+![Dark theme](art/feed-dark-theme.png)
+
 ## License
-* This extension: [Apache 2.0](LICENSE)
+[Apache 2.0](LICENSE)

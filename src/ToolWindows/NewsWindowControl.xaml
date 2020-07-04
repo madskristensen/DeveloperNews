@@ -52,7 +52,7 @@
         </StackPanel>
 
         <ScrollViewer Grid.Row="2" IsDeferredScrollingEnabled="True" Grid.ColumnSpan="2" Padding="5">
-            <VirtualizingStackPanel x:Name="pnlPosts" />
+            <VirtualizingStackPanel x:Name="pnlPosts" VirtualizationMode="Recycling" />
         </ScrollViewer>
     </Grid>
 </UserControl>
