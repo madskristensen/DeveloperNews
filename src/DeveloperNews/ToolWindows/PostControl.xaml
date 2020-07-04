@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
+             xmlns:catalog="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.ImageCatalog"
              xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
-             xmlns:local="clr-namespace:FeedManager.ToolWindows"
              mc:Ignorable="d" 
              d:DesignHeight="120" d:DesignWidth="300">
     <UserControl.Resources>
@@ -101,6 +102,19 @@
                     <TextBlock Name="lblSummary" TextWrapping="WrapWithOverflow" />
                 </Label>
             </StackPanel>
+
+            <Button.ContextMenu>
+                <ContextMenu Name="ctxMenu">
+                    <MenuItem Header="Open in Visual Studio" Click="OpenInVsClick" />
+                    <MenuItem Header="Open in Default Browser" Click="OpenInDefaultBrowserClick" />
+                    <Separator/>
+                    <MenuItem Header="Copy URL" Click="CopyUrlClick">
+                        <MenuItem.Icon>
+                            <imaging:CrispImage Moniker="{x:Static catalog:KnownMonikers.Copy}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </Button.ContextMenu>
         </Button>
     </Grid>
 </UserControl>
