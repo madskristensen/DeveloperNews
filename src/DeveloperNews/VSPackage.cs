@@ -15,6 +15,9 @@ namespace DeveloperNews
         public const string guidDeveloperNewsPackageString = "cf0f01e7-96a3-4245-a561-76353cddf32d";
         public static Guid guidDeveloperNewsPackage = new Guid(guidDeveloperNewsPackageString);
 
+        public const string guidToolWindowString = "7b3eb750-0ca7-4a08-b0a7-b48c654b741c";
+        public static Guid guidToolWindow = new Guid(guidToolWindowString);
+
         public const string guidDeveloperNewsPackageCmdSetString = "257fd01e-353b-43a2-a48a-48fccf3c536f";
         public static Guid guidDeveloperNewsPackageCmdSet = new Guid(guidDeveloperNewsPackageCmdSetString);
     }

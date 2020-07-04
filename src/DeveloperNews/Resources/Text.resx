@@ -153,4 +153,7 @@
   <data name="Totalcount" xml:space="preserve">
     <value>{0} total</value>
   </data>
+  <data name="WindowTitle" xml:space="preserve">
+    <value>News</value>
+  </data>
 </root>

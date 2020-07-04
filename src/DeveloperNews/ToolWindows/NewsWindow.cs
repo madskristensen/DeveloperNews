@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.ServiceModel.Syndication;
+using DeveloperNews.Resources;
 using Microsoft.VisualStudio.Shell;
 
 namespace DeveloperNews.ToolWindows
 {
-    [Guid(WindowGuidString)]
+    [Guid(PackageGuids.guidToolWindowString)]
     public class NewsWindow : ToolWindowPane
     {
-        public const string WindowGuidString = "7b3eb750-0ca7-4a08-b0a7-b48c654b741c";
-
-        public const string Title = "News";
-
         public NewsWindow(SyndicationFeed feed) : base(null)
         {
-            Caption = Title;
+            Caption = Text.WindowTitle;
             Content = new NewsWindowControl(feed);
         }
     }

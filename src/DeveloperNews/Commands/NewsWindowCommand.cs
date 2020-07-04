@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.Design;
+﻿using System.ComponentModel.Design;
 using DeveloperNews.ToolWindows;
 using Microsoft;
 using Microsoft.VisualStudio.Shell;
@@ -26,10 +25,7 @@ namespace DeveloperNews
             package.JoinableTaskFactory.RunAsync(async delegate
             {
                 ToolWindowPane window = await package.ShowToolWindowAsync(typeof(NewsWindow), 0, true, package.DisposalToken);
-                if ((null == window) || (null == window.Frame))
-                {
-                    throw new NotSupportedException("Cannot create tool window");
-                }
+                Assumes.Present(window);
             });
         }
     }

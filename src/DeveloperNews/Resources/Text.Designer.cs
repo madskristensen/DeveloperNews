@@ -167,5 +167,14 @@ namespace DeveloperNews.Resources {
                 return ResourceManager.GetString("Totalcount", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to News.
+        /// </summary>
+        public static string WindowTitle {
+            get {
+                return ResourceManager.GetString("WindowTitle", resourceCulture);
+            }
+        }
     }
 }
