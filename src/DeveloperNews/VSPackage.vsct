@@ -18,6 +18,10 @@
     </Buttons>
   </Commands>
 
+  <KeyBindings>
+    <KeyBinding guid="guidDeveloperNewsPackageCmdSet" id="NewsWindowCommandId" editor="guidVSStd97" key1="O" mod1="Alt" key2="N" mod2="Alt" />
+  </KeyBindings>
+
   <Symbols>
     <GuidSymbol name="guidDeveloperNewsPackage" value="{cf0f01e7-96a3-4245-a561-76353cddf32d}" />
 
