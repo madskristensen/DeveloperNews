@@ -30,8 +30,15 @@ namespace DeveloperNews.ToolWindows
 		{
 			ThreadHelper.ThrowIfNotOnUIThread();
 
-			var service = Package.GetGlobalService(typeof(IVsWebBrowsingService)) as IVsWebBrowsingService;
-			service.Navigate(_url.OriginalString, (uint)__VSWBNAVIGATEFLAGS.VSNWB_WebURLOnly, out _);
+			if (GeneralOptions.Instance.OpenInDefaultBrowser)
+			{
+				Process.Start(_url.OriginalString);
+			}
+			else
+			{
+				var service = Package.GetGlobalService(typeof(IVsWebBrowsingService)) as IVsWebBrowsingService;
+				service.Navigate(_url.OriginalString, (uint)__VSWBNAVIGATEFLAGS.VSNWB_WebURLOnly, out _);
+			}
 		}
 
 		public static string TruncateHtml(string input, int length = 200, string ommission = "...")

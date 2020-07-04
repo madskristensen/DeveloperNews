@@ -18,6 +18,7 @@
           Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowBackgroundKey}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -28,15 +29,16 @@
 
         <Label Name="lblTotal" Grid.Row="0" Grid.Column="0" Content="6 total" Padding="8 6 0 0" />
 
-        <VirtualizingStackPanel VirtualizationMode="Recycling" 
-                                Orientation="Horizontal" 
-                                Grid.Row="0" 
-                                Grid.Column="1">
-            <Label>
+        <StackPanel  Orientation="Horizontal" 
+                     Grid.Row="0" 
+                     Grid.Column="1">
+
+            <Label ToolTip="Fetches the latest news online and refreshes the list">
                 <Hyperlink Click="RefreshClick">Refresh</Hyperlink>
             </Label>
-            <imaging:CrispImage Margin="5 0 2 0" Width="14" Height="14" Moniker="{x:Static catalog:KnownMonikers.Settings}" />
-        </VirtualizingStackPanel>
+
+            <imaging:CrispImage Margin="3 0 1 0" ToolTip="Opens and closes the settings" Cursor="Hand" MouseUp="CrispImage_MouseUp" Moniker="{x:Static catalog:KnownMonikers.Settings}" />
+        </StackPanel>
 
         <Border Grid.Row="0" 
                 Grid.ColumnSpan="2" 
@@ -45,8 +47,12 @@
                 VerticalAlignment="Bottom"/>
 
 
-        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" Padding="5">
-            <StackPanel x:Name="pnlPosts" />
+        <StackPanel Name="pnlSettings" Grid.Row="1" Grid.ColumnSpan="2" Margin="8" Visibility="Collapsed">
+            <CheckBox Name="cbOpenInVS" Click="OpenInVS_Click">Open in default browser</CheckBox>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="2" IsDeferredScrollingEnabled="True" Grid.ColumnSpan="2" Padding="5">
+            <VirtualizingStackPanel x:Name="pnlPosts" />
         </ScrollViewer>
     </Grid>
 </UserControl>

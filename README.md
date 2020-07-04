@@ -11,4 +11,3 @@ or get the [CI build](https://www.vsixgallery.com/extension/36cfa8d9-bd14-4d32-a
 
 ## License
 * This extension: [Apache 2.0](LICENSE)
-* [License for the images](https://www.microsoft.com/download/details.aspx?id=35825)

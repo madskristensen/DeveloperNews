@@ -48,6 +48,8 @@
     <Compile Include="FeedStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DeveloperNewsPackage.cs" />
+    <Compile Include="Settings\BaseOptionModel.cs" />
+    <Compile Include="Settings\GeneralOptions.cs" />
     <Compile Include="source.extension.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

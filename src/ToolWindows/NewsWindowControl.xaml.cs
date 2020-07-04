@@ -13,6 +13,8 @@ namespace DeveloperNews.ToolWindows
 		{
 			InitializeComponent();
 			BindPosts(feed);
+
+			cbOpenInVS.IsChecked = GeneralOptions.Instance.OpenInDefaultBrowser;
 		}
 
 		private void BindPosts(SyndicationFeed feed)
@@ -84,6 +86,17 @@ namespace DeveloperNews.ToolWindows
 				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 				BindPosts(feed);
 			});
+		}
+
+		private void CrispImage_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			pnlSettings.Visibility = pnlSettings.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+		}
+
+		private void OpenInVS_Click(object sender, RoutedEventArgs e)
+		{
+			GeneralOptions.Instance.OpenInDefaultBrowser = cbOpenInVS.IsChecked.Value;
+			GeneralOptions.Instance.Save();
 		}
 	}
 }
