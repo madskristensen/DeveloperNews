@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 
@@ -15,14 +17,23 @@ namespace DeveloperNews
         public FeedStore(RegistryKey rootKey)
         {
             _rootKey = rootKey;
+            FeedInfos = GetFeedInfos();
         }
+
+        public static IEnumerable<FeedInfo> FeedInfos { get; private set; }
 
         public async Task<SyndicationFeed> GetFeedAsync(bool force = false)
         {
             var orchestrator = new FeedOrchestrator(Vsix.Name, Vsix.Description);
-            IEnumerable<FeedInfo> feedInfos = GetFeedInfos();
+            var selection = GeneralOptions.Instance.FeedSelection.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            IEnumerable<FeedInfo> infos = FeedInfos;
 
-            return await orchestrator.GetFeedsAsync(feedInfos, force);
+            if (selection.Any())
+            {
+                infos = FeedInfos.Where(f => selection.Contains($"{f.Name}:true", StringComparer.OrdinalIgnoreCase));
+            }
+
+            return await orchestrator.GetFeedsAsync(infos, force);
         }
 
         private IEnumerable<FeedInfo> GetFeedInfos()

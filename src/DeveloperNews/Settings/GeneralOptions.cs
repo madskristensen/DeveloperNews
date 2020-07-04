@@ -9,5 +9,8 @@ namespace DeveloperNews
         [Description("Specifies if the blog posts should open in the default browser or inside Visual Studio.")]
         [DefaultValue(false)]
         public bool OpenInDefaultBrowser { get; set; }
+
+        [DefaultValue("")]
+        public string FeedSelection { get; set; } = "";
     }
 }
