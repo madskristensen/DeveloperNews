@@ -3,7 +3,7 @@
     <Metadata>
         <Identity Id="36cfa8d9-bd14-4d32-a8a6-34133aa2309d" Version="0.5" Language="en-US" Publisher="Mads Kristensen" />
         <DisplayName>Daily News</DisplayName>
-        <Description xml:space="preserve">Shows the developer news from the Visual Studio blog and other sources in a tool window inside Visual Studio or your default browser.</Description>
+        <Description xml:space="preserve">Always stay up to date with developer news from the Visual Studio team and other sources right within Visual Studio or your default browser.</Description>
         <MoreInfo>https://github.com/madskristensen/DeveloperNews</MoreInfo>
         <License>Resources\LICENSE</License>
         <Icon>Resources\Icon.png</Icon>

@@ -9,7 +9,7 @@ namespace DeveloperNews
     {
         public const string Id = "36cfa8d9-bd14-4d32-a8a6-34133aa2309d";
         public const string Name = "Daily News";
-        public const string Description = @"Shows the developer news from the Visual Studio blog and other sources in a tool window inside Visual Studio or your default browser.";
+        public const string Description = @"Always stay up to date with developer news from the Visual Studio team and other sources right within Visual Studio or your default browser.";
         public const string Language = "en-US";
         public const string Version = "0.5";
         public const string Author = "Mads Kristensen";
