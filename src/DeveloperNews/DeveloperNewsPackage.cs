@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using DeveloperNews.ToolWindows;
 
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
@@ -17,6 +18,7 @@ namespace DeveloperNews
     [InstalledProductRegistration(Vsix.Name, Vsix.Description, Vsix.Version)]
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [ProvideToolWindow(typeof(NewsWindow), Style = VsDockStyle.Tabbed, Window = "3ae79031-e1bc-11d0-8f78-00a0c9110057")]
+    [ProvideToolWindowVisibility(typeof(NewsWindow), VSConstants.UICONTEXT.NoSolution_string, Name = NewsWindow.Title)]
     public sealed class DeveloperNewsPackage : AsyncPackage
     {
         public static FeedStore Store { get; private set; }

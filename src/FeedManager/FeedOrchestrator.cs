@@ -8,76 +8,76 @@ using System.Xml;
 
 namespace FeedManager
 {
-	public class FeedOrchestrator
-	{
-		private readonly string _folder;
-		private readonly string _combinedFile;
-		
-		private readonly string _name;
-		private readonly string _description;
+    public class FeedOrchestrator
+    {
+        private readonly string _folder;
+        private readonly string _combinedFile;
 
-		public FeedOrchestrator(string name, string description)
-		{
-			_name = name;
-			_description = description;
+        private readonly string _name;
+        private readonly string _description;
 
-			_folder = Path.Combine(Path.GetTempPath(), name);
-			_combinedFile= Path.Combine(_folder, "_feed.xml");
-		}
+        public FeedOrchestrator(string name, string description)
+        {
+            _name = name;
+            _description = description;
 
-		public async Task<SyndicationFeed> GetFeedsAsync(IEnumerable<FeedInfo> feedInfos, bool force = false)
-		{
-			if (feedInfos == null)
-			{
-				return new SyndicationFeed(_name, _description, null);
-			}
+            _folder = Path.Combine(Path.GetTempPath(), name);
+            _combinedFile = Path.Combine(_folder, "_feed.xml");
+        }
 
-			if (!force && 
-				File.Exists(_combinedFile) && 
-				File.GetLastWriteTime(_combinedFile) >= DateTime.Now.AddHours(-4))
-			{
-				using (var reader = XmlReader.Create(_combinedFile))
-				{
-					return SyndicationFeed.Load(reader);
-				}
-			}
+        public async Task<SyndicationFeed> GetFeedsAsync(IEnumerable<FeedInfo> feedInfos, bool force = false)
+        {
+            if (feedInfos == null)
+            {
+                return new SyndicationFeed(_name, _description, null);
+            }
 
-			return await CreateNewCombinedFeedAsync(feedInfos, force);
-		}
+            if (!force &&
+                File.Exists(_combinedFile) &&
+                File.GetLastWriteTime(_combinedFile) >= DateTime.Now.AddHours(-4))
+            {
+                using (var reader = XmlReader.Create(_combinedFile))
+                {
+                    return SyndicationFeed.Load(reader);
+                }
+            }
 
-		public void ClearCache()
-		{
-			if (Directory.Exists(_folder))
-			{
-				Directory.Delete(_folder, true);
-			}
-		}
+            return await CreateNewCombinedFeedAsync(feedInfos, force);
+        }
 
-		private async Task<SyndicationFeed> CreateNewCombinedFeedAsync(IEnumerable<FeedInfo> feedInfos, bool force)
-		{
-			var downloader = new FeedDownloader(_folder);
-			var feed = new SyndicationFeed(_name, _description, null);
+        public void ClearCache()
+        {
+            if (Directory.Exists(_folder))
+            {
+                Directory.Delete(_folder, true);
+            }
+        }
 
-			foreach (FeedInfo feedInfo in feedInfos)
-			{
+        private async Task<SyndicationFeed> CreateNewCombinedFeedAsync(IEnumerable<FeedInfo> feedInfos, bool force)
+        {
+            var downloader = new FeedDownloader(_folder);
+            var feed = new SyndicationFeed(_name, _description, null);
+
+            foreach (FeedInfo feedInfo in feedInfos)
+            {
                 SyndicationFeed fetchedFeed = await downloader.FetchAsync(feedInfo, force);
 
-				feed.Items = feed.Items
-					.Union(fetchedFeed.Items)
-					.GroupBy(i => i.Title.Text)
-					.Select(i => i.First())
-					.OrderByDescending(i => i.PublishDate.Date);
-			}
+                feed.Items = feed.Items
+                    .Union(fetchedFeed.Items)
+                    .GroupBy(i => i.Title.Text)
+                    .Select(i => i.First())
+                    .OrderByDescending(i => i.PublishDate.Date);
+            }
 
-			Directory.CreateDirectory(_folder);
+            Directory.CreateDirectory(_folder);
 
-			using (var writer = XmlWriter.Create(_combinedFile))
-			{
-				feed.Items = feed.Items.Take(20);
-				feed.SaveAsRss20(writer);
-			}
+            using (var writer = XmlWriter.Create(_combinedFile))
+            {
+                feed.Items = feed.Items.Take(20);
+                feed.SaveAsRss20(writer);
+            }
 
-			return feed;
-		}
-	}
+            return feed;
+        }
+    }
 }
