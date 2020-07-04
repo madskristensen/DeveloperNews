@@ -7,8 +7,8 @@
 
   <Commands package="guidDeveloperNewsPackage">
     <Buttons>
-      <Button guid="guidDeveloperNewsPackageCmdSet" id="NewsWindowCommandId" priority="0x0100" type="Button">
-        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
+      <Button guid="guidDeveloperNewsPackageCmdSet" id="NewsWindowCommandId" priority="0x0900" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_VIEW_ORG_WINDOWS"/>
         <Icon guid="ImageCatalogGuid" id="RSS" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>

@@ -11,17 +11,25 @@ or get the [CI build](https://www.vsixgallery.com/extension/36cfa8d9-bd14-4d32-a
 
 ![Full screen](art/full-screen.png)
 
-## Settings
+## Open the tool window
+Open the *News* tool window from the *View* top level menu.
 
+![View menu](art/view-menu.png)
+
+## Design
+The *News* tool window looks great in any theme and looks like a built-in part of Visual Studio.
+
+![Tool window](art/toolwindow.png)
+
+## Context menu
+Right-clicking on any of the posts will show a context menu with various options.
+
+![Context menu](art/context-menu.png)
+
+## Settings
 Decide if you want the news to open inside Visual Studio or in your default browser.
 
 ![Settings](art/settings.png)
-
-## Blue theme
-![Blue theme](art/feed-blue-theme.png)
-
-## Dark theme
-![Dark theme](art/feed-dark-theme.png)
 
 ## License
 [Apache 2.0](LICENSE)
