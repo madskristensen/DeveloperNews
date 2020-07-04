@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 using Microsoft.VisualStudio.Shell;
 
-namespace FeedManager.ToolWindows
+namespace DeveloperNews.ToolWindows
 {
     public partial class NewsWindowControl : UserControl
     {

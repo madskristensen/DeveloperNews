@@ -5,23 +5,25 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
+
 using Microsoft;
 using Microsoft.VisualStudio.Settings;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell.Settings;
 using Microsoft.VisualStudio.Threading;
+
 using Task = System.Threading.Tasks.Task;
 
-namespace FeedManager
+namespace DeveloperNews
 {
     /// <summary>
     /// A base class for specifying options
     /// </summary>
     internal abstract class BaseOptionModel<T> where T : BaseOptionModel<T>, new()
     {
-        private static AsyncLazy<T> _liveModel = new AsyncLazy<T>(CreateAsync, ThreadHelper.JoinableTaskFactory);
-        private static AsyncLazy<ShellSettingsManager> _settingsManager = new AsyncLazy<ShellSettingsManager>(GetSettingsManagerAsync, ThreadHelper.JoinableTaskFactory);
+        private static readonly AsyncLazy<T> _liveModel = new AsyncLazy<T>(CreateAsync, ThreadHelper.JoinableTaskFactory);
+        private static readonly AsyncLazy<ShellSettingsManager> _settingsManager = new AsyncLazy<ShellSettingsManager>(GetSettingsManagerAsync, ThreadHelper.JoinableTaskFactory);
 
         protected BaseOptionModel()
         { }
@@ -38,9 +40,9 @@ namespace FeedManager
             {
                 ThreadHelper.ThrowIfNotOnUIThread();
 
-#pragma warning disable VSTHRD104 // Offer async methods
+#pragma warning disable VSTHRD102 // Implement internal logic asynchronously
                 return ThreadHelper.JoinableTaskFactory.Run(GetLiveInstanceAsync);
-#pragma warning restore VSTHRD104 // Offer async methods
+#pragma warning restore VSTHRD102 // Implement internal logic asynchronously
             }
         }
 
@@ -70,7 +72,9 @@ namespace FeedManager
         /// </summary>
         public virtual void Load()
         {
+#pragma warning disable VSTHRD102 // Implement internal logic asynchronously
             ThreadHelper.JoinableTaskFactory.Run(LoadAsync);
+#pragma warning restore VSTHRD102 // Implement internal logic asynchronously
         }
 
         /// <summary>
@@ -90,8 +94,8 @@ namespace FeedManager
             {
                 try
                 {
-                    string serializedProp = settingsStore.GetString(CollectionName, property.Name);
-                    object value = DeserializeValue(serializedProp, property.PropertyType);
+                    var serializedProp = settingsStore.GetString(CollectionName, property.Name);
+                    var value = DeserializeValue(serializedProp, property.PropertyType);
                     property.SetValue(this, value);
                 }
                 catch (Exception ex)
@@ -106,7 +110,9 @@ namespace FeedManager
         /// </summary>
         public virtual void Save()
         {
+#pragma warning disable VSTHRD102 // Implement internal logic asynchronously
             ThreadHelper.JoinableTaskFactory.Run(SaveAsync);
+#pragma warning restore VSTHRD102 // Implement internal logic asynchronously
         }
 
         /// <summary>
@@ -124,7 +130,7 @@ namespace FeedManager
 
             foreach (PropertyInfo property in GetOptionProperties())
             {
-                string output = SerializeValue(property.GetValue(this));
+                var output = SerializeValue(property.GetValue(this));
                 settingsStore.SetString(CollectionName, property.Name, output);
             }
 
@@ -155,7 +161,7 @@ namespace FeedManager
         /// </summary>
         protected virtual object DeserializeValue(string value, Type type)
         {
-            byte[] b = Convert.FromBase64String(value);
+            var b = Convert.FromBase64String(value);
 
             using (var stream = new MemoryStream(b))
             {

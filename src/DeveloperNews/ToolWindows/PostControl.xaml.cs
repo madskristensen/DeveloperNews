@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace FeedManager.ToolWindows
+namespace DeveloperNews.ToolWindows
 {
     public partial class PostControl : UserControl
     {
@@ -26,8 +26,10 @@ namespace FeedManager.ToolWindows
             lblSummary.Text = TruncateHtml(item.Summary.Text);
         }
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             if (GeneralOptions.Instance.OpenInDefaultBrowser)
             {
                 OpenInDefaultBrowserClick(this, null);
