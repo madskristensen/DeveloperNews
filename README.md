@@ -33,7 +33,7 @@ Right-clicking on any of the posts will show a context menu with various options
 ![Context menu](art/context-menu.png)
 
 ## Settings
-Decide if you want the news to open inside Visual Studio or in your default browser. And
+Decide if you want the news to open inside Visual Studio or in your default browser. And select the news feeds that are relevant to you.
 
 ![Settings](art/settings.png)
 
