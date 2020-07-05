@@ -1,17 +1,19 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Xunit;
-
-namespace FeedManager.Test
+namespace DeveloperNews.Test
 {
-    public class FeedDownloaderTest : IDisposable
+    [TestClass]
+    public class FeedDownloaderTest
     {
         private static readonly string _folder = Path.Combine(Path.GetTempPath(), "FeedManagerTest");
 
-        public FeedDownloaderTest()
+        [TestInitialize]
+        public void Setup()
         {
             if (Directory.Exists(_folder))
             {
@@ -19,9 +21,9 @@ namespace FeedManager.Test
             }
         }
 
-        [Theory]
-        [InlineData("VS blog", "https://devblogs.microsoft.com/visualstudio/rss")]
-        [InlineData("hanselman", "http://feeds.hanselman.com/ScottHanselman")]
+        [TestMethod]
+        [DataRow("VS blog", "https://devblogs.microsoft.com/visualstudio/rss")]
+        [DataRow("hanselman", "http://feeds.hanselman.com/ScottHanselman")]
         public async Task FetchAsyncOnline(string name, string url)
         {
             var downloader = new FeedDownloader(_folder);
@@ -31,12 +33,12 @@ namespace FeedManager.Test
                 Url = url
             };
 
-            System.ServiceModel.Syndication.SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
+            SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
 
-            Assert.True(feed.Items.Count() > 0);
+            Assert.IsTrue(feed.Items.Count() > 0);
         }
 
-        [Fact]
+        [TestMethod]
         public async Task FetchAsyncFromCache()
         {
             var downloader = new FeedDownloader(_folder);
@@ -54,10 +56,10 @@ namespace FeedManager.Test
             _ = await downloader.FetchAsync(feedInfo, false);
             DateTime lastModified2 = File.GetLastWriteTime(file);
 
-            Assert.Equal(lastModified, lastModified2);
+            Assert.AreEqual(lastModified, lastModified2);
         }
 
-        [Fact]
+        [TestMethod]
         public async Task FetchAsync404()
         {
             var downloader = new FeedDownloader(_folder);
@@ -69,10 +71,10 @@ namespace FeedManager.Test
 
             System.ServiceModel.Syndication.SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
 
-            Assert.Null(feed);
+            Assert.IsNull(feed);
         }
 
-        [Fact]
+        [TestMethod]
         public async Task FetchAsyncInvalidRss()
         {
             var downloader = new FeedDownloader(_folder);
@@ -84,10 +86,10 @@ namespace FeedManager.Test
 
             System.ServiceModel.Syndication.SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
 
-            Assert.Null(feed);
+            Assert.IsNull(feed);
         }
 
-        [Fact]
+        [TestMethod]
         public async Task FetchAsyncEmptyUrl()
         {
             var downloader = new FeedDownloader(_folder);
@@ -99,12 +101,7 @@ namespace FeedManager.Test
 
             System.ServiceModel.Syndication.SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
 
-            Assert.Null(feed);
-        }
-
-        public void Dispose()
-        {
-
+            Assert.IsNull(feed);
         }
     }
 }

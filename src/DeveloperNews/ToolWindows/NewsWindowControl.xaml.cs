@@ -5,7 +5,6 @@ using System.ServiceModel.Syndication;
 using System.Windows;
 using System.Windows.Controls;
 using DeveloperNews.Resources;
-using FeedManager;
 using Microsoft.VisualStudio.Shell;
 
 namespace DeveloperNews.ToolWindows
@@ -50,10 +49,7 @@ namespace DeveloperNews.ToolWindows
                 feedInfos.Add(feedInfo);
             }
 
-            var selection = new FeedSelector(GeneralOptions.Instance.FeedSelection);
-            DeveloperNewsPackage.Store.FeedInfos = feedInfos;
-            GeneralOptions.Instance.FeedSelection = selection.GenerateRawSelectionSetting(feedInfos);
-            GeneralOptions.Instance.Save();
+            DeveloperNewsPackage.Store.SaveSelection();
         }
 
         private void BindPosts(SyndicationFeed feed)

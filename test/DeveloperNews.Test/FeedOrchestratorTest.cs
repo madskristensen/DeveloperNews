@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Xunit;
-
-namespace FeedManager.Test
+namespace DeveloperNews.Test
 {
+    [TestClass]
     public class FeedOrchestratorTest
     {
-        [Fact]
+        [TestMethod]
         public async Task FetchAsyncOnline()
         {
             var orchestrator = new FeedOrchestrator("Name", "Description");
@@ -21,10 +21,10 @@ namespace FeedManager.Test
 
             System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(feedInfos, false);
 
-            Assert.Equal(18, feed.Items.Count());
+            Assert.AreEqual(18, feed.Items.Count());
         }
 
-        [Fact]
+        [TestMethod]
         public async Task FetchAsyncFromCache()
         {
             var orchestrator = new FeedOrchestrator("Name", "Description");
@@ -39,11 +39,11 @@ namespace FeedManager.Test
 
                 System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(feedInfos, false);
 
-                Assert.Equal(18, feed.Items.Count());
+                Assert.AreEqual(18, feed.Items.Count());
             }
         }
 
-        [Fact]
+        [TestMethod]
         public async Task FetchAsyncDuplicatesWithDifferentNames()
         {
             var orchestrator = new FeedOrchestrator("Name", "Description");
@@ -58,11 +58,11 @@ namespace FeedManager.Test
 
                 System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(feedInfos, false);
 
-                Assert.Equal(10, feed.Items.Count());
+                Assert.AreEqual(10, feed.Items.Count());
             }
         }
 
-        [Fact]
+        [TestMethod]
         public async Task FetchAsyncDuplicatesFromCache()
         {
             var orchestrator = new FeedOrchestrator("Name", "Description");
@@ -77,11 +77,11 @@ namespace FeedManager.Test
 
                 System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(feedInfos, false);
 
-                Assert.Equal(10, feed.Items.Count());
+                Assert.AreEqual(10, feed.Items.Count());
             }
         }
 
-        [Fact]
+        [TestMethod]
         public async Task FetchAsyncEmptyList()
         {
             var orchestrator = new FeedOrchestrator("Name", "Description");
@@ -90,11 +90,11 @@ namespace FeedManager.Test
             var feedInfos = new List<FeedInfo>();
             System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(feedInfos, false);
 
-            Assert.Empty(feed.Items);
-            Assert.Equal("Name", feed.Title.Text);
+            Assert.IsTrue(feed.Items.Count() == 0);
+            Assert.AreEqual("Name", feed.Title.Text);
         }
 
-        [Fact]
+        [TestMethod]
         public async Task FetchAsyncEmptyListForce()
         {
             var orchestrator = new FeedOrchestrator("Name", "Description");
@@ -103,11 +103,11 @@ namespace FeedManager.Test
             var feedInfos = new List<FeedInfo>();
             System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(feedInfos, false);
 
-            Assert.Empty(feed.Items);
-            Assert.Equal("Name", feed.Title.Text);
+            Assert.IsTrue(feed.Items.Count() == 0);
+            Assert.AreEqual("Name", feed.Title.Text);
         }
 
-        [Fact]
+        [TestMethod]
         public async Task FetchAsyncNullList()
         {
             var orchestrator = new FeedOrchestrator("Name", "Description");
@@ -115,8 +115,8 @@ namespace FeedManager.Test
 
             System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(null, false);
 
-            Assert.Empty(feed.Items);
-            Assert.Equal("Name", feed.Title.Text);
+            Assert.IsTrue(feed.Items.Count() == 0);
+            Assert.AreEqual("Name", feed.Title.Text);
         }
     }
 }

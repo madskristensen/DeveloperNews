@@ -6,7 +6,7 @@ using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace FeedManager
+namespace DeveloperNews
 {
     public class FeedOrchestrator
     {

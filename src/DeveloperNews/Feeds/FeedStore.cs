@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
+using System.Text;
 using System.Threading.Tasks;
-
-using FeedManager;
 using Microsoft.Win32;
 
 namespace DeveloperNews
@@ -15,10 +15,6 @@ namespace DeveloperNews
         public FeedStore(RegistryKey rootKey)
         {
             _rootKey = rootKey;
-            IEnumerable<FeedInfo> feedInfos = GetFeedInfos();
-
-            var selector = new FeedSelector(GeneralOptions.Instance.FeedSelection);
-            FeedInfos = selector.LoadSelectionData(feedInfos).ToArray();
         }
 
         public IEnumerable<FeedInfo> FeedInfos { get; set; }
@@ -26,8 +22,22 @@ namespace DeveloperNews
         public async Task<SyndicationFeed> GetFeedAsync(bool force = false)
         {
             var orchestrator = new FeedOrchestrator(Vsix.Name, Vsix.Description);
+            FeedInfos = GetFeedInfos();
 
             return await orchestrator.GetFeedsAsync(FeedInfos.Where(f => f.IsSelected), force);
+        }
+
+        public void SaveSelection()
+        {
+            var sb = new StringBuilder();
+
+            foreach (FeedInfo feedInfo in FeedInfos)
+            {
+                sb.AppendLine(feedInfo.ToString());
+            }
+
+            GeneralOptions.Instance.FeedSelection = sb.ToString();
+            GeneralOptions.Instance.Save();
         }
 
         private IEnumerable<FeedInfo> GetFeedInfos()
@@ -38,13 +48,28 @@ namespace DeveloperNews
 
                 foreach (var name in names)
                 {
-                    yield return new FeedInfo
+                    var feedInfo = new FeedInfo
                     {
                         Name = name,
                         Url = key.GetValue(name)?.ToString()
                     };
+
+                    feedInfo.IsSelected = CheckIfSelected(feedInfo);
+                    yield return feedInfo;
                 }
             }
+        }
+
+        private bool CheckIfSelected(FeedInfo feedInfo)
+        {
+            var raw = GeneralOptions.Instance.FeedSelection;
+
+            if (string.IsNullOrEmpty(raw) || raw.IndexOf(feedInfo.Name, StringComparison.OrdinalIgnoreCase) == -1)
+            {
+                return true;
+            }
+
+            return raw.IndexOf($"{feedInfo.Name}:true", StringComparison.OrdinalIgnoreCase) > -1;
         }
     }
 }
