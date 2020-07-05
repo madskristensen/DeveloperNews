@@ -5,6 +5,7 @@ using System.ServiceModel.Syndication;
 using System.Windows;
 using System.Windows.Controls;
 using DeveloperNews.Resources;
+using FeedManager;
 using Microsoft.VisualStudio.Shell;
 
 namespace DeveloperNews.ToolWindows
@@ -21,17 +22,16 @@ namespace DeveloperNews.ToolWindows
 
         private void BindSettings()
         {
-            var selection = GeneralOptions.Instance.FeedSelection.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (FeedManager.FeedInfo feedInfo in FeedStore.FeedInfos.OrderBy(f => f.Name))
+            foreach (FeedInfo feedInfo in DeveloperNewsPackage.Store.FeedInfos.OrderBy(f => f.Name))
             {
                 var cb = new CheckBox
                 {
                     Content = feedInfo.Name,
                     Padding = new Thickness(5, 2, 0, 2),
+                    IsChecked = feedInfo.IsSelected,
+                    Tag = feedInfo,
                 };
 
-                cb.IsChecked = !selection.Any() || selection.Contains($"{feedInfo.Name}:true", StringComparer.OrdinalIgnoreCase);
                 cb.Click += FeedSelectionClick;
 
                 pnlFeedSelection.Children.Add(cb);
@@ -40,16 +40,19 @@ namespace DeveloperNews.ToolWindows
 
         private void FeedSelectionClick(object sender, RoutedEventArgs e)
         {
-            var selection = new List<string>();
+            var feedInfos = new List<FeedInfo>();
 
             foreach (CheckBox cb in pnlFeedSelection.Children.Cast<CheckBox>())
             {
-                var isChecked = cb.IsChecked.Value.ToString().ToLowerInvariant();
-                selection.Add($"{cb.Content}:{isChecked}");
+                var feedInfo = cb.Tag as FeedInfo;
+
+                feedInfo.IsSelected = cb.IsChecked.Value;
+                feedInfos.Add(feedInfo);
             }
 
-            var setting = string.Join(";", selection);
-            GeneralOptions.Instance.FeedSelection = setting;
+            var selection = new FeedSelector(GeneralOptions.Instance.FeedSelection);
+            DeveloperNewsPackage.Store.FeedInfos = feedInfos;
+            GeneralOptions.Instance.FeedSelection = selection.GenerateRawSelectionSetting(feedInfos);
             GeneralOptions.Instance.Save();
         }
 
@@ -86,7 +89,7 @@ namespace DeveloperNews.ToolWindows
             {
                 Content = timestamp,
                 FontWeight = FontWeights.Medium,
-                Opacity = 0.7,
+                Opacity = 0.6,
                 Margin = new Thickness(0, 3, 0, 0),
             };
 

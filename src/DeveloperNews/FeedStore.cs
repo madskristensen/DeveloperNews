@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 
 using FeedManager;
-
 using Microsoft.Win32;
 
 namespace DeveloperNews
@@ -17,23 +15,19 @@ namespace DeveloperNews
         public FeedStore(RegistryKey rootKey)
         {
             _rootKey = rootKey;
-            FeedInfos = GetFeedInfos();
+            IEnumerable<FeedInfo> feedInfos = GetFeedInfos();
+
+            var selector = new FeedSelector(GeneralOptions.Instance.FeedSelection);
+            FeedInfos = selector.LoadSelectionData(feedInfos).ToArray();
         }
 
-        public static IEnumerable<FeedInfo> FeedInfos { get; private set; }
+        public IEnumerable<FeedInfo> FeedInfos { get; set; }
 
         public async Task<SyndicationFeed> GetFeedAsync(bool force = false)
         {
             var orchestrator = new FeedOrchestrator(Vsix.Name, Vsix.Description);
-            var selection = GeneralOptions.Instance.FeedSelection.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            IEnumerable<FeedInfo> infos = FeedInfos;
 
-            if (selection.Any())
-            {
-                infos = FeedInfos.Where(f => selection.Contains($"{f.Name}:true", StringComparer.OrdinalIgnoreCase));
-            }
-
-            return await orchestrator.GetFeedsAsync(infos, force);
+            return await orchestrator.GetFeedsAsync(FeedInfos.Where(f => f.IsSelected), force);
         }
 
         private IEnumerable<FeedInfo> GetFeedInfos()
