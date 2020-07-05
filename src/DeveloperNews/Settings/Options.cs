@@ -2,7 +2,7 @@
 
 namespace DeveloperNews
 {
-    internal class GeneralOptions : BaseOptionModel<GeneralOptions>
+    internal class Options : BaseOptionModel<Options>
     {
         [Category("General")]
         [DisplayName("Open in default browser")]
@@ -11,6 +11,7 @@ namespace DeveloperNews
         public bool OpenInDefaultBrowser { get; set; }
 
         [DefaultValue("")]
+        [Browsable(false)]
         public string FeedSelection { get; set; } = "";
     }
 }

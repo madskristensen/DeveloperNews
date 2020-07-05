@@ -36,8 +36,8 @@ namespace DeveloperNews
                 sb.AppendLine(feedInfo.ToString());
             }
 
-            GeneralOptions.Instance.FeedSelection = sb.ToString();
-            GeneralOptions.Instance.Save();
+            Options.Instance.FeedSelection = sb.ToString();
+            Options.Instance.Save();
         }
 
         private IEnumerable<FeedInfo> GetFeedInfos()
@@ -62,7 +62,7 @@ namespace DeveloperNews
 
         private bool CheckIfSelected(FeedInfo feedInfo)
         {
-            var raw = GeneralOptions.Instance.FeedSelection;
+            var raw = Options.Instance.FeedSelection;
 
             if (string.IsNullOrEmpty(raw) || raw.IndexOf(feedInfo.Name, StringComparison.OrdinalIgnoreCase) == -1)
             {

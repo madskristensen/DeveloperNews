@@ -57,7 +57,7 @@
       <DependentUpon>Text.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings\BaseOptionModel.cs" />
-    <Compile Include="Settings\GeneralOptions.cs" />
+    <Compile Include="Settings\Options.cs" />
     <Compile Include="source.extension.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

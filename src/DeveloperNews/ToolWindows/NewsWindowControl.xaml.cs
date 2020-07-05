@@ -16,7 +16,7 @@ namespace DeveloperNews.ToolWindows
             InitializeComponent();
             BindPosts(feed);
 
-            cbOpenInVS.IsChecked = GeneralOptions.Instance.OpenInDefaultBrowser;
+            cbOpenInVS.IsChecked = Options.Instance.OpenInDefaultBrowser;
         }
 
         private void BindSettings()
@@ -143,8 +143,8 @@ namespace DeveloperNews.ToolWindows
 
         private void OpenInVS_Click(object sender, RoutedEventArgs e)
         {
-            GeneralOptions.Instance.OpenInDefaultBrowser = cbOpenInVS.IsChecked.Value;
-            GeneralOptions.Instance.Save();
+            Options.Instance.OpenInDefaultBrowser = cbOpenInVS.IsChecked.Value;
+            Options.Instance.Save();
         }
     }
 }

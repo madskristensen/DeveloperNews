@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DeveloperNews.Test
 {
     [TestClass]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "VSTHRD200:Use \"Async\" suffix for async methods", Justification = "<Pending>")]
     public class FeedDownloaderTest
     {
         private static readonly string _folder = Path.Combine(Path.GetTempPath(), "FeedManagerTest");
@@ -69,7 +70,7 @@ namespace DeveloperNews.Test
                 Url = "https://fail.example.com"
             };
 
-            System.ServiceModel.Syndication.SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
+            SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
 
             Assert.IsNull(feed);
         }
@@ -84,7 +85,7 @@ namespace DeveloperNews.Test
                 Url = "https://example.com"
             };
 
-            System.ServiceModel.Syndication.SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
+            SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
 
             Assert.IsNull(feed);
         }
@@ -99,7 +100,7 @@ namespace DeveloperNews.Test
                 Url = ""
             };
 
-            System.ServiceModel.Syndication.SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
+            SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
 
             Assert.IsNull(feed);
         }

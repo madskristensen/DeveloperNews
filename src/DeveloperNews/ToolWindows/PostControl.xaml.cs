@@ -29,7 +29,7 @@ namespace DeveloperNews.ToolWindows
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            if (GeneralOptions.Instance.OpenInDefaultBrowser)
+            if (Options.Instance.OpenInDefaultBrowser)
             {
                 OpenInDefaultBrowserClick(this, null);
             }
