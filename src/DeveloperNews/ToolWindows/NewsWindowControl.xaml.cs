@@ -49,6 +49,7 @@ namespace DeveloperNews.ToolWindows
                 feedInfos.Add(feedInfo);
             }
 
+            DeveloperNewsPackage.Store.FeedInfos = feedInfos;
             DeveloperNewsPackage.Store.SaveSelection();
         }
 

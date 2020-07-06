@@ -40,14 +40,36 @@
                 </Hyperlink>
             </Label>
 
-            <Button BorderThickness="0" 
-                    Background="Transparent" 
+            <Button BorderThickness="0"
                     MinWidth="1"
                     Click="OpenSettings"
+                    Cursor="Hand"
                     IsTabStop="True"
                     Padding="5 0 2 0">
-                <imaging:CrispImage ToolTip="{x:Static resources:Text.Tooltip_Settings}" 
+                <imaging:CrispImage Margin="2" ToolTip="{x:Static resources:Text.Tooltip_Settings}" 
                                     Moniker="{x:Static catalog:KnownMonikers.Settings}" />
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource {x:Static vsshell:VsBrushes.ButtonHighlightKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource {x:Static vsshell:VsBrushes.ButtonHighlightKey}}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
             </Button>
         </StackPanel>
 
