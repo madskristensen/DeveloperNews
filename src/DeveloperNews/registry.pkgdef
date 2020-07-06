@@ -6,10 +6,17 @@
 "DisplayName"="Daily News CI Builds"
 
 ; List of feeds to include
+; End name with a '?' to indicate it isn't selected by default
 [$RootKey$\DeveloperNews\Feeds]
 "!Featured News"="https://go.microsoft.com/fwlink/?linkid=2066144"
-".NET Blog"="https://devblogs.microsoft.com/dotnet/feed/"
-"ASP.NET Blog"="https://devblogs.microsoft.com/aspnet/feed/"
-"C++ Team Blog"="https://devblogs.microsoft.com/cppblog/feed/"
-"Visual Studio Blog"="https://devblogs.microsoft.com/visualstudio/feed/"
-"Xamarin Blog"="https://devblogs.microsoft.com/xamarin/feed/"
+"?.NET"="https://devblogs.microsoft.com/dotnet/feed/"
+"?ASP.NET"="https://devblogs.microsoft.com/aspnet/feed/"
+"?Azure DevOps"="https://devblogs.microsoft.com/devops/feed/"
+"?Azure SDKs"="https://devblogs.microsoft.com/azure-sdk/feed/"
+"?C++"="https://devblogs.microsoft.com/cppblog/feed/"
+"?NuGet"="https://devblogs.microsoft.com/nuget/feed/"
+"?PowerShell"="https://devblogs.microsoft.com/powershell/feed/"
+"?SQL Server"="https://cloudblogs.microsoft.com/sqlserver/feed/"
+"?TypeScript"="https://devblogs.microsoft.com/typescript/feed/"
+"Visual Studio"="https://devblogs.microsoft.com/visualstudio/feed/"
+"?Xamarin Blog"="https://devblogs.microsoft.com/xamarin/feed/"

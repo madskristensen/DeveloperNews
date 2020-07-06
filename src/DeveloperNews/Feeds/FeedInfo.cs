@@ -6,6 +6,11 @@
         public string Url { get; set; }
         public bool IsSelected { get; set; }
 
+        public string DisplayName
+        {
+            get { return Name.TrimStart('!', '?'); }
+        }
+
         public override string ToString()
         {
             return $"{Name}:{IsSelected}";

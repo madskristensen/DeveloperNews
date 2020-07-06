@@ -19,17 +19,17 @@ namespace DeveloperNews.ToolWindows
 
             pnlFeedSelection.Children.Clear();
 
-            foreach (FeedInfo feedInfo in DeveloperNewsPackage.Store.FeedInfos.OrderBy(f => f.Name))
+            foreach (FeedInfo feedInfo in DeveloperNewsPackage.Store.FeedInfos.OrderBy(f => f.Name.TrimStart('?')))
             {
                 var cb = new CheckBox
                 {
-                    Content = feedInfo.Name.TrimStart('!'),
+                    Content = feedInfo.DisplayName,
                     Padding = new Thickness(5, 2, 0, 2),
                     IsChecked = feedInfo.IsSelected,
                     Tag = feedInfo,
                 };
 
-                cb.IsEnabled = pnlFeedSelection.Children.Count != 0;
+                cb.IsEnabled = feedInfo.Name[0] != '!';
                 pnlFeedSelection.Children.Add(cb);
             }
         }
@@ -46,13 +46,14 @@ namespace DeveloperNews.ToolWindows
                 feedInfos.Add(feedInfo);
             }
 
-            // Set selected feeds
-            DeveloperNewsPackage.Store.FeedInfos = feedInfos;
-            DeveloperNewsPackage.Store.SaveSelection();
-
             // Set default opening behavior
             Options.Instance.OpenInDefaultBrowser = cbOpenInVS.IsChecked.Value;
-            Options.Instance.Save();
+
+            // Set selected feeds
+            DeveloperNewsPackage.Store.FeedInfos = feedInfos;
+
+            // Save selection and Options
+            DeveloperNewsPackage.Store.SaveSelection();
 
             CancelClick(sender, e);
 

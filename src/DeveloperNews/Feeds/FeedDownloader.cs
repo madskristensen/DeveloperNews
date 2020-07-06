@@ -21,7 +21,7 @@ namespace DeveloperNews
 
         public async Task<SyndicationFeed> FetchAsync(FeedInfo feedInfo, bool force = false)
         {
-            var file = Path.Combine(_folder, feedInfo.Name + ".xml");
+            var file = Path.Combine(_folder, feedInfo.DisplayName + ".xml");
             DateTime lastModified = File.Exists(file) ? File.GetLastWriteTime(file) : DateTime.MinValue;
 
             if (force || lastModified < DateTime.Now.AddHours(-4))

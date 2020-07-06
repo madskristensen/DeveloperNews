@@ -87,14 +87,22 @@ namespace DeveloperNews.ToolWindows
         private void RefreshClick(object sender, RoutedEventArgs e)
         {
             prsLoader.Visibility = Visibility.Visible;
+            lnkRefresh.IsEnabled = false;
 
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
-                SyndicationFeed feed = await DeveloperNewsPackage.Store.GetFeedAsync(true);
+                try
+                {
+                    SyndicationFeed feed = await DeveloperNewsPackage.Store.GetFeedAsync(true);
 
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                prsLoader.Visibility = Visibility.Hidden;
-                BindPosts(feed);
+                    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                    BindPosts(feed);
+                }
+                finally
+                {
+                    prsLoader.Visibility = Visibility.Hidden;
+                    lnkRefresh.IsEnabled = true;
+                }
             });
         }
 
