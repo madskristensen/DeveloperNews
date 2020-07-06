@@ -1,4 +1,12 @@
-﻿[$RootKey$\DeveloperNews\Feeds]
+﻿; TODO: Delete this when the extension before going public
+[$RootKey$\ExtensionManager\Repositories\{31fa092f-eb72-46de-a0d6-4dd97b15fde1}]
+@="https://www.vsixgallery.com/feed/extension/36cfa8d9-bd14-4d32-a8a6-34133aa2309d"
+"Priority"=dword:00000064
+"Protocol"="Atom Feed"
+"DisplayName"="Daily News CI Builds"
+
+; List of feeds to include
+[$RootKey$\DeveloperNews\Feeds]
 "!Featured News"="https://go.microsoft.com/fwlink/?linkid=2066144"
 ".NET Blog"="https://devblogs.microsoft.com/dotnet/feed/"
 "ASP.NET Blog"="https://devblogs.microsoft.com/aspnet/feed/"
