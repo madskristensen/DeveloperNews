@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
@@ -21,15 +23,17 @@ namespace DeveloperNews.ToolWindows
 
             InitializeComponent();
 
-            lblTitle.Content = item.Title.Text;
-            lblSummary.Text = TruncateHtml(item.Summary.Text);
+            lblTitle.Content = WebUtility.HtmlDecode(item.Title.Text);
+            lblSummary.Text = WebUtility.HtmlDecode(TruncateHtml(item.Summary.Text));
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void PostClick(object sender, RoutedEventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            if (Options.Instance.OpenInDefaultBrowser)
+            var ctrlHit = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+
+            if (Options.Instance.OpenInDefaultBrowser || ctrlHit)
             {
                 OpenInDefaultBrowserClick(this, null);
             }

@@ -80,7 +80,7 @@
         </Grid.ColumnDefinitions>
 
         <Button Grid.Row="0" Grid.Column="0" 
-                Click="Button_Click"
+                Click="PostClick"
                 IsTabStop="True" 
                 FocusVisualStyle="{x:Null}"
                 Style="{DynamicResource PostControl.Style}" 

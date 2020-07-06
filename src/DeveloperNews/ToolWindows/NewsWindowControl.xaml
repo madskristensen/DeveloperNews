@@ -40,11 +40,15 @@
                 </Hyperlink>
             </Label>
 
-            <imaging:CrispImage Margin="3 0 1 0" 
-                                ToolTip="{x:Static resources:Text.Tooltip_Settings}" 
-                                Cursor="Hand" 
-                                MouseUp="CrispImage_MouseUp" 
-                                Moniker="{x:Static catalog:KnownMonikers.Settings}" />
+            <Button BorderThickness="0" 
+                    Background="Transparent" 
+                    MinWidth="1"
+                    Click="OpenSettings"
+                    IsTabStop="True"
+                    Padding="5 0 2 0">
+                <imaging:CrispImage ToolTip="{x:Static resources:Text.Tooltip_Settings}" 
+                                    Moniker="{x:Static catalog:KnownMonikers.Settings}" />
+            </Button>
         </StackPanel>
 
         <Border Grid.Row="0" 
@@ -53,10 +57,30 @@
                 BorderThickness="0 1 0 0" 
                 VerticalAlignment="Bottom"/>
 
+        <ProgressBar Grid.Row="0"
+                     Grid.ColumnSpan="2"
+                     Name="prsLoader"
+                     Height="2"
+                     Visibility="Hidden"
+                     Foreground="{DynamicResource {x:Static vsshell:VsBrushes.PanelHyperlinkKey}}"
+                     VerticalAlignment="Bottom"
+                     IsIndeterminate="true"/>
+
         <StackPanel Name="pnlSettings" Grid.Row="1" Grid.ColumnSpan="2" Margin="8" Visibility="Collapsed">
-            <Label Content="Default behavior" Padding="0 5" FontWeight="Bold"/>
-            <CheckBox Name="cbOpenInVS" Margin="0 0 0 5" Click="OpenInVS_Click" Content="{x:Static resources:Text.OpenInDefaultBrowser}" />
-            <Label Content="Select feeds" Padding="0 5" FontWeight="Bold"/>
+            <Label Content="Default behavior" 
+                   Padding="0 5" 
+                   FontWeight="Bold"/>
+            
+            <CheckBox Name="cbOpenInVS" 
+                      Margin="0 0 0 5" 
+                      Click="OpenInVS_Click" 
+                      ToolTip="{x:Static resources:Text.Tooltip_OpenInDefaultBrowser}" 
+                      Content="{x:Static resources:Text.OpenInDefaultBrowser}" />
+            
+            <Label Content="Select feeds" 
+                   Padding="0 5" 
+                   FontWeight="Bold"/>
+            
             <StackPanel Name="pnlFeedSelection" Orientation="Vertical" />
         </StackPanel>
 

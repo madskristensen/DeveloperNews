@@ -142,6 +142,15 @@ namespace DeveloperNews.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ctrl+Click always opens blog post in default browser.
+        /// </summary>
+        public static string Tooltip_OpenInDefaultBrowser {
+            get {
+                return ResourceManager.GetString("Tooltip.OpenInDefaultBrowser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fetches the latest news online and refreshes the list.
         /// </summary>
         public static string Tooltip_Refresh {

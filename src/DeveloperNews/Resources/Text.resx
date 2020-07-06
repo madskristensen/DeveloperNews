@@ -144,6 +144,9 @@
   <data name="Timeline.yesterday" xml:space="preserve">
     <value>Yesterday</value>
   </data>
+  <data name="Tooltip.OpenInDefaultBrowser" xml:space="preserve">
+    <value>Ctrl+Click always opens blog post in default browser</value>
+  </data>
   <data name="Tooltip.Refresh" xml:space="preserve">
     <value>Fetches the latest news online and refreshes the list</value>
   </data>

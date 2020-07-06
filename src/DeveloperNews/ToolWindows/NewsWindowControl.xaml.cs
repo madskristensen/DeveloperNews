@@ -117,16 +117,25 @@ namespace DeveloperNews.ToolWindows
 
         private void RefreshClick(object sender, RoutedEventArgs e)
         {
+            prsLoader.Visibility = Visibility.Visible;
+
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
                 SyndicationFeed feed = await DeveloperNewsPackage.Store.GetFeedAsync(true);
 
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                prsLoader.Visibility = Visibility.Hidden;
                 BindPosts(feed);
             });
         }
 
-        private void CrispImage_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OpenInVS_Click(object sender, RoutedEventArgs e)
+        {
+            Options.Instance.OpenInDefaultBrowser = cbOpenInVS.IsChecked.Value;
+            Options.Instance.Save();
+        }
+
+        private void OpenSettings(object sender, RoutedEventArgs e)
         {
             if (pnlFeedSelection.Children.Count == 0)
             {
@@ -139,12 +148,6 @@ namespace DeveloperNews.ToolWindows
             {
                 RefreshClick(this, null);
             }
-        }
-
-        private void OpenInVS_Click(object sender, RoutedEventArgs e)
-        {
-            Options.Instance.OpenInDefaultBrowser = cbOpenInVS.IsChecked.Value;
-            Options.Instance.Save();
         }
     }
 }
