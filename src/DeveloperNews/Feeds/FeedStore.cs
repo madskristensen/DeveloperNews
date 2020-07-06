@@ -64,6 +64,7 @@ namespace DeveloperNews
         {
             var raw = Environment.NewLine + Options.Instance.FeedSelection;
 
+            // If the feed doesn't exist in settings, it's new and should be selected by default
             if (string.IsNullOrEmpty(raw) || raw.IndexOf(feedInfo.Name, StringComparison.OrdinalIgnoreCase) == -1)
             {
                 return true;
