@@ -6,7 +6,8 @@
 "DisplayName"="Daily News CI Builds"
 
 ; List of feeds to include
-; End name with a '?' to indicate it isn't selected by default
+; '!' in front of a name, makes it selected and mandatory
+; '?' in front of a name makes the feed deselected by default
 [$RootKey$\DeveloperNews\Feeds]
 "!Featured News"="https://go.microsoft.com/fwlink/?linkid=2066144"
 "?.NET"="https://devblogs.microsoft.com/dotnet/feed/"
