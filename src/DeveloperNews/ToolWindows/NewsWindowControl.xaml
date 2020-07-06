@@ -88,23 +88,12 @@
                      VerticalAlignment="Bottom"
                      IsIndeterminate="true"/>
 
-        <StackPanel Name="pnlSettings" Grid.Row="1" Grid.ColumnSpan="2" Margin="8" Visibility="Collapsed">
-            <Label Content="Default behavior" 
-                   Padding="0 5" 
-                   FontWeight="Bold"/>
-            
-            <CheckBox Name="cbOpenInVS" 
-                      Margin="0 0 0 5" 
-                      Click="OpenInVS_Click" 
-                      ToolTip="{x:Static resources:Text.Tooltip_OpenInDefaultBrowser}" 
-                      Content="{x:Static resources:Text.OpenInDefaultBrowser}" />
-            
-            <Label Content="Select feeds" 
-                   Padding="0 5" 
-                   FontWeight="Bold"/>
-            
-            <StackPanel Name="pnlFeedSelection" Orientation="Vertical" />
-        </StackPanel>
+        <local:SettingsControl x:Name="ctrlSettings" 
+                               Visibility="Collapsed"
+                               Saved="SettingsSaved"
+                               Margin="8"
+                               Grid.Row="1"
+                               Grid.ColumnSpan="2"/>
 
         <ScrollViewer Grid.Row="2" IsDeferredScrollingEnabled="True" Grid.ColumnSpan="2" Padding="5">
             <VirtualizingStackPanel x:Name="pnlPosts" VirtualizationMode="Recycling" />

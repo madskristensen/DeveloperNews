@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="Menu.CopyUrl" xml:space="preserve">
-    <value>CopyURL</value>
+    <value>Copy Link</value>
   </data>
   <data name="Menu.OpenInDefaultBrowser" xml:space="preserve">
     <value>Open in Default Browser</value>
@@ -131,6 +134,15 @@
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Settings.DefaultBehavior" xml:space="preserve">
+    <value>Default behavior</value>
+  </data>
+  <data name="Settings.SelectFeeds" xml:space="preserve">
+    <value>Select feeds</value>
   </data>
   <data name="Timeline.older" xml:space="preserve">
     <value>Older</value>

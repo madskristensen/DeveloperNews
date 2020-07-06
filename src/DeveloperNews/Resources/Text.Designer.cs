@@ -61,7 +61,16 @@ namespace DeveloperNews.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CopyURL.
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy Link.
         /// </summary>
         public static string Menu_CopyUrl {
             get {
@@ -102,6 +111,33 @@ namespace DeveloperNews.Resources {
         public static string Refresh {
             get {
                 return ResourceManager.GetString("Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default behavior.
+        /// </summary>
+        public static string Settings_DefaultBehavior {
+            get {
+                return ResourceManager.GetString("Settings.DefaultBehavior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select feeds.
+        /// </summary>
+        public static string Settings_SelectFeeds {
+            get {
+                return ResourceManager.GetString("Settings.SelectFeeds", resourceCulture);
             }
         }
         

@@ -66,6 +66,9 @@
     <Compile Include="ToolWindows\PostControl.xaml.cs">
       <DependentUpon>PostControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ToolWindows\SettingsControl.xaml.cs">
+      <DependentUpon>SettingsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ToolWindows\VsTheme.cs" />
     <Compile Include="VSPackage.cs">
       <AutoGen>True</AutoGen>
@@ -125,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ToolWindows\PostControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ToolWindows\SettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

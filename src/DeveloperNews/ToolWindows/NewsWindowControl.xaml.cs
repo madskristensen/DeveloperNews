@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Windows;
@@ -15,42 +14,11 @@ namespace DeveloperNews.ToolWindows
         {
             InitializeComponent();
             BindPosts(feed);
-
-            cbOpenInVS.IsChecked = Options.Instance.OpenInDefaultBrowser;
         }
 
-        private void BindSettings()
+        private void SettingsSaved(object sender, EventArgs e)
         {
-            foreach (FeedInfo feedInfo in DeveloperNewsPackage.Store.FeedInfos.OrderBy(f => f.Name))
-            {
-                var cb = new CheckBox
-                {
-                    Content = feedInfo.Name,
-                    Padding = new Thickness(5, 2, 0, 2),
-                    IsChecked = feedInfo.IsSelected,
-                    Tag = feedInfo,
-                };
-
-                cb.Click += FeedSelectionClick;
-
-                pnlFeedSelection.Children.Add(cb);
-            }
-        }
-
-        private void FeedSelectionClick(object sender, RoutedEventArgs e)
-        {
-            var feedInfos = new List<FeedInfo>();
-
-            foreach (CheckBox cb in pnlFeedSelection.Children.Cast<CheckBox>())
-            {
-                var feedInfo = cb.Tag as FeedInfo;
-
-                feedInfo.IsSelected = cb.IsChecked.Value;
-                feedInfos.Add(feedInfo);
-            }
-
-            DeveloperNewsPackage.Store.FeedInfos = feedInfos;
-            DeveloperNewsPackage.Store.SaveSelection();
+            RefreshClick(this, null);
         }
 
         private void BindPosts(SyndicationFeed feed)
@@ -130,24 +98,13 @@ namespace DeveloperNews.ToolWindows
             });
         }
 
-        private void OpenInVS_Click(object sender, RoutedEventArgs e)
-        {
-            Options.Instance.OpenInDefaultBrowser = cbOpenInVS.IsChecked.Value;
-            Options.Instance.Save();
-        }
-
         private void OpenSettings(object sender, RoutedEventArgs e)
         {
-            if (pnlFeedSelection.Children.Count == 0)
-            {
-                BindSettings();
-            }
+            ctrlSettings.Visibility = ctrlSettings.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 
-            pnlSettings.Visibility = pnlSettings.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-
-            if (pnlSettings.Visibility == Visibility.Collapsed)
+            if (ctrlSettings.Visibility == Visibility.Visible)
             {
-                RefreshClick(this, null);
+                ctrlSettings.BindSettings();
             }
         }
     }

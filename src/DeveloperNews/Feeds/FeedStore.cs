@@ -62,14 +62,14 @@ namespace DeveloperNews
 
         private bool CheckIfSelected(FeedInfo feedInfo)
         {
-            var raw = Options.Instance.FeedSelection;
+            var raw = Environment.NewLine + Options.Instance.FeedSelection;
 
             if (string.IsNullOrEmpty(raw) || raw.IndexOf(feedInfo.Name, StringComparison.OrdinalIgnoreCase) == -1)
             {
                 return true;
             }
 
-            return raw.IndexOf($"{feedInfo.Name}:true", StringComparison.OrdinalIgnoreCase) > -1;
+            return raw.IndexOf($"{Environment.NewLine}{feedInfo.Name}:true", StringComparison.OrdinalIgnoreCase) > -1;
         }
     }
 }
