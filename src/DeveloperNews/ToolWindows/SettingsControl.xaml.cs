@@ -23,12 +23,13 @@ namespace DeveloperNews.ToolWindows
             {
                 var cb = new CheckBox
                 {
-                    Content = feedInfo.Name,
+                    Content = feedInfo.Name.TrimStart('!'),
                     Padding = new Thickness(5, 2, 0, 2),
                     IsChecked = feedInfo.IsSelected,
                     Tag = feedInfo,
                 };
 
+                cb.IsEnabled = pnlFeedSelection.Children.Count != 0;
                 pnlFeedSelection.Children.Add(cb);
             }
         }
