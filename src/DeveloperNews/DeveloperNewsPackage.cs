@@ -18,6 +18,9 @@ namespace DeveloperNews
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [ProvideToolWindow(typeof(NewsWindow), Style = VsDockStyle.Tabbed, Window = "3ae79031-e1bc-11d0-8f78-00a0c9110057")]
     [ProvideToolWindowVisibility(typeof(NewsWindow), VSConstants.UICONTEXT.NoSolution_string)]
+    [ProvideToolWindowVisibility(typeof(NewsWindow), VSConstants.UICONTEXT.SolutionHasSingleProject_string)]
+    [ProvideToolWindowVisibility(typeof(NewsWindow), VSConstants.UICONTEXT.SolutionHasMultipleProjects_string)]
+    [ProvideToolWindowVisibility(typeof(NewsWindow), VSConstants.UICONTEXT.EmptySolution_string)]
     public sealed class DeveloperNewsPackage : AsyncPackage
     {
         public static FeedStore Store { get; private set; }
