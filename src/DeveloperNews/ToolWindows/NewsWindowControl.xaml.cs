@@ -3,10 +3,10 @@ using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Windows;
 using System.Windows.Controls;
-using DeveloperNews.Resources;
+using DevNews.Resources;
 using Microsoft.VisualStudio.Shell;
 
-namespace DeveloperNews.ToolWindows
+namespace DevNews.ToolWindows
 {
     public partial class NewsWindowControl : UserControl
     {

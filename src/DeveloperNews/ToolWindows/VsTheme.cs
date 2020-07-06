@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 
-namespace DeveloperNews.ToolWindows
+namespace DevNews.ToolWindows
 {
     public static class VsTheme
     {

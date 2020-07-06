@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DeveloperNews.ToolWindows
+namespace DevNews.ToolWindows
 {
     public partial class SettingsControl : UserControl
     {

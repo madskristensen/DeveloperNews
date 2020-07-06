@@ -8,7 +8,7 @@ using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace DeveloperNews
+namespace DevNews
 {
     public class FeedDownloader
     {

@@ -5,7 +5,7 @@ using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DeveloperNews.Test
+namespace DevNews.Test
 {
     [TestClass]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "VSTHRD200:Use \"Async\" suffix for async methods", Justification = "<Pending>")]

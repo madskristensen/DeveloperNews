@@ -15,7 +15,7 @@ using Microsoft.VisualStudio.Threading;
 
 using Task = System.Threading.Tasks.Task;
 
-namespace DeveloperNews
+namespace DevNews
 {
     /// <summary>
     /// A base class for specifying options

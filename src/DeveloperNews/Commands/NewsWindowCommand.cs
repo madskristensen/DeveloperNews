@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.Design;
-using DeveloperNews.ToolWindows;
+using DevNews.ToolWindows;
 using Microsoft;
 using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
 
-namespace DeveloperNews
+namespace DevNews
 {
     internal sealed class NewsWindowCommand
     {

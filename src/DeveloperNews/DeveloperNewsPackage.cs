@@ -2,15 +2,15 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using DeveloperNews.Resources;
-using DeveloperNews.ToolWindows;
+using DevNews.Resources;
+using DevNews.ToolWindows;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
 using Task = System.Threading.Tasks.Task;
 
-namespace DeveloperNews
+namespace DevNews
 {
     [Guid(PackageGuids.guidDeveloperNewsPackageString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]

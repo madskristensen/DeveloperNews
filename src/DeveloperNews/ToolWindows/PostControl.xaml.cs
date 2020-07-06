@@ -10,7 +10,7 @@ using System.Windows.Input;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace DeveloperNews.ToolWindows
+namespace DevNews.ToolWindows
 {
     public partial class PostControl : UserControl
     {

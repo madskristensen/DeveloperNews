@@ -6,7 +6,7 @@ using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace DeveloperNews
+namespace DevNews
 {
     public class FeedOrchestrator
     {
@@ -62,11 +62,14 @@ namespace DeveloperNews
             {
                 SyndicationFeed fetchedFeed = await downloader.FetchAsync(feedInfo, force);
 
-                feed.Items = feed.Items
-                    .Union(fetchedFeed.Items)
-                    .GroupBy(i => i.Title.Text)
-                    .Select(i => i.First())
-                    .OrderByDescending(i => i.PublishDate.Date);
+                if (fetchedFeed != null)
+                {
+                    feed.Items = feed.Items
+                        .Union(fetchedFeed.Items)
+                        .GroupBy(i => i.Title.Text)
+                        .Select(i => i.First())
+                        .OrderByDescending(i => i.PublishDate.Date);
+                }
             }
 
             Directory.CreateDirectory(_folder);

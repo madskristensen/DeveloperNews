@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.ServiceModel.Syndication;
-using DeveloperNews.Resources;
+using DevNews.Resources;
 using Microsoft.VisualStudio.Shell;
 
-namespace DeveloperNews.ToolWindows
+namespace DevNews.ToolWindows
 {
     [Guid(PackageGuids.guidToolWindowString)]
     public class NewsWindow : ToolWindowPane

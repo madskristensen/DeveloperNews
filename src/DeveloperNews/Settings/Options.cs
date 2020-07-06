@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace DeveloperNews
+namespace DevNews
 {
     internal class Options : BaseOptionModel<Options>
     {
