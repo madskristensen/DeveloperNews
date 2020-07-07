@@ -21,9 +21,9 @@ namespace DevNews
         public async Task<SyndicationFeed> FetchAsync(FeedInfo feedInfo, bool force = false)
         {
             var file = Path.Combine(_folder, feedInfo.DisplayName + ".xml");
-            DateTime lastModified = File.Exists(file) ? File.GetLastWriteTime(file) : DateTime.MinValue;
+            DateTime lastModified = File.Exists(file) ? File.GetLastWriteTimeUtc(file) : DateTime.UtcNow.AddMonths(-2);
 
-            if (force || lastModified < DateTime.Now.AddHours(-4))
+            if (force || lastModified < DateTime.UtcNow.AddHours(-4))
             {
                 SyndicationFeed feed = await DownloadFeedAsync(feedInfo.Url, lastModified);
 
@@ -56,7 +56,7 @@ namespace DevNews
                 feed.SaveAsRss20(writer);
             }
 
-            File.SetLastWriteTime(file, feed.LastUpdatedTime.DateTime);
+            File.SetLastWriteTimeUtc(file, feed.LastUpdatedTime.DateTime);
         }
 
         private async Task<SyndicationFeed> DownloadFeedAsync(string url, DateTime lastModified)
