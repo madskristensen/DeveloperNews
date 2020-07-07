@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using task = System.Threading.Tasks.Task;
@@ -7,7 +8,6 @@ using task = System.Threading.Tasks.Task;
 internal class OutputWindowTraceListener : TraceListener
 {
     private static IVsOutputWindowPane _pane;
-    private static IVsOutputWindow _output;
 
     public static void Register()
     {
@@ -44,17 +44,17 @@ internal class OutputWindowTraceListener : TraceListener
 
     private static async System.Threading.Tasks.Task<bool> EnsurePaneAsync()
     {
-        if (_pane == null || _output == null)
+        if (_pane == null)
         {
             try
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
-                _output = await ServiceProvider.GetGlobalServiceAsync(typeof(SVsOutputWindow)) as IVsOutputWindow;
-
+                var output = await ServiceProvider.GetGlobalServiceAsync(typeof(SVsOutputWindow)) as IVsOutputWindow;
                 var guid = new Guid();
-                _output.CreatePane(ref guid, DevNews.Vsix.Name, 1, 1);
-                _output.GetPane(ref guid, out _pane);
+
+                ErrorHandler.ThrowOnFailure(output.CreatePane(ref guid, DevNews.Vsix.Name, 1, 1));
+                ErrorHandler.ThrowOnFailure(output.GetPane(ref guid, out _pane));
             }
             catch (Exception ex)
             {
