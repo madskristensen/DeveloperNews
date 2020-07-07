@@ -62,6 +62,11 @@ namespace DevNews
 
         private async Task<SyndicationFeed> DownloadFeedAsync(string url, DateTime lastModified)
         {
+            if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+            {
+                return null;
+            }
+
             try
             {
                 using (var client = new HttpClient())
@@ -79,7 +84,7 @@ namespace DevNews
             }
             catch (Exception ex)
             {
-                Debug.Write(ex);
+                Trace.TraceError(ex.ToString());
             }
 
             return null;

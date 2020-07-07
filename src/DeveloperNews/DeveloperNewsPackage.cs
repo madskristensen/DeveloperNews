@@ -27,6 +27,8 @@ namespace DevNews
 
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
+            OutputWindowTraceListener.Register();
+
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await NewsWindowCommand.InitializeAsync(this);
         }
