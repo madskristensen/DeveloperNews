@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -98,9 +97,9 @@ namespace DevNews
             {
                 var feed = SyndicationFeed.Load(reader);
 
-                if (result.Content.Headers.TryGetValues("last-modified", out IEnumerable<string> values))
+                if (result.Content.Headers.LastModified.HasValue)
                 {
-                    feed.LastUpdatedTime = DateTime.Parse(values.First());
+                    feed.LastUpdatedTime = result.Content.Headers.LastModified.Value;
                 }
 
                 return feed;
