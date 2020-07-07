@@ -24,6 +24,7 @@ namespace DevNews.ToolWindows
 
             lblTitle.Text = WebUtility.HtmlDecode(item.Title.Text);
             lblSummary.Text = WebUtility.HtmlDecode(TruncateHtml(item.Summary.Text));
+            lblSource.Content = item.SourceFeed?.Title.Text;
         }
 
         private void SetUrl(SyndicationItem item)
