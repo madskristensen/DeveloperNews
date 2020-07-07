@@ -28,7 +28,7 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <Label Name="lblTotal" Grid.Row="0" Grid.Column="0" Content="6 total" Padding="8 6 0 0" />
+        <Label Name="lblTotal" Grid.Row="0" Grid.Column="0" Content="6 total" Padding="10 6 0 0" />
 
         <StackPanel  Orientation="Horizontal" 
                      Grid.Row="0" 
@@ -95,7 +95,7 @@
                                Grid.Row="1"
                                Grid.ColumnSpan="2"/>
 
-        <ScrollViewer Grid.Row="2" IsDeferredScrollingEnabled="True" Grid.ColumnSpan="2" Padding="5">
+        <ScrollViewer Grid.Row="2" IsDeferredScrollingEnabled="True" Grid.ColumnSpan="2" Padding="0 5">
             <VirtualizingStackPanel x:Name="pnlPosts" VirtualizationMode="Recycling" />
         </ScrollViewer>
     </Grid>

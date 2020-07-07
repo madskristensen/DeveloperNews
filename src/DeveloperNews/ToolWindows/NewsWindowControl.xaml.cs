@@ -53,9 +53,9 @@ namespace DevNews.ToolWindows
             var time = new Label
             {
                 Content = timestamp,
-                FontWeight = FontWeights.Medium,
+                FontWeight = FontWeights.Normal,
                 Opacity = 0.6,
-                Margin = new Thickness(0, 3, 0, 0),
+                Margin = new Thickness(8, 3, 0, 0),
             };
 
             pnlPosts.Children.Add(time);

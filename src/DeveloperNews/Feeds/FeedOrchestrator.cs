@@ -64,13 +64,16 @@ namespace DevNews
 
                 if (fetchedFeed != null)
                 {
-                    feed.Items = feed.Items
-                        .Union(fetchedFeed.Items)
-                        .GroupBy(i => i.Title.Text)
-                        .Select(i => i.First())
-                        .OrderByDescending(i => i.PublishDate.Date);
+                    feed.Items = feed.Items.Union(fetchedFeed.Items);
+
                 }
             }
+
+            // Dedupe and sort by date
+            feed.Items = feed.Items
+                            .GroupBy(i => i.Title.Text)
+                            .Select(i => i.First())
+                            .OrderByDescending(i => i.PublishDate.Date);
 
             Directory.CreateDirectory(_folder);
 

@@ -15,16 +15,26 @@ namespace DevNews.ToolWindows
     public partial class PostControl : UserControl
     {
         private static readonly Regex _regex = new Regex(@"</?\w+((\s+\w+(\s*=\s*(?:"".*?""|'.*?'|[^'"">\s]+))?)+\s*|\s*)/?>", RegexOptions.Singleline);
-        private readonly Uri _url;
+        private string _url;
 
         public PostControl(SyndicationItem item)
         {
-            _url = item.Links.FirstOrDefault().Uri;
-
             InitializeComponent();
+            SetUrl(item);
 
-            lblTitle.Content = WebUtility.HtmlDecode(item.Title.Text);
+            lblTitle.Text = WebUtility.HtmlDecode(item.Title.Text);
             lblSummary.Text = WebUtility.HtmlDecode(TruncateHtml(item.Summary.Text));
+        }
+
+        private void SetUrl(SyndicationItem item)
+        {
+            _url = item.Links.FirstOrDefault()?.Uri?.OriginalString;
+
+            if (!_url.Contains('?'))
+            {
+                // To track the referrals from this extension
+                _url += "?utm_source=vs_developer_news&utm_medium=referral";
+            }
         }
 
         private void PostClick(object sender, RoutedEventArgs e)
@@ -57,17 +67,17 @@ namespace DevNews.ToolWindows
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             var service = Package.GetGlobalService(typeof(IVsWebBrowsingService)) as IVsWebBrowsingService;
-            service.Navigate(_url.OriginalString, (uint)__VSWBNAVIGATEFLAGS.VSNWB_WebURLOnly, out _);
+            service.Navigate(_url, (uint)__VSWBNAVIGATEFLAGS.VSNWB_WebURLOnly, out _);
         }
 
         private void OpenInDefaultBrowserClick(object sender, RoutedEventArgs e)
         {
-            Process.Start(_url.OriginalString);
+            Process.Start(_url);
         }
 
         private void CopyUrlClick(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(_url.OriginalString);
+            Clipboard.SetText(_url);
         }
     }
 }
