@@ -24,7 +24,7 @@ namespace DevNews.ToolWindows
 
             lblTitle.Text = WebUtility.HtmlDecode(item.Title.Text);
             lblSummary.Text = WebUtility.HtmlDecode(TruncateHtml(item.Summary.Text));
-            lblSource.Content = item.SourceFeed?.Title.Text;
+            lblSource.Content = item.SourceFeed?.Title?.Text;
         }
 
         private void SetUrl(SyndicationItem item)
@@ -54,7 +54,7 @@ namespace DevNews.ToolWindows
             }
         }
 
-        public static string TruncateHtml(string input, int length = 200, string ommission = "...")
+        private static string TruncateHtml(string input, int length = 175, string ommission = "...")
         {
             var clearText = _regex.Replace(input, "");
 

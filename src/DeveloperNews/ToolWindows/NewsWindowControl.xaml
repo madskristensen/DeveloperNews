@@ -43,6 +43,7 @@
             <Button BorderThickness="0"
                     MinWidth="1"
                     Click="OpenSettings"
+                    Background="Transparent"
                     Cursor="Hand"
                     IsTabStop="True"
                     Padding="5 0 2 0">
@@ -50,7 +51,7 @@
                                     Moniker="{x:Static catalog:KnownMonikers.Settings}" />
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
-                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Background" Value="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowBackgroundKey}}"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type Button}">
@@ -95,7 +96,7 @@
                                Grid.Row="1"
                                Grid.ColumnSpan="2"/>
 
-        <ScrollViewer Grid.Row="2" IsDeferredScrollingEnabled="True" Grid.ColumnSpan="2" Padding="0 5">
+        <ScrollViewer Grid.Row="2" IsDeferredScrollingEnabled="True" Grid.ColumnSpan="2" Padding="0 0 0 10">
             <VirtualizingStackPanel x:Name="pnlPosts" VirtualizationMode="Recycling" />
         </ScrollViewer>
     </Grid>

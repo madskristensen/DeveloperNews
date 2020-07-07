@@ -55,7 +55,7 @@ namespace DevNews.ToolWindows
                 Content = timestamp,
                 FontWeight = FontWeights.Normal,
                 Opacity = 0.6,
-                Margin = new Thickness(8, 3, 0, 0),
+                Margin = new Thickness(6, 3, 0, 0),
             };
 
             pnlPosts.Children.Add(time);
