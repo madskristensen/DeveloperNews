@@ -59,7 +59,7 @@
                 BorderThickness="0 0 0 1"
                 BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.AccentPaleKey}}"
                 Background="Transparent" 
-                Padding="7 5 0 0"
+                Padding="7 5 2 0"
                 HorizontalAlignment="Stretch" 
                 HorizontalContentAlignment="Stretch">
             
@@ -68,7 +68,7 @@
                        IsTabStop="False" 
                        FontWeight="DemiBold"
                        Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ControlLinkTextKey}}">
-                    <TextBlock Name="lblTitle" TextWrapping="WrapWithOverflow" />
+                    <TextBlock Name="lblTitle" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
                 </Label>
 
 

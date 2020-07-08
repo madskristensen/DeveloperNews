@@ -7,11 +7,19 @@ using task = System.Threading.Tasks.Task;
 
 internal class OutputWindowTraceListener : TraceListener
 {
-    private static IVsOutputWindowPane _pane;
+    private IVsOutputWindowPane _pane;
+    private readonly string _paneTitle;
+    private readonly string _filterText;
 
-    public static void Register()
+    private OutputWindowTraceListener(string paneTitle, string filterText)
     {
-        var instance = new OutputWindowTraceListener();
+        _paneTitle = paneTitle;
+        _filterText = filterText;
+    }
+
+    public static void Register(string paneTitle, string filterText)
+    {
+        var instance = new OutputWindowTraceListener(paneTitle, filterText);
         Trace.Listeners.Add(instance);
     }
 
@@ -20,13 +28,13 @@ internal class OutputWindowTraceListener : TraceListener
 
     public override void WriteLine(string message)
     {
-        if (!string.IsNullOrEmpty(message) && message.Contains(nameof(DevNews)))
+        if (!string.IsNullOrEmpty(message) && message.Contains(_filterText))
         {
             LogAsync(message + Environment.NewLine).ConfigureAwait(false);
         }
     }
 
-    private static async task LogAsync(object message)
+    private async task LogAsync(object message)
     {
         try
         {
@@ -42,7 +50,7 @@ internal class OutputWindowTraceListener : TraceListener
         }
     }
 
-    private static async System.Threading.Tasks.Task<bool> EnsurePaneAsync()
+    private async System.Threading.Tasks.Task<bool> EnsurePaneAsync()
     {
         if (_pane == null)
         {
@@ -53,7 +61,7 @@ internal class OutputWindowTraceListener : TraceListener
                 var output = await ServiceProvider.GetGlobalServiceAsync(typeof(SVsOutputWindow)) as IVsOutputWindow;
                 var guid = new Guid();
 
-                ErrorHandler.ThrowOnFailure(output.CreatePane(ref guid, DevNews.Vsix.Name, 1, 1));
+                ErrorHandler.ThrowOnFailure(output.CreatePane(ref guid, _paneTitle, 1, 1));
                 ErrorHandler.ThrowOnFailure(output.GetPane(ref guid, out _pane));
             }
             catch (Exception ex)
