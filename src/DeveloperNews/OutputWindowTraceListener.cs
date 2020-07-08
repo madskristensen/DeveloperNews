@@ -68,9 +68,9 @@ internal class OutputWindowTraceListener : TraceListener
                     ErrorHandler.ThrowOnFailure(output.GetPane(ref guid, out _pane));
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                Debug.WriteLine(ex, nameof(OutputWindowTraceListener));
+                // Nothing to do if this fails
             }
         }
 
