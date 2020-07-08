@@ -30,7 +30,8 @@ internal class OutputWindowTraceListener : TraceListener
     {
         if (!string.IsNullOrEmpty(message) && message.Contains(_filterText))
         {
-            LogAsync(message + Environment.NewLine).ConfigureAwait(false);
+            LogAsync(message + Environment.NewLine)
+                .FileAndForget(nameof(OutputWindowTraceListener));
         }
     }
 
@@ -58,11 +59,14 @@ internal class OutputWindowTraceListener : TraceListener
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
-                var output = await ServiceProvider.GetGlobalServiceAsync(typeof(SVsOutputWindow)) as IVsOutputWindow;
-                var guid = new Guid();
+                if (_pane == null)
+                {
+                    var output = await ServiceProvider.GetGlobalServiceAsync(typeof(SVsOutputWindow)) as IVsOutputWindow;
+                    var guid = new Guid();
 
-                ErrorHandler.ThrowOnFailure(output.CreatePane(ref guid, _paneTitle, 1, 1));
-                ErrorHandler.ThrowOnFailure(output.GetPane(ref guid, out _pane));
+                    ErrorHandler.ThrowOnFailure(output.CreatePane(ref guid, _paneTitle, 1, 1));
+                    ErrorHandler.ThrowOnFailure(output.GetPane(ref guid, out _pane));
+                }
             }
             catch (Exception ex)
             {
