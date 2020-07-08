@@ -4,6 +4,7 @@ using System.ServiceModel.Syndication;
 using System.Windows;
 using System.Windows.Controls;
 using DevNews.Resources;
+using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 
 namespace DevNews.ToolWindows
@@ -54,10 +55,10 @@ namespace DevNews.ToolWindows
             {
                 Content = timestamp,
                 FontWeight = FontWeights.Normal,
-                Opacity = 0.6,
                 Margin = new Thickness(6, 3, 0, 0),
             };
 
+            time.SetResourceReference(ForegroundProperty, EnvironmentColors.ClassDesignerConnectionRouteBorderBrushKey);
             pnlPosts.Children.Add(time);
         }
 

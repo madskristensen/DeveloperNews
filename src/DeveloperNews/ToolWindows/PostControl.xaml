@@ -78,7 +78,8 @@
 
                 <Label Name="lblSource"
                        HorizontalAlignment="Right"
-                       Opacity=".6"
+                       Foreground="{DynamicResource {x:Static platformUI:EnvironmentColors.ClassDesignerConnectionRouteBorderBrushKey}}"
+                       FontWeight="Light"
                        Padding="0 0 5 0"
                        Margin="0"/>
             </StackPanel>
