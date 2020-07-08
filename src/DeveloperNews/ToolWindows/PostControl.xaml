@@ -6,7 +6,7 @@
              xmlns:resources="clr-namespace:DevNews.Resources"
              xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
              xmlns:catalog="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.ImageCatalog"
-             xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
+             xmlns:platformUI="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0"
              mc:Ignorable="d" 
              d:DesignHeight="120" d:DesignWidth="300">
     <UserControl.Resources>
@@ -28,13 +28,13 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{DynamicResource {x:Static vsshell:VsBrushes.DropDownDisabledBackgroundKey}}"/>
+                                <Setter Property="Background" TargetName="border" Value="{DynamicResource {x:Static platformUI:EnvironmentColors.CommandBarMouseOverBackgroundBeginBrushKey}}"/>
                             </Trigger>
                             <Trigger Property="IsFocused" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{DynamicResource {x:Static vsshell:VsBrushes.DropDownDisabledBackgroundKey}}"/>
+                                <Setter Property="Background" TargetName="border" Value="{DynamicResource {x:Static platformUI:EnvironmentColors.CommandBarMouseOverBackgroundBeginBrushKey}}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="{DynamicResource {x:Static vsshell:VsBrushes.DropDownDisabledBackgroundKey}}"/>
+                                <Setter Property="Background" TargetName="border" Value="{DynamicResource {x:Static platformUI:EnvironmentColors.CommandBarMouseOverBackgroundBeginBrushKey}}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -57,7 +57,7 @@
                 FocusVisualStyle="{x:Null}"
                 Style="{DynamicResource PostControl.Style}" 
                 BorderThickness="0 0 0 1"
-                BorderBrush="{DynamicResource {x:Static vsshell:VsBrushes.AccentPaleKey}}"
+                BorderBrush="{DynamicResource {x:Static platformUI:EnvironmentColors.AccentPaleBrushKey}}"
                 Background="Transparent" 
                 Padding="7 5 2 0"
                 HorizontalAlignment="Stretch" 
@@ -67,7 +67,7 @@
                 <Label Padding="5 0 5 3" 
                        IsTabStop="False" 
                        FontWeight="DemiBold"
-                       Foreground="{DynamicResource {x:Static vsshell:VsBrushes.ControlLinkTextKey}}">
+                       Foreground="{DynamicResource {x:Static platformUI:EnvironmentColors.ControlLinkTextBrushKey}}">
                     <TextBlock Name="lblTitle" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
                 </Label>
 
