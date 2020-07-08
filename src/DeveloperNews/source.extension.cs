@@ -13,6 +13,6 @@ namespace DevNews
         public const string Language = "en-US";
         public const string Version = "0.5";
         public const string Author = "Mads Kristensen";
-        public const string Tags = "news, rss, feed, unlisted";
+        public const string Tags = "news, rss, feed";
     }
 }

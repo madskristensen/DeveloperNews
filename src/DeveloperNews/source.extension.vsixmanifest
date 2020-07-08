@@ -8,7 +8,7 @@
     <License>Resources\LICENSE</License>
     <Icon>Resources\Icon.png</Icon>
     <PreviewImage>Resources\Icon.png</PreviewImage>
-    <Tags>news, rss, feed, unlisted</Tags>
+    <Tags>news, rss, feed</Tags>
     <Preview>true</Preview>
   </Metadata>
   <Installation>
