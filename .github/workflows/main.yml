@@ -1,6 +1,10 @@
-name: Build Visual Studio IDE extension
+name: Build extension
  
-on: [push]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
  
 jobs:
   build:
@@ -16,9 +20,18 @@ jobs:
        
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.2
+       
+    - name: Setup extension scripts
+      run: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
      
     - name: Restore NuGet Packages
       run: nuget restore -Verbosity quiet
+    
+    - name: Update version
+      run: Vsix-IncrementVsixVersion
+    
+    - name: Update AssemblyInfo
+      run: Vsix-TokenReplacement **\*\source.extension.cs 'Version = "([0-9\\.]+)"' 'Version = "{version}"'
  
     - name: Build extension
       run: msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
@@ -27,4 +40,4 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: VSIX
-        path: "*.vsix"
+        path: "./**/*.vsix"
