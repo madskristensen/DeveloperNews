@@ -23,15 +23,18 @@ jobs:
        
     - name: Setup extension scripts
       run: (new-object Net.WebClient).DownloadString("https://raw.github.com/madskristensen/ExtensionScripts/master/AppVeyor/vsix.ps1") | iex
+      shell: powershell
      
     - name: Restore NuGet Packages
       run: nuget restore -Verbosity quiet
     
     - name: Update version
       run: Vsix-IncrementVsixVersion
+      shell: powershell
     
     - name: Update AssemblyInfo
       run: Vsix-TokenReplacement **\*\source.extension.cs 'Version = "([0-9\\.]+)"' 'Version = "{version}"'
+      shell: powershell
  
     - name: Build extension
       run: msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m
