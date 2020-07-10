@@ -52,11 +52,14 @@ namespace DevNews
             using (var writer = XmlWriter.Create(file))
             {
                 // Limit feed items to something reasonable for perf reasons
-                feed.Items = feed.Items.Take(100);
+                feed.Items = feed.Items.Take(20);
                 feed.SaveAsRss20(writer);
             }
 
-            File.SetLastWriteTimeUtc(file, feed.LastUpdatedTime.DateTime);
+            if (feed.LastUpdatedTime.DateTime != DateTime.MinValue)
+            {
+                File.SetLastWriteTimeUtc(file, feed.LastUpdatedTime.DateTime);
+            }
         }
 
         private async Task<SyndicationFeed> DownloadFeedAsync(string url, DateTime lastModified)

@@ -77,7 +77,8 @@ namespace DevNews
             // Dedupe and sort by date
             feed.Items = feed.Items
                             .GroupBy(i => i.Title.Text)
-                            .Select(i => i.First())
+                            .Select(i => i.First()) // dedupe
+                            .Where(i => !string.IsNullOrWhiteSpace(i.Title?.Text)) // validation
                             .OrderByDescending(i => i.PublishDate.Date);
 
             Directory.CreateDirectory(_folder);

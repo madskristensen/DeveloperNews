@@ -21,9 +21,14 @@ namespace DevNews.ToolWindows
         {
             InitializeComponent();
             SetUrl(item);
+            BindText(item);
+        }
 
+        private void BindText(SyndicationItem item)
+        {
+            var summary = item.Summary?.Text ?? "No description for this item ...";
             lblTitle.Text = WebUtility.HtmlDecode(item.Title.Text);
-            lblSummary.Text = WebUtility.HtmlDecode(TruncateHtml(item.Summary.Text));
+            lblSummary.Text = WebUtility.HtmlDecode(TruncateHtml(summary));
             lblSource.Content = item.SourceFeed?.Title?.Text;
         }
 
