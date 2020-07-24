@@ -15,6 +15,8 @@ namespace DevNews.ToolWindows
         {
             InitializeComponent();
             BindPosts(feed);
+
+            RefreshClick(this, null);
         }
 
         private void SettingsSaved(object sender, EventArgs e)
@@ -89,6 +91,7 @@ namespace DevNews.ToolWindows
         {
             prsLoader.Visibility = Visibility.Visible;
             lnkRefresh.IsEnabled = false;
+            pnlPosts.IsEnabled = false;
 
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
@@ -103,6 +106,7 @@ namespace DevNews.ToolWindows
                 {
                     prsLoader.Visibility = Visibility.Hidden;
                     lnkRefresh.IsEnabled = true;
+                    pnlPosts.IsEnabled = true;
                 }
             });
         }

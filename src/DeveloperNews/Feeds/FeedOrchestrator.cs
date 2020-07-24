@@ -32,13 +32,15 @@ namespace DevNews
                 return new SyndicationFeed(_name, _description, null);
             }
 
-            if (!force &&
-                File.Exists(_combinedFile) &&
-                File.GetLastWriteTime(_combinedFile) > DateTime.Now.AddHours(-4))
+            if (!force && File.Exists(_combinedFile))
             {
+                DateTime lastModified = File.GetLastWriteTimeUtc(_combinedFile);
                 using (var reader = XmlReader.Create(_combinedFile))
                 {
-                    return SyndicationFeed.Load(reader);
+
+                    var feed = SyndicationFeed.Load(reader);
+                    feed.LastUpdatedTime = lastModified;
+                    return feed;
                 }
             }
 
@@ -73,6 +75,8 @@ namespace DevNews
                     feed.Items = feed.Items.Union(fetchedFeed.Items);
                 }
             }
+
+            feed.LastUpdatedTime = DateTime.UtcNow;
 
             // Dedupe and sort by date
             feed.Items = feed.Items
