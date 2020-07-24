@@ -44,6 +44,7 @@ namespace DevNews.ToolWindows
                     }
 
                     var post = new PostControl(item);
+
                     pnlPosts.Children.Add(post);
                 }
             }

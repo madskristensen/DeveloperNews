@@ -141,6 +141,9 @@
   <data name="Settings.DefaultBehavior" xml:space="preserve">
     <value>Default behavior</value>
   </data>
+  <data name="Settings.Open" xml:space="preserve">
+    <value>Open settings</value>
+  </data>
   <data name="Settings.SelectFeeds" xml:space="preserve">
     <value>Select feeds</value>
   </data>

@@ -35,7 +35,7 @@
                      Grid.Column="1">
 
             <Label ToolTip="{x:Static resources:Text.Tooltip_Refresh}">
-                <Hyperlink Name="lnkRefresh" Click="RefreshClick">
+                <Hyperlink Name="lnkRefresh" Click="RefreshClick" AutomationProperties.Name="{x:Static resources:Text.Refresh}">
                     <TextBlock Text="{x:Static resources:Text.Refresh}"/>
                 </Hyperlink>
             </Label>
@@ -46,7 +46,8 @@
                     Background="Transparent"
                     Cursor="Hand"
                     IsTabStop="True"
-                    Padding="5 0 2 0">
+                    Padding="5 0 2 0"
+                    AutomationProperties.Name="{x:Static resources:Text.Settings_Open}">
                 <imaging:CrispImage Margin="2" ToolTip="{x:Static resources:Text.Tooltip_Settings}" 
                                     Moniker="{x:Static catalog:KnownMonikers.Settings}" />
                 <Button.Style>

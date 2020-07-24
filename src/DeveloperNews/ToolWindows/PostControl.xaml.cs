@@ -5,6 +5,7 @@ using System.Net;
 using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.VisualStudio.Shell;
@@ -30,6 +31,8 @@ namespace DevNews.ToolWindows
             lblTitle.Text = WebUtility.HtmlDecode(item.Title.Text);
             lblSummary.Text = WebUtility.HtmlDecode(TruncateHtml(summary));
             lblSource.Content = item.SourceFeed?.Title?.Text;
+
+            SetValue(AutomationProperties.NameProperty, lblTitle.Text);
         }
 
         private void SetUrl(SyndicationItem item)

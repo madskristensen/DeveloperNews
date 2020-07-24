@@ -133,6 +133,15 @@ namespace DevNews.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open settings.
+        /// </summary>
+        public static string Settings_Open {
+            get {
+                return ResourceManager.GetString("Settings.Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select feeds.
         /// </summary>
         public static string Settings_SelectFeeds {
