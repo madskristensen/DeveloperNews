@@ -1,4 +1,4 @@
-# Daily News in Visual Studio
+# Developer News in Visual Studio
 
 [![Build status](https://ci.appveyor.com/api/projects/status/2835p8bajgsg6lir?svg=true)](https://ci.appveyor.com/project/madskristensen/developernews)
 
