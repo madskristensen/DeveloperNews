@@ -9,7 +9,7 @@
     <Buttons>
       <Button guid="guidDeveloperNewsPackageCmdSet" id="NewsWindowCommandId" priority="0x0900" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_VIEW_ORG_WINDOWS"/>
-        <Icon guid="ImageCatalogGuid" id="RSS" />
+        <Icon guid="ImageCatalogGuid" id="Dictionary" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
           <ButtonText>Developer News</ButtonText>

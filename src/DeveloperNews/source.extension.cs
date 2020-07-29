@@ -11,7 +11,7 @@ namespace DevNews
         public const string Name = "Developer News";
         public const string Description = @"Always stay up to date with developer news from the Visual Studio team and other sources right within Visual Studio or your default browser.";
         public const string Language = "en-US";
-        public const string Version = "0.5";
+        public const string Version = "0.6";
         public const string Author = "Mads Kristensen";
         public const string Tags = "news, rss, feed";
     }
