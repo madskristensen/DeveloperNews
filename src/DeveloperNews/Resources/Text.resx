@@ -150,8 +150,8 @@
   <data name="Timeline.older" xml:space="preserve">
     <value>Older</value>
   </data>
-  <data name="Timeline.pastweek" xml:space="preserve">
-    <value>Past week</value>
+  <data name="Timeline.thisweek" xml:space="preserve">
+    <value>This week</value>
   </data>
   <data name="Timeline.today" xml:space="preserve">
     <value>Today</value>

@@ -160,11 +160,11 @@ namespace DevNews.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Past week.
+        ///   Looks up a localized string similar to This week.
         /// </summary>
-        public static string Timeline_pastweek {
+        public static string Timeline_thisweek {
             get {
-                return ResourceManager.GetString("Timeline.pastweek", resourceCulture);
+                return ResourceManager.GetString("Timeline.thisweek", resourceCulture);
             }
         }
         

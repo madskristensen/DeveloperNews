@@ -82,7 +82,7 @@ namespace DevNews.ToolWindows
             }
             else if (item.PublishDate.Date >= DateTime.Now.AddDays(-7))
             {
-                return Text.Timeline_pastweek;
+                return Text.Timeline_thisweek;
             }
 
             return Text.Timeline_older;
