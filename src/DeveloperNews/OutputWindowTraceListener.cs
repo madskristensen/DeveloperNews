@@ -61,7 +61,7 @@ internal class OutputWindowTraceListener : TraceListener
 
                 if (_pane == null)
                 {
-                    var output = await ServiceProvider.GetGlobalServiceAsync(typeof(SVsOutputWindow)) as IVsOutputWindow;
+                    IVsOutputWindow output = await ServiceProvider.GetGlobalServiceAsync<SVsOutputWindow, IVsOutputWindow>();
                     var guid = new Guid();
 
                     ErrorHandler.ThrowOnFailure(output.CreatePane(ref guid, _paneTitle, 1, 1));
