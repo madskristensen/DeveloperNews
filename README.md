@@ -9,6 +9,8 @@ or get the [CI build](https://www.vsixgallery.com/extension/36cfa8d9-bd14-4d32-a
 
 ----------------------------------------------
 
+**Help ensure this will be built in to Visual Studio** by voting on [Bring back the 'Developer News' on startup](https://developercommunity.visualstudio.com/idea/399833/bring-back-the-developer-news-on-startup.html) suggestion.
+
 Get the daily news about Visual Studio and other relevant topics right inside Visual Studio. 
 
 It's simple, it's easy, and it keeps you up-to-date. 
