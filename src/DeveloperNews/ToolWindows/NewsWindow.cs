@@ -6,6 +6,9 @@ using Microsoft.VisualStudio.Shell;
 
 namespace DevNews.ToolWindows
 {
+    /// <summary>
+    /// The tool window hosting the Developer News content.
+    /// </summary>
     [Guid(PackageGuids.guidToolWindowString)]
     public class NewsWindow : ToolWindowPane
     {

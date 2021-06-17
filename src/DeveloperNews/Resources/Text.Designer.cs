@@ -97,6 +97,15 @@ namespace DevNews.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No description for this item.
+        /// </summary>
+        public static string NoDescription {
+            get {
+                return ResourceManager.GetString("NoDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open in default browser.
         /// </summary>
         public static string OpenInDefaultBrowser {

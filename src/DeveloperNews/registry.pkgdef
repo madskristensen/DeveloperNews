@@ -13,6 +13,7 @@
 "?SQL Server"="https://cloudblogs.microsoft.com/sqlserver/feed/"
 "?TypeScript"="https://devblogs.microsoft.com/typescript/feed/"
 "Visual Studio"="https://devblogs.microsoft.com/visualstudio/feed/"
-"?VS Office Hours"="https://www.youtube.com/feeds/videos.xml?playlist_id=PLReL099Y5nRem6UA4w849hTfd0LzBIsAk"
+;"?VS Office Hours"="https://www.youtube.com/feeds/videos.xml?playlist_id=PLReL099Y5nRem6UA4w849hTfd0LzBIsAk"
+;"VS Tips & Tricks"="https://www.youtube.com/feeds/videos.xml?playlist_id=PLReL099Y5nRc-zbaFbf0aNcIamBQujOxP"
 "?Xamarin"="https://devblogs.microsoft.com/xamarin/feed/"
 "?Windows Developer"="https://blogs.windows.com/windowsdeveloper/feed/"

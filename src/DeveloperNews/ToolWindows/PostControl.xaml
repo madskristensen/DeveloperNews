@@ -73,14 +73,13 @@
 
 
                 <Label Padding="5 0">
-                    <TextBlock Name="lblSummary" TextWrapping="WrapWithOverflow" />
+                    <TextBlock Name="lblSummary" TextWrapping="Wrap" TextTrimming="WordEllipsis" MaxHeight="75"/>
                 </Label>
 
                 <Label Name="lblSource"
                        HorizontalAlignment="Right"
-                       Foreground="{DynamicResource {x:Static platformUI:EnvironmentColors.ClassDesignerConnectionRouteBorderBrushKey}}"
-                       FontWeight="Light"
-                       Padding="0 0 5 0"
+                       Foreground="{DynamicResource {x:Static platformUI:EnvironmentColors.CommandBarMenuWatermarkTextBrushKey}}"
+                       Padding="0 5 5 0"
                        Margin="0"/>
             </StackPanel>
 

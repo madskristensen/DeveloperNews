@@ -61,7 +61,7 @@ namespace DevNews.ToolWindows
                 Margin = new Thickness(6, 3, 0, 0),
             };
 
-            time.SetResourceReference(ForegroundProperty, EnvironmentColors.ClassDesignerConnectionRouteBorderBrushKey);
+            time.SetResourceReference(ForegroundProperty, EnvironmentColors.CommandBarMenuWatermarkTextBrushKey);
             pnlPosts.Children.Add(time);
         }
 
@@ -109,7 +109,7 @@ namespace DevNews.ToolWindows
                     lnkRefresh.IsEnabled = true;
                     pnlPosts.IsEnabled = true;
                 }
-            });
+            }).FileAndForget(nameof(NewsWindowControl));
         }
 
         private void OpenSettings(object sender, RoutedEventArgs e)

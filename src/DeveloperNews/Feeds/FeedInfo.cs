@@ -1,5 +1,8 @@
 ﻿namespace DevNews
 {
+    /// <summary>
+    /// Represents all the meta data about a news feed.
+    /// </summary>
     public class FeedInfo
     {
         public string Name { get; set; }

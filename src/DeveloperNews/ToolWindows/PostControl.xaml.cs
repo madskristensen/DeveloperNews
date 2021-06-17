@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Input;
+using DevNews.Resources;
+using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
@@ -27,10 +29,15 @@ namespace DevNews.ToolWindows
 
         private void BindText(SyndicationItem item)
         {
-            var summary = item.Summary?.Text ?? "No description for this item ...";
+            var summary = item.Summary?.Text ?? Text.NoDescription;
             lblTitle.Text = WebUtility.HtmlDecode(item.Title.Text);
             lblSummary.Text = WebUtility.HtmlDecode(TruncateHtml(summary));
             lblSource.Content = item.SourceFeed?.Title?.Text;
+
+            if (lblSummary.Text == Text.NoDescription)
+            {
+                lblSummary.SetResourceReference(ForegroundProperty, EnvironmentColors.CommandBarMenuWatermarkTextBrushKey);
+            }
 
             SetValue(AutomationProperties.NameProperty, lblTitle.Text);
         }
@@ -62,14 +69,12 @@ namespace DevNews.ToolWindows
             }
         }
 
-        private static string TruncateHtml(string input, int length = 175, string ommission = "...")
+        private static string TruncateHtml(string input)
         {
-            var clearText = _regex.Replace(input, "");
+            var clearText = _regex.Replace(input, "").Replace("\r", " ").Replace("\n", "");
+            var maxLength = Math.Min(1000, clearText.Length);
 
-            var nextSpace = clearText.LastIndexOf(" ", Math.Min(length, clearText.Length));
-
-            return string.Format("{0}" + ommission,
-                                  clearText.Substring(0, (nextSpace > 0) ? nextSpace : length).Trim());
+            return clearText.Substring(0, maxLength);
         }
 
         private void OpenInVsClick(object sender, RoutedEventArgs e)

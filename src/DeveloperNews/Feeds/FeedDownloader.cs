@@ -9,6 +9,9 @@ using System.Xml;
 
 namespace DevNews
 {
+    /// <summary>
+    /// Downloads the individual feeds to disk
+    /// </summary>
     public class FeedDownloader
     {
         private readonly string _folder;
@@ -18,14 +21,19 @@ namespace DevNews
             _folder = folder;
         }
 
-        public async Task<SyndicationFeed> FetchAsync(FeedInfo feedInfo, bool force = false)
+        /// <summary>
+        /// Downloads the feed
+        /// </summary>
+        /// <param name="feedInfo">Contains information needed to download the feed.</param>
+        /// <param name="force">If true, ignores file timestamp and downloads the latest feed.</param>
+        public async Task<SyndicationFeed> DownloadAsync(FeedInfo feedInfo, bool force = false)
         {
             var file = Path.Combine(_folder, feedInfo.DisplayName + ".xml");
             DateTime lastModified = File.Exists(file) ? File.GetLastWriteTimeUtc(file) : DateTime.UtcNow.AddMonths(-2);
 
             if (force || lastModified < DateTime.UtcNow.AddHours(-4))
             {
-                SyndicationFeed feed = await DownloadFeedAsync(feedInfo.Url, lastModified);
+                SyndicationFeed feed = await DownloadUrlAsync(feedInfo.Url, lastModified);
 
                 if (feed != null)
                 {
@@ -62,7 +70,7 @@ namespace DevNews
             }
         }
 
-        private async Task<SyndicationFeed> DownloadFeedAsync(string url, DateTime lastModified)
+        private async Task<SyndicationFeed> DownloadUrlAsync(string url, DateTime lastModified)
         {
             if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {

@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 using System;
 using System.IO;
 using System.Linq;
@@ -34,7 +37,7 @@ namespace DevNews.Test
                 Url = url
             };
 
-            SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
+            SyndicationFeed feed = await downloader.DownloadAsync(feedInfo, false);
 
             Assert.IsTrue(feed.Items.Count() > 0);
         }
@@ -49,12 +52,12 @@ namespace DevNews.Test
                 Url = "https://devblogs.microsoft.com/visualstudio/rss"
             };
 
-            _ = await downloader.FetchAsync(feedInfo, false);
+            _ = await downloader.DownloadAsync(feedInfo, false);
 
             var file = Path.Combine(_folder, feedInfo.Name + ".xml");
             DateTime lastModified = File.GetLastWriteTime(file);
 
-            _ = await downloader.FetchAsync(feedInfo, false);
+            _ = await downloader.DownloadAsync(feedInfo, false);
             DateTime lastModified2 = File.GetLastWriteTime(file);
 
             Assert.AreEqual(lastModified, lastModified2);
@@ -70,7 +73,7 @@ namespace DevNews.Test
                 Url = "https://fail.example.com"
             };
 
-            SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
+            SyndicationFeed feed = await downloader.DownloadAsync(feedInfo, false);
 
             Assert.IsNull(feed);
         }
@@ -85,7 +88,7 @@ namespace DevNews.Test
                 Url = "https://example.com"
             };
 
-            SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
+            SyndicationFeed feed = await downloader.DownloadAsync(feedInfo, false);
 
             Assert.IsNull(feed);
         }
@@ -100,7 +103,7 @@ namespace DevNews.Test
                 Url = ""
             };
 
-            SyndicationFeed feed = await downloader.FetchAsync(feedInfo, false);
+            SyndicationFeed feed = await downloader.DownloadAsync(feedInfo, false);
 
             Assert.IsNull(feed);
         }

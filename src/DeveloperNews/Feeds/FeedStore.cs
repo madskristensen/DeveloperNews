@@ -8,6 +8,9 @@ using Microsoft.Win32;
 
 namespace DevNews
 {
+    /// <summary>
+    /// The entry point for the feeds. Handles the custom selection of feeds as well.
+    /// </summary>
     public class FeedStore
     {
         private readonly RegistryKey _rootKey;
@@ -17,6 +20,9 @@ namespace DevNews
             _rootKey = rootKey;
         }
 
+        /// <summary>
+        /// The feeds located in the registry.
+        /// </summary>
         public IEnumerable<FeedInfo> FeedInfos { get; set; }
 
         public async Task<SyndicationFeed> GetFeedAsync(bool force = false)
@@ -24,9 +30,12 @@ namespace DevNews
             var orchestrator = new FeedOrchestrator(Vsix.Name, Vsix.Description);
             FeedInfos = GetFeedInfos();
 
-            return await orchestrator.GetFeedsAsync(FeedInfos.Where(f => f.IsSelected), force);
+            return await orchestrator.GetFeedAsync(FeedInfos.Where(f => f.IsSelected), force);
         }
 
+        /// <summary>
+        /// Saves the feed selection to the registry.
+        /// </summary>
         public void SaveSelection()
         {
             var sb = new StringBuilder();

@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,9 +23,9 @@ namespace DevNews.Test
                 new FeedInfo { Name = "test2", Url = "http://feeds.hanselman.com/ScottHanselman"}
             };
 
-            System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(feedInfos, false);
+            System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedAsync(feedInfos, false);
 
-            Assert.AreEqual(18, feed.Items.Count());
+            Assert.AreEqual(20, feed.Items.Count());
         }
 
         [TestMethod]
@@ -38,9 +41,9 @@ namespace DevNews.Test
                     new FeedInfo { Name = "test2", Url = "http://feeds.hanselman.com/ScottHanselman"}
                 };
 
-                System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(feedInfos, false);
+                System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedAsync(feedInfos, false);
 
-                Assert.AreEqual(18, feed.Items.Count());
+                Assert.AreEqual(20, feed.Items.Count());
             }
         }
 
@@ -57,7 +60,7 @@ namespace DevNews.Test
                     new FeedInfo { Name = "test2", Url = "https://devblogs.microsoft.com/visualstudio/rss"},
                 };
 
-                System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(feedInfos, false);
+                System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedAsync(feedInfos, false);
 
                 Assert.AreEqual(10, feed.Items.Count());
             }
@@ -76,7 +79,7 @@ namespace DevNews.Test
                     new FeedInfo { Name = "test1", Url = "https://devblogs.microsoft.com/visualstudio/rss"},
                 };
 
-                System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(feedInfos, false);
+                System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedAsync(feedInfos, false);
 
                 Assert.AreEqual(10, feed.Items.Count());
             }
@@ -89,7 +92,7 @@ namespace DevNews.Test
             orchestrator.ClearCache();
 
             var feedInfos = new List<FeedInfo>();
-            System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(feedInfos, false);
+            System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedAsync(feedInfos, false);
 
             Assert.IsTrue(feed.Items.Count() == 0);
             Assert.AreEqual("Name", feed.Title.Text);
@@ -102,7 +105,7 @@ namespace DevNews.Test
             orchestrator.ClearCache();
 
             var feedInfos = new List<FeedInfo>();
-            System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(feedInfos, false);
+            System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedAsync(feedInfos, false);
 
             Assert.IsTrue(feed.Items.Count() == 0);
             Assert.AreEqual("Name", feed.Title.Text);
@@ -114,7 +117,7 @@ namespace DevNews.Test
             var orchestrator = new FeedOrchestrator("Name", "Description");
             orchestrator.ClearCache();
 
-            System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedsAsync(null, false);
+            System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedAsync(null, false);
 
             Assert.IsTrue(feed.Items.Count() == 0);
             Assert.AreEqual("Name", feed.Title.Text);

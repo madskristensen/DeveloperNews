@@ -8,6 +8,9 @@ using System.Xml;
 
 namespace DevNews
 {
+    /// <summary>
+    /// Is responsible for creating a single combined feed out of the individually selected feeds.
+    /// </summary>
     public class FeedOrchestrator
     {
         private readonly string _folder;
@@ -25,7 +28,10 @@ namespace DevNews
             _combinedFile = Path.Combine(_folder, "_feed.xml");
         }
 
-        public async Task<SyndicationFeed> GetFeedsAsync(IEnumerable<FeedInfo> feedInfos, bool force = false)
+        /// <summary>
+        /// Aquires and combines the feeds into a single main feed.
+        /// </summary>
+        public async Task<SyndicationFeed> GetFeedAsync(IEnumerable<FeedInfo> feedInfos, bool force = false)
         {
             if (feedInfos == null)
             {
@@ -37,7 +43,6 @@ namespace DevNews
                 DateTime lastModified = File.GetLastWriteTimeUtc(_combinedFile);
                 using (var reader = XmlReader.Create(_combinedFile))
                 {
-
                     var feed = SyndicationFeed.Load(reader);
                     feed.LastUpdatedTime = lastModified;
                     return feed;
@@ -47,6 +52,9 @@ namespace DevNews
             return await CreateNewCombinedFeedAsync(feedInfos, force);
         }
 
+        /// <summary>
+        /// Used by unit tests to clear the cache
+        /// </summary>
         public void ClearCache()
         {
             if (Directory.Exists(_folder))
@@ -62,7 +70,7 @@ namespace DevNews
 
             foreach (FeedInfo feedInfo in feedInfos)
             {
-                SyndicationFeed fetchedFeed = await downloader.FetchAsync(feedInfo, force);
+                SyndicationFeed fetchedFeed = await downloader.DownloadAsync(feedInfo, force);
                 fetchedFeed.Title = new TextSyndicationContent(feedInfo.DisplayName);
 
                 if (fetchedFeed != null)

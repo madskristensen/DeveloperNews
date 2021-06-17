@@ -7,6 +7,9 @@ using Microsoft.VisualStudio.Shell;
 
 namespace DevNews.ToolWindows
 {
+    /// <summary>
+    /// Helper class used for theming the tool window controls.
+    /// </summary>
     public static class VsTheme
     {
         private static readonly Dictionary<UIElement, bool> _isUsingVsTheme = new Dictionary<UIElement, bool>();

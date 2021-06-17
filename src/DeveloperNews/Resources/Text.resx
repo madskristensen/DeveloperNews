@@ -129,6 +129,9 @@
   <data name="Menu.OpenInVisualStudio" xml:space="preserve">
     <value>Open in Visual Studio</value>
   </data>
+  <data name="NoDescription" xml:space="preserve">
+    <value>No description for this item</value>
+  </data>
   <data name="OpenInDefaultBrowser" xml:space="preserve">
     <value>Open in default browser</value>
   </data>

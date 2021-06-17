@@ -2,6 +2,9 @@
 
 namespace DevNews
 {
+    /// <summary>
+    /// The options used by this extension.
+    /// </summary>
     internal class Options : BaseOptionModel<Options>
     {
         [Category("General")]

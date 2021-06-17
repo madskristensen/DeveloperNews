@@ -49,7 +49,6 @@
     <Compile Include="Feeds\FeedInfo.cs" />
     <Compile Include="Feeds\FeedOrchestrator.cs" />
     <Compile Include="Feeds\FeedStore.cs" />
-    <Compile Include="OutputWindowTraceListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DeveloperNewsPackage.cs" />
     <Compile Include="Resources\Text.Designer.cs">
@@ -58,6 +57,10 @@
       <DependentUpon>Text.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings\BaseOptionModel.cs" />
+    <Compile Include="Settings\BaseOptionPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Settings\DialogPageProvider.cs" />
     <Compile Include="Settings\Options.cs" />
     <Compile Include="source.extension.cs">
       <AutoGen>True</AutoGen>
@@ -104,10 +107,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.0.206" ExcludeAssets="runtime">
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.0-previews-1-31410-273" ExcludeAssets="runtime">
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.7.2046" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.0.1600">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="registry.pkgdef">

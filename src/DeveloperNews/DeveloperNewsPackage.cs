@@ -15,6 +15,7 @@ namespace DevNews
     [Guid(PackageGuids.guidDeveloperNewsPackageString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [InstalledProductRegistration(Vsix.Name, Vsix.Description, Vsix.Version)]
+    [ProvideProfile(typeof(DialogPageProvider.General), Vsix.Name, "General", 0, 110, false)]
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [ProvideToolWindow(typeof(NewsWindow), Style = VsDockStyle.Tabbed, Window = ToolWindowGuids.SolutionExplorer)]
     [ProvideToolWindowVisibility(typeof(NewsWindow), VSConstants.UICONTEXT.NoSolution_string)]
@@ -25,10 +26,11 @@ namespace DevNews
     {
         public static FeedStore Store { get; private set; }
 
+        /// <summary>
+        /// The entry point for the extension. This is executed when the tool window is activated.
+        /// </summary>
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            OutputWindowTraceListener.Register(Vsix.Name, nameof(DevNews));
-
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await NewsWindowCommand.InitializeAsync(this);
         }
