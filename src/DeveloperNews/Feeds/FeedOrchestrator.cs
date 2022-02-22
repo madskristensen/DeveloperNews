@@ -71,10 +71,11 @@ namespace DevNews
             foreach (FeedInfo feedInfo in feedInfos)
             {
                 SyndicationFeed fetchedFeed = await downloader.DownloadAsync(feedInfo, force);
-                fetchedFeed.Title = new TextSyndicationContent(feedInfo.DisplayName);
 
                 if (fetchedFeed != null)
                 {
+                    fetchedFeed.Title = new TextSyndicationContent(feedInfo.DisplayName);
+                    
                     foreach (SyndicationItem item in fetchedFeed.Items)
                     {
                         item.SourceFeed = fetchedFeed;
