@@ -15,7 +15,7 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Name="MyToolWindow"
              local:VsTheme.UseVsTheme="True">
-    <Grid theming:ImageThemingUtilities.ImageBackgroundColor="{Binding Background, RelativeSource={RelativeSource Self}}"
+    <Grid theming:ImageThemingUtilities.ImageBackgroundColor="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource BrushToColorConverter}}"
           Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowBackgroundKey}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />

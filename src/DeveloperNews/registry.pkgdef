@@ -4,7 +4,6 @@
 [$RootKey$\DeveloperNews\Feeds]
 "!Featured News"="https://go.microsoft.com/fwlink/?linkid=2066144"
 "?.NET"="https://devblogs.microsoft.com/dotnet/feed/"
-"?ASP.NET"="https://devblogs.microsoft.com/aspnet/feed/"
 "?Azure DevOps"="https://devblogs.microsoft.com/devops/feed/"
 "?Azure SDKs"="https://devblogs.microsoft.com/azure-sdk/feed/"
 "?C++"="https://devblogs.microsoft.com/cppblog/feed/"

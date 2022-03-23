@@ -17,7 +17,7 @@ namespace DevNews.ToolWindows
 {
     public partial class PostControl : UserControl
     {
-        private static readonly Regex _regex = new Regex(@"</?\w+((\s+\w+(\s*=\s*(?:"".*?""|'.*?'|[^'"">\s]+))?)+\s*|\s*)/?>", RegexOptions.Singleline);
+        private static readonly Regex _regex = new(@"</?\w+((\s+\w+(\s*=\s*(?:"".*?""|'.*?'|[^'"">\s]+))?)+\s*|\s*)/?>", RegexOptions.Singleline);
         private string _url;
 
         public PostControl(SyndicationItem item)
@@ -31,6 +31,7 @@ namespace DevNews.ToolWindows
         {
             var summary = item.Summary?.Text ?? Text.NoDescription;
             lblTitle.Text = WebUtility.HtmlDecode(item.Title.Text);
+            lblTitle.ToolTip = $"{lblTitle.Text}\r\n{item.PublishDate:MMMM d, yyyy}";
             lblSummary.Text = WebUtility.HtmlDecode(TruncateHtml(summary));
             lblSource.Content = item.SourceFeed?.Title?.Text;
 

@@ -12,8 +12,8 @@ namespace DevNews.ToolWindows
     /// </summary>
     public static class VsTheme
     {
-        private static readonly Dictionary<UIElement, bool> _isUsingVsTheme = new Dictionary<UIElement, bool>();
-        private static readonly Dictionary<UIElement, object> _originalBackgrounds = new Dictionary<UIElement, object>();
+        private static readonly Dictionary<UIElement, bool> _isUsingVsTheme = new();
+        private static readonly Dictionary<UIElement, object> _originalBackgrounds = new();
 
         public static DependencyProperty UseVsThemeProperty = DependencyProperty.RegisterAttached("UseVsTheme", typeof(bool), typeof(VsTheme), new PropertyMetadata(false, UseVsThemePropertyChanged));
 
