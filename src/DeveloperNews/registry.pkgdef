@@ -2,7 +2,7 @@
 ; '!' in front of a name, makes it selected and mandatory
 ; '?' in front of a name makes the feed deselected by default
 [$RootKey$\DeveloperNews\Feeds]
-"!Featured News"="https://go.microsoft.com/fwlink/?linkid=2066144"
+"!Visual Studio"="https://devblogs.microsoft.com/visualstudio/feed/"
 "?.NET"="https://devblogs.microsoft.com/dotnet/feed/"
 "?Azure DevOps"="https://devblogs.microsoft.com/devops/feed/"
 "?Azure SDKs"="https://devblogs.microsoft.com/azure-sdk/feed/"
@@ -11,7 +11,6 @@
 "?PowerShell"="https://devblogs.microsoft.com/powershell/feed/"
 "?SQL Server"="https://cloudblogs.microsoft.com/sqlserver/feed/"
 "?TypeScript"="https://devblogs.microsoft.com/typescript/feed/"
-"Visual Studio"="https://devblogs.microsoft.com/visualstudio/feed/"
 ;"?VS Office Hours"="https://www.youtube.com/feeds/videos.xml?playlist_id=PLReL099Y5nRem6UA4w849hTfd0LzBIsAk"
 ;"VS Tips & Tricks"="https://www.youtube.com/feeds/videos.xml?playlist_id=PLReL099Y5nRc-zbaFbf0aNcIamBQujOxP"
 "?Xamarin"="https://devblogs.microsoft.com/xamarin/feed/"
