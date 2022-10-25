@@ -50,7 +50,7 @@ namespace DevNews.ToolWindows
             if (!_url.Contains('?'))
             {
                 // To track the referrals from this extension
-                _url += "?utm_source=vs_developer_news&utm_medium=referral";
+                _url += "?cid=vs_developer_news";
             }
         }
 
