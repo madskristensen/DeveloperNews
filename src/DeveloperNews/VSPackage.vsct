@@ -12,7 +12,7 @@
         <Icon guid="ImageCatalogGuid" id="Dictionary" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
-          <ButtonText>Developer News</ButtonText>
+          <ButtonText>Developer &amp;News</ButtonText>
         </Strings>
       </Button>
     </Buttons>
