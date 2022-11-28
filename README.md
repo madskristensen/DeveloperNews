@@ -22,7 +22,7 @@ Open the *News* tool window from the *View* top level menu.
 
 ![View menu](art/view-menu.png)
 
-You can also use the keybord shortcut **Alt + O, Alt + N**. Think of it being short for **O**pen **N**ews.
+You can also use the keyboard shortcut **Control + Alt + N**.
 
 ## Design
 The *News* tool window looks great in any theme and looks like a built-in part of Visual Studio.

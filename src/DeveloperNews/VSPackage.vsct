@@ -19,7 +19,7 @@
   </Commands>
 
   <KeyBindings>
-    <KeyBinding guid="guidDeveloperNewsPackageCmdSet" id="NewsWindowCommandId" editor="guidVSStd97" key1="O" mod1="Alt" key2="N" mod2="Alt" />
+    <KeyBinding guid="guidDeveloperNewsPackageCmdSet" id="NewsWindowCommandId" editor="guidVSStd97" key1="N" mod1="Control Alt" />
   </KeyBindings>
 
   <Symbols>
