@@ -25,7 +25,7 @@ namespace DevNews.Test
 
             System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedAsync(feedInfos, false);
 
-            Assert.AreEqual(20, feed.Items.Count());
+            Assert.AreEqual(21, feed.Items.Count());
         }
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace DevNews.Test
 
                 System.ServiceModel.Syndication.SyndicationFeed feed = await orchestrator.GetFeedAsync(feedInfos, false);
 
-                Assert.AreEqual(20, feed.Items.Count());
+                Assert.AreEqual(21, feed.Items.Count());
             }
         }
 
