@@ -57,7 +57,7 @@ namespace DevNews.ToolWindows
             var time = new Label
             {
                 Content = timestamp,
-                FontWeight = FontWeights.Normal,
+                FontWeight = FontWeights.Bold,
                 Margin = new Thickness(6, 3, 0, 0),
             };
 
