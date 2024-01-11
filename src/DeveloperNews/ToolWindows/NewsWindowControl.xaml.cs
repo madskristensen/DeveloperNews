@@ -27,6 +27,10 @@ namespace DevNews.ToolWindows
         private void BindPosts(SyndicationFeed feed)
         {
             pnlPosts.Children.Clear();
+
+            if (feed == null)
+                return;
+
             var currentTime = Timestamp(feed.Items.FirstOrDefault());
 
             if (!string.IsNullOrEmpty(currentTime))

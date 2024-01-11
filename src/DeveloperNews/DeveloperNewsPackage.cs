@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.ServiceModel.Syndication;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,6 +34,7 @@ namespace DevNews
     public sealed class DeveloperNewsPackage : AsyncPackage
     {
         private CrispImageWithCount _iconCounter;
+        private SyndicationFeed _feed;
 
         public static FeedStore Store { get; private set; }
 
@@ -40,13 +42,27 @@ namespace DevNews
         {
             FeedOrchestrator.FeedUpdated += FeedOrchestrator_FeedUpdated;
             Store = new FeedStore(ApplicationRegistryRoot);
-            await Store.GetFeedAsync();
 
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
             SetupStatusBarIconAsync().FileAndForget(nameof(DevNews));
 
+            _feed = await Store.GetFeedAsync();
             await NewsWindowCommand.InitializeAsync(this);
+
+            StartTimerToCheckForUpdates();
+        }
+
+        private void StartTimerToCheckForUpdates()
+        {
+            var timeInterval = 12 * 60 * 60 * 1000; // 12 hours
+            var timer = new Timer((o) =>
+            {
+                _ = JoinableTaskFactory.StartOnIdle(async () =>
+                {
+                    _feed = await Store.GetFeedAsync();
+                }, VsTaskRunContext.UIThreadBackgroundPriority);
+            }, null, timeInterval, timeInterval);
         }
 
         protected override int QueryClose(out bool canClose)
@@ -68,7 +84,10 @@ namespace DevNews
 
         private void FeedOrchestrator_FeedUpdated(object sender, int unreadPosts)
         {
-            _iconCounter.Count = unreadPosts;
+            if (_iconCounter != null)
+            {
+                _iconCounter.Count = unreadPosts;
+            }
         }
 
         private async Task SetupStatusBarIconAsync()
@@ -81,7 +100,7 @@ namespace DevNews
             {
                 Margin = new Thickness(0, 0, 5, 0),
                 Height = 22,
-                ToolTip = "Open Developer News (Ctrl+Alt+N)",
+                ToolTip = "Open Developer News (Ctrl+Alt+N)", // TODO: Get the shortcut from the command dynamically
             };
 
             _iconCounter = new CrispImageWithCount()
@@ -124,9 +143,9 @@ namespace DevNews
             return toolWindowType == typeof(NewsWindow) ? Text.WindowTitle : base.GetToolWindowTitle(toolWindowType, id);
         }
 
-        protected override async Task<object> InitializeToolWindowAsync(Type toolWindowType, int id, CancellationToken cancellationToken)
+        protected override Task<object> InitializeToolWindowAsync(Type toolWindowType, int id, CancellationToken cancellationToken)
         {
-            return await Store.GetFeedAsync();
+            return Task.FromResult<object>(_feed);
         }
     }
 }

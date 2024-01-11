@@ -27,10 +27,17 @@ namespace DevNews
 
         public async Task<SyndicationFeed> GetFeedAsync(bool force = false)
         {
-            var orchestrator = new FeedOrchestrator(Vsix.Name, Vsix.Description);
-            FeedInfos = GetFeedInfos();
+            try
+            {
+                var orchestrator = new FeedOrchestrator(Vsix.Name, Vsix.Description);
+                FeedInfos = GetFeedInfos();
 
-            return await orchestrator.GetFeedAsync(FeedInfos.Where(f => f.IsSelected), force);
+                return await orchestrator.GetFeedAsync(FeedInfos.Where(f => f.IsSelected), force);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>

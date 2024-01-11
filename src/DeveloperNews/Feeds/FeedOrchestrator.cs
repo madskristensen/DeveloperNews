@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml;
 
 namespace DevNews
@@ -39,14 +40,18 @@ namespace DevNews
                 return new SyndicationFeed(_name, _description, null);
             }
 
-            if (!force && File.Exists(_combinedFile))
+            if (File.Exists(_combinedFile))
             {
                 _lastModified = File.GetLastWriteTimeUtc(_combinedFile);
-                using (var reader = XmlReader.Create(_combinedFile))
+
+                if (!force && _lastModified > DateTime.UtcNow.AddHours(-4))
                 {
-                    var feed = SyndicationFeed.Load(reader);
-                    feed.LastUpdatedTime = _lastModified;
-                    return feed;
+                    using (var reader = XmlReader.Create(_combinedFile))
+                    {
+                        var feed = SyndicationFeed.Load(reader);
+                        feed.LastUpdatedTime = _lastModified;
+                        return feed;
+                    }
                 }
             }
 
@@ -103,12 +108,15 @@ namespace DevNews
                 feed.SaveAsRss20(writer);
             }
 
-            Options options = await Options.GetLiveInstanceAsync();
-            var newPosts = feed.Items.Where(i => i.PublishDate > options.LastRead).Count();
-            options.UnreadPosts += newPosts;
-            await options.SaveAsync();
+            if (Application.Current != null) // if running in VS and not in unit test
+            {
+                Options options = await Options.GetLiveInstanceAsync();
+                var newPosts = feed.Items.Where(i => i.PublishDate > options.LastRead).Count();
+                options.UnreadPosts += newPosts;
+                await options.SaveAsync();
 
-            FeedUpdated?.Invoke(this, options.UnreadPosts);
+                FeedUpdated?.Invoke(this, options.UnreadPosts);
+            }
 
             return feed;
         }
