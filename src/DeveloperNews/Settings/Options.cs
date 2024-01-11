@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace DevNews
 {
@@ -16,5 +17,11 @@ namespace DevNews
         [DefaultValue("")]
         [Browsable(false)]
         public string FeedSelection { get; set; } = "";
+
+        [Browsable(false)]
+        public DateTime LastRead { get; set; }
+
+        [Browsable(false)]
+        public int UnreadPosts { get; set; }
     }
 }

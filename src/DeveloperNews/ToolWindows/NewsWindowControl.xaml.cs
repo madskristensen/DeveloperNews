@@ -50,6 +50,14 @@ namespace DevNews.ToolWindows
             }
 
             lblTotal.Content = string.Format(Text.Totalcount, feed.Items.Count());
+
+            _ = ThreadHelper.JoinableTaskFactory.StartOnIdle(async () =>
+            {
+                Options options = await Options.GetLiveInstanceAsync();
+                options.LastRead = DateTime.Now;
+                options.UnreadPosts = 0;
+                await options.SaveAsync();
+            });
         }
 
         private void AddTimeLabel(string timestamp)

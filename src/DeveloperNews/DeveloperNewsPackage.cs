@@ -32,10 +32,16 @@ namespace DevNews
     [ProvideAutoLoad(VSConstants.UICONTEXT.ShellInitialized_string, PackageAutoLoadFlags.BackgroundLoad)]
     public sealed class DeveloperNewsPackage : AsyncPackage
     {
+        private CrispImageWithCount _iconCounter;
+
         public static FeedStore Store { get; private set; }
 
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
+            FeedOrchestrator.FeedUpdated += FeedOrchestrator_FeedUpdated;
+            Store = new FeedStore(ApplicationRegistryRoot);
+            await Store.GetFeedAsync();
+
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
             SetupStatusBarIconAsync().FileAndForget(nameof(DevNews));
@@ -43,29 +49,51 @@ namespace DevNews
             await NewsWindowCommand.InitializeAsync(this);
         }
 
+        protected override int QueryClose(out bool canClose)
+        {
+            try
+            {
+                if (_iconCounter?.Count > 0)
+                {
+                    OpenNewsWindow();
+                }
+            }
+            catch
+            {
+                // Don't prevent VS shutdown
+            }
+
+            return base.QueryClose(out canClose);
+        }
+
+        private void FeedOrchestrator_FeedUpdated(object sender, int unreadPosts)
+        {
+            _iconCounter.Count = unreadPosts;
+        }
+
         private async Task SetupStatusBarIconAsync()
         {
+            Options options = await Options.GetLiveInstanceAsync();
+
             await JoinableTaskFactory.SwitchToMainThreadAsync();
 
             DockPanel panel = new()
             {
                 Margin = new Thickness(0, 0, 5, 0),
-                Width = 24,
                 Height = 22,
                 ToolTip = "Open Developer News (Ctrl+Alt+N)",
             };
 
-            CrispImage img = new()
+            _iconCounter = new CrispImageWithCount()
             {
                 Moniker = KnownMonikers.Dictionary,
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Width = 16,
-                Height = 16,
+                Count = options.UnreadPosts,
             };
 
-            panel.Children.Add(img);
-            panel.MouseUp += StatusIconClicked;
+            panel.Children.Add(_iconCounter);
+            panel.MouseUp += OpenNewsWindow;
             panel.MouseEnter += Panel_MouseEnter;
             panel.MouseLeave += Panel_MouseEnter;
 
@@ -76,17 +104,10 @@ namespace DevNews
         {
             var panel = (Panel)sender;
 
-            if (panel.IsMouseOver)
-            {
-                panel.Background = new SolidColorBrush(Colors.White) { Opacity = 0.1 };
-            }
-            else
-            {
-                panel.Background = Brushes.Transparent;
-            }
+            panel.Background = panel.IsMouseOver ? new SolidColorBrush(Colors.White) { Opacity = 0.1 } : (Brush)Brushes.Transparent;
         }
 
-        private void StatusIconClicked(object sender, MouseButtonEventArgs e)
+        private void OpenNewsWindow(object sender = null, MouseButtonEventArgs e = null)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             var dte = GetService(typeof(DTE)) as DTE2;
@@ -105,7 +126,6 @@ namespace DevNews
 
         protected override async Task<object> InitializeToolWindowAsync(Type toolWindowType, int id, CancellationToken cancellationToken)
         {
-            Store = new FeedStore(ApplicationRegistryRoot);
             return await Store.GetFeedAsync();
         }
     }

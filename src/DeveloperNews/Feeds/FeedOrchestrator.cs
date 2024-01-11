@@ -18,6 +18,7 @@ namespace DevNews
 
         private readonly string _name;
         private readonly string _description;
+        private DateTime _lastModified;
 
         public FeedOrchestrator(string name, string description)
         {
@@ -29,7 +30,7 @@ namespace DevNews
         }
 
         /// <summary>
-        /// Aquires and combines the feeds into a single main feed.
+        /// Acquires and combines the feeds into a single main feed.
         /// </summary>
         public async Task<SyndicationFeed> GetFeedAsync(IEnumerable<FeedInfo> feedInfos, bool force = false)
         {
@@ -40,11 +41,11 @@ namespace DevNews
 
             if (!force && File.Exists(_combinedFile))
             {
-                DateTime lastModified = File.GetLastWriteTimeUtc(_combinedFile);
+                _lastModified = File.GetLastWriteTimeUtc(_combinedFile);
                 using (var reader = XmlReader.Create(_combinedFile))
                 {
                     var feed = SyndicationFeed.Load(reader);
-                    feed.LastUpdatedTime = lastModified;
+                    feed.LastUpdatedTime = _lastModified;
                     return feed;
                 }
             }
@@ -75,7 +76,7 @@ namespace DevNews
                 if (fetchedFeed != null)
                 {
                     fetchedFeed.Title = new TextSyndicationContent(feedInfo.DisplayName);
-                    
+
                     foreach (SyndicationItem item in fetchedFeed.Items)
                     {
                         item.SourceFeed = fetchedFeed;
@@ -102,7 +103,16 @@ namespace DevNews
                 feed.SaveAsRss20(writer);
             }
 
+            Options options = await Options.GetLiveInstanceAsync();
+            var newPosts = feed.Items.Where(i => i.PublishDate > options.LastRead).Count();
+            options.UnreadPosts += newPosts;
+            await options.SaveAsync();
+
+            FeedUpdated?.Invoke(this, options.UnreadPosts);
+
             return feed;
         }
+
+        public static event EventHandler<int> FeedUpdated;
     }
 }
