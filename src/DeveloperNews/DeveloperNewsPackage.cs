@@ -145,6 +145,11 @@ namespace DevNews
 
         protected override Task<object> InitializeToolWindowAsync(Type toolWindowType, int id, CancellationToken cancellationToken)
         {
+            if (_iconCounter != null)
+            {
+                _iconCounter.Count = 0;
+            }
+
             return Task.FromResult<object>(_feed);
         }
     }
