@@ -121,10 +121,10 @@
     <value>Cancel</value>
   </data>
   <data name="Menu.CopyUrl" xml:space="preserve">
-    <value>Copy Link</value>
+    <value>Copy link</value>
   </data>
   <data name="Menu.OpenInDefaultBrowser" xml:space="preserve">
-    <value>Open in Default Browser</value>
+    <value>Open in default Browser</value>
   </data>
   <data name="Menu.OpenInVisualStudio" xml:space="preserve">
     <value>Open in Visual Studio</value>

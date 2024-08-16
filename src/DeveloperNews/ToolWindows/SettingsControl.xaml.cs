@@ -15,8 +15,6 @@ namespace DevNews.ToolWindows
 
         public void BindSettings()
         {
-            cbOpenInVS.IsChecked = Options.Instance.OpenInDefaultBrowser;
-
             pnlFeedSelection.Children.Clear();
 
             foreach (FeedInfo feedInfo in DeveloperNewsPackage.Store.FeedInfos.OrderBy(f => f.Name.TrimStart('?')))
@@ -27,9 +25,9 @@ namespace DevNews.ToolWindows
                     Padding = new Thickness(5, 2, 0, 2),
                     IsChecked = feedInfo.IsSelected,
                     Tag = feedInfo,
+                    IsEnabled = feedInfo.Name[0] != '!'
                 };
 
-                cb.IsEnabled = feedInfo.Name[0] != '!';
                 pnlFeedSelection.Children.Add(cb);
             }
         }
@@ -45,9 +43,6 @@ namespace DevNews.ToolWindows
                 feedInfo.IsSelected = cb.IsChecked.Value;
                 feedInfos.Add(feedInfo);
             }
-
-            // Set default opening behavior
-            Options.Instance.OpenInDefaultBrowser = cbOpenInVS.IsChecked.Value;
 
             // Set selected feeds
             DeveloperNewsPackage.Store.FeedInfos = feedInfos;

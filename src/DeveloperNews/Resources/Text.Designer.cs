@@ -70,7 +70,7 @@ namespace DevNews.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copy Link.
+        ///   Looks up a localized string similar to Copy link.
         /// </summary>
         public static string Menu_CopyUrl {
             get {
@@ -79,7 +79,7 @@ namespace DevNews.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open in Default Browser.
+        ///   Looks up a localized string similar to Open in default Browser.
         /// </summary>
         public static string Menu_OpenInDefaultBrowser {
             get {

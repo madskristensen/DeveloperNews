@@ -87,7 +87,6 @@
 
             <Button.ContextMenu>
                 <ContextMenu Name="ctxMenu">
-                    <MenuItem Header="{x:Static resources:Text.Menu_OpenInVisualStudio}" Click="OpenInVsClick" />
                     <MenuItem Header="{x:Static resources:Text.Menu_OpenInDefaultBrowser}" Click="OpenInDefaultBrowserClick" />
                     <Separator/>
                     <MenuItem Header="{x:Static resources:Text.Menu_CopyUrl}" Click="CopyUrlClick">

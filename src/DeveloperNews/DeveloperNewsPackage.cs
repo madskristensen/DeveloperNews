@@ -11,6 +11,7 @@ using DevNews.Resources;
 using DevNews.ToolWindows;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Imaging;
 using Microsoft.VisualStudio.Shell;
@@ -67,6 +68,8 @@ namespace DevNews
 
         protected override int QueryClose(out bool canClose)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
             try
             {
                 if (_iconCounter?.Count > 0)
@@ -130,6 +133,7 @@ namespace DevNews
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             var dte = GetService(typeof(DTE)) as DTE2;
+            Assumes.Present(dte);
             dte.Commands.Raise(PackageGuids.guidDeveloperNewsPackageCmdSetString, PackageIds.NewsWindowCommandId, null, null);
         }
 

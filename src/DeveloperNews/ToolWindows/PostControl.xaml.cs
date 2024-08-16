@@ -56,18 +56,7 @@ namespace DevNews.ToolWindows
 
         private void PostClick(object sender, RoutedEventArgs e)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-
-            var ctrlHit = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
-
-            if (Options.Instance.OpenInDefaultBrowser || ctrlHit)
-            {
-                OpenInDefaultBrowserClick(this, null);
-            }
-            else
-            {
-                OpenInVsClick(this, null);
-            }
+            OpenInDefaultBrowserClick(this, null);
         }
 
         private static string TruncateHtml(string input)
@@ -76,13 +65,6 @@ namespace DevNews.ToolWindows
             var maxLength = Math.Min(1000, clearText.Length);
 
             return clearText.Substring(0, maxLength);
-        }
-
-        private void OpenInVsClick(object sender, RoutedEventArgs e)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            var service = Package.GetGlobalService(typeof(IVsWebBrowsingService)) as IVsWebBrowsingService;
-            service.Navigate(_url, (uint)__VSWBNAVIGATEFLAGS.VSNWB_WebURLOnly, out _);
         }
 
         private void OpenInDefaultBrowserClick(object sender, RoutedEventArgs e)

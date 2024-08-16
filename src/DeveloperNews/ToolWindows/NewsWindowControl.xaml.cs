@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using DevNews.Resources;
 using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Threading;
 
 namespace DevNews.ToolWindows
 {
@@ -121,7 +122,7 @@ namespace DevNews.ToolWindows
                     lnkRefresh.IsEnabled = true;
                     pnlPosts.IsEnabled = true;
                 }
-            }).FileAndForget(nameof(NewsWindowControl));
+            }).Task.Forget();
         }
 
         private void OpenSettings(object sender, RoutedEventArgs e)

@@ -8,15 +8,6 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel Name="pnlSettings">
-            <Label Content="{x:Static resources:Text.Settings_DefaultBehavior}" 
-                   Padding="0 5" 
-                   FontWeight="Bold"/>
-
-            <CheckBox Name="cbOpenInVS" 
-                      Margin="0 0 0 5"
-                      ToolTip="{x:Static resources:Text.Tooltip_OpenInDefaultBrowser}" 
-                      Content="{x:Static resources:Text.OpenInDefaultBrowser}" />
-
             <Label Content="{x:Static resources:Text.Settings_SelectFeeds}" 
                    Padding="0 5" 
                    FontWeight="Bold"/>
