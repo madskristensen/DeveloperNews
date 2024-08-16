@@ -30,9 +30,9 @@ namespace DevNews.ToolWindows
         private void BindText(SyndicationItem item)
         {
             var summary = item.Summary?.Text ?? Text.NoDescription;
-            lblTitle.Text = WebUtility.HtmlDecode(item.Title.Text);
-            lblTitle.ToolTip = $"{lblTitle.Text}\r\n{item.PublishDate:MMMM d, yyyy}";
-            lblSummary.Text = WebUtility.HtmlDecode(TruncateHtml(summary));
+            lblTitle.Text = WebUtility.HtmlDecode(item.Title.Text).Trim();
+            lblTitle.ToolTip = $"{lblTitle.Text.Trim()}\r\n{item.PublishDate:MMMM d, yyyy}";
+            lblSummary.Text = WebUtility.HtmlDecode(TruncateHtml(summary.Trim()));
             lblSource.Content = $"{item.PublishDate:MMM d} in {item.SourceFeed?.Title?.Text}";
 
             if (lblSummary.Text == Text.NoDescription)
