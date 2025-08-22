@@ -36,6 +36,11 @@ namespace DevNews
     {
         private CrispImageWithCount _iconCounter;
         private SyndicationFeed _feed;
+        private Timer _updateTimer; // Store timer reference for proper disposal
+
+        // Constants for better maintainability
+        private const int FeedUpdateIntervalHours = 12;
+        private static readonly TimeSpan FeedUpdateInterval = TimeSpan.FromHours(FeedUpdateIntervalHours);
 
         public static FeedStore Store { get; private set; }
 
@@ -56,14 +61,29 @@ namespace DevNews
 
         private void StartTimerToCheckForUpdates()
         {
-            var timeInterval = 12 * 60 * 60 * 1000; // 12 hours
-            var timer = new Timer((o) =>
+            // Store timer reference for proper disposal
+            _updateTimer = new Timer((o) =>
             {
                 _ = JoinableTaskFactory.StartOnIdle(async () =>
                 {
                     _feed = await Store.GetFeedAsync();
                 }, VsTaskRunContext.UIThreadBackgroundPriority);
-            }, null, timeInterval, timeInterval);
+            }, null, FeedUpdateInterval, FeedUpdateInterval);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // Properly dispose of timer to prevent resource leak
+                _updateTimer?.Dispose();
+                _updateTimer = null;
+                
+                // Unsubscribe from events to prevent memory leaks
+                FeedOrchestrator.FeedUpdated -= FeedOrchestrator_FeedUpdated;
+            }
+            
+            base.Dispose(disposing);
         }
 
         protected override int QueryClose(out bool canClose)

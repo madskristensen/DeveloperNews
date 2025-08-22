@@ -9,6 +9,10 @@ namespace DevNews
     internal static class StatusBarInjector
     {
         private static Panel _panel;
+        
+        // Constants for better maintainability
+        private const string StatusBarPanelName = "StatusBarPanel";
+        private const int StatusBarRetryDelayMilliseconds = 5000;
 
         private static DependencyObject FindChild(DependencyObject parent, string childName)
         {
@@ -43,17 +47,19 @@ namespace DevNews
         {
             while (_panel is null)
             {
-                _panel = FindChild(Application.Current.MainWindow, "StatusBarPanel") as DockPanel;
+                _panel = FindChild(Application.Current?.MainWindow, StatusBarPanelName) as DockPanel;
                 if (_panel is null)
                 {
                     // Start window is showing. Need to wait for status bar render.
-                    await Task.Delay(5000);
+                    await Task.Delay(StatusBarRetryDelayMilliseconds);
                 }
             }
         }
 
         public static async Task InjectControlAsync(FrameworkElement element)
         {
+            if (element == null) return;
+            
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             await EnsureUIAsync();
 

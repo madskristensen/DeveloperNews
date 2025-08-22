@@ -16,6 +16,10 @@ namespace DevNews.ToolWindows
         private static readonly Regex _htmlRegex = new Regex(@"</?\w+((\s+\w+(\s*=\s*(?:"".*?""|'.*?'|[^'"">\s]+))?)+\s*|\s*)/?>", 
             RegexOptions.Singleline | RegexOptions.Compiled);
 
+        // Constants for better maintainability
+        private const string TrackingParameter = "?cid=vs_developer_news";
+        private const int MaxSummaryLength = 1000;
+
         public PostViewModel(SyndicationItem item)
         {
             if (item == null) return;
@@ -26,7 +30,7 @@ namespace DevNews.ToolWindows
             // Add tracking parameter if not present
             if (!string.IsNullOrEmpty(Url) && !Url.Contains('?'))
             {
-                Url += "?cid=vs_developer_news";
+                Url += TrackingParameter;
             }
 
             var summary = item.Summary?.Text ?? Text.NoDescription;
@@ -51,7 +55,7 @@ namespace DevNews.ToolWindows
         private static string TruncateHtml(string input)
         {
             var clearText = _htmlRegex.Replace(input, "").Replace("\r", " ").Replace("\n", "");
-            var maxLength = Math.Min(1000, clearText.Length);
+            var maxLength = Math.Min(MaxSummaryLength, clearText.Length);
             return clearText.Substring(0, maxLength);
         }
 

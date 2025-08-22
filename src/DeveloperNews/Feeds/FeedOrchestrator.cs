@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.ServiceModel.Syndication;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
@@ -74,60 +76,84 @@ namespace DevNews
             var downloader = new FeedDownloader(_folder);
             var feed = new SyndicationFeed(_name, _description, null);
 
-            // Download all feeds in parallel for better performance
             var feedInfoList = feedInfos.ToList();
-            var downloadTasks = feedInfoList.Select(async feedInfo =>
+            if (!feedInfoList.Any())
             {
-                var fetchedFeed = await downloader.DownloadAsync(feedInfo, force);
-                if (fetchedFeed != null)
+                return feed;
+            }
+
+            // Use SemaphoreSlim to limit concurrent downloads to prevent overwhelming servers
+            const int maxConcurrentDownloads = 6; // Reasonable limit for RSS feeds
+            using (var semaphore = new SemaphoreSlim(maxConcurrentDownloads, maxConcurrentDownloads))
+            {
+                // Create download tasks with concurrency control
+                var downloadTasks = feedInfoList.Select(async feedInfo =>
                 {
-                    fetchedFeed.Title = new TextSyndicationContent(feedInfo.DisplayName);
-                    
-                    // Set source feed for all items
-                    foreach (SyndicationItem item in fetchedFeed.Items)
+                    await semaphore.WaitAsync();
+                    try
                     {
-                        item.SourceFeed = fetchedFeed;
+                        var fetchedFeed = await downloader.DownloadAsync(feedInfo, force);
+                        if (fetchedFeed?.Items != null)
+                        {
+                            fetchedFeed.Title = new TextSyndicationContent(feedInfo.DisplayName);
+
+                            // Set source feed for all items efficiently
+                            foreach (var item in fetchedFeed.Items)
+                            {
+                                item.SourceFeed = fetchedFeed;
+                            }
+                        }
+                        return fetchedFeed;
                     }
-                }
-                return fetchedFeed;
-            });
+                    finally
+                    {
+                        semaphore.Release();
+                    }
+                });
 
-            // Wait for all downloads to complete
-            var fetchedFeeds = await Task.WhenAll(downloadTasks);
+                // Wait for all downloads to complete
+                var fetchedFeeds = await Task.WhenAll(downloadTasks);
 
-            // Combine all successful feed items
-            var allItems = new List<SyndicationItem>();
-            foreach (var fetchedFeed in fetchedFeeds.Where(f => f != null))
-            {
-                allItems.AddRange(fetchedFeed.Items);
+                // Combine and process all items in a single optimized LINQ chain
+                feed.Items = fetchedFeeds
+                    .Where(f => f?.Items != null)
+                    .SelectMany(f => f.Items)
+                    .Where(i => !string.IsNullOrWhiteSpace(i.Title?.Text)) // Filter invalid items first
+                    .GroupBy(i => i.Title.Text, StringComparer.OrdinalIgnoreCase) // Case-insensitive grouping
+                    .Select(g => g.OrderByDescending(i => i.PublishDate).First()) // Keep latest of duplicates
+                    .OrderByDescending(i => i.PublishDate.Date)
+                    .Take(100) // Limit early to avoid processing unnecessary items
+                    .ToList(); // Materialize once
             }
 
             feed.LastUpdatedTime = DateTime.UtcNow;
 
-            // Optimize LINQ operations by combining them and avoiding multiple enumerations
-            feed.Items = allItems
-                .Where(i => !string.IsNullOrWhiteSpace(i.Title?.Text)) // validation first
-                .GroupBy(i => i.Title.Text)
-                .Select(g => g.OrderByDescending(i => i.PublishDate).First()) // dedupe and keep latest
-                .OrderByDescending(i => i.PublishDate.Date)
-                .ToList(); // materialize to avoid multiple enumerations
-
+            // Ensure directory exists before writing
             Directory.CreateDirectory(_folder);
 
+            // Write to file (removed redundant Take(100))
             using (var writer = XmlWriter.Create(_combinedFile))
             {
-                feed.Items = feed.Items.Take(100);
                 feed.SaveAsRss20(writer);
             }
 
-            if (Application.Current != null) // if running in VS and not in unit test
+            // Update unread count if running in VS
+            if (Application.Current != null)
             {
-                Options options = await Options.GetLiveInstanceAsync();
-                var newPosts = feed.Items.Where(i => i.PublishDate > options.LastRead).Count();
-                options.UnreadPosts += newPosts;
-                await options.SaveAsync();
+                try
+                {
+                    var options = await Options.GetLiveInstanceAsync();
+                    var newPostsCount = feed.Items.Count(i => i.PublishDate > options.LastRead);
+                    options.UnreadPosts += newPostsCount;
+                    await options.SaveAsync();
 
-                FeedUpdated?.Invoke(this, options.UnreadPosts);
+                    FeedUpdated?.Invoke(this, options.UnreadPosts);
+                }
+                catch (Exception ex)
+                {
+                    // Log error but don't fail the entire operation
+                    Trace.TraceError($"Failed to update unread count: {ex.Message}");
+                }
             }
 
             return feed;
