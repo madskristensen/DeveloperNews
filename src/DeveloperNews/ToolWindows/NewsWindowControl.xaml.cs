@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Windows;
 using System.Windows.Controls;
-using DevNews.Resources;
-using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Threading;
 
@@ -12,11 +9,16 @@ namespace DevNews.ToolWindows
 {
     public partial class NewsWindowControl : UserControl
     {
+        private readonly NewsViewModel _viewModel;
+
         public NewsWindowControl(SyndicationFeed feed)
         {
             InitializeComponent();
+            
+            _viewModel = new NewsViewModel();
+            DataContext = _viewModel;
+            
             BindPosts(feed);
-
             RefreshClick(this, null);
         }
 
@@ -27,34 +29,7 @@ namespace DevNews.ToolWindows
 
         private void BindPosts(SyndicationFeed feed)
         {
-            pnlPosts.Children.Clear();
-
-            if (feed == null)
-                return;
-
-            var currentTime = Timestamp(feed.Items.FirstOrDefault());
-
-            if (!string.IsNullOrEmpty(currentTime))
-            {
-                AddTimeLabel(currentTime);
-
-                foreach (SyndicationItem item in feed.Items)
-                {
-                    var newTime = Timestamp(item);
-
-                    if (newTime != currentTime)
-                    {
-                        AddTimeLabel(newTime);
-                        currentTime = newTime;
-                    }
-
-                    var post = new PostControl(item);
-
-                    pnlPosts.Children.Add(post);
-                }
-            }
-
-            lblTotal.Content = string.Format(Text.Totalcount, feed.Items.Count());
+            _viewModel.UpdateFeed(feed);
 
             _ = ThreadHelper.JoinableTaskFactory.StartOnIdle(async () =>
             {
@@ -65,47 +40,11 @@ namespace DevNews.ToolWindows
             });
         }
 
-        private void AddTimeLabel(string timestamp)
-        {
-            var time = new Label
-            {
-                Content = timestamp,
-                FontWeight = FontWeights.Bold,
-                Margin = new Thickness(6, 3, 0, 0),
-            };
-
-            time.SetResourceReference(ForegroundProperty, EnvironmentColors.CommandBarMenuWatermarkTextBrushKey);
-            pnlPosts.Children.Add(time);
-        }
-
-        private static string Timestamp(SyndicationItem item)
-        {
-            if (item == null)
-            {
-                return null;
-            }
-
-            if (item.PublishDate.Date >= DateTime.Now.AddDays(-1))
-            {
-                return Text.Timeline_today;
-            }
-            else if (item.PublishDate.Date >= DateTime.Now.AddDays(-2))
-            {
-                return Text.Timeline_today;
-            }
-            else if (item.PublishDate.Date >= DateTime.Now.AddDays(-7))
-            {
-                return Text.Timeline_thisweek;
-            }
-
-            return Text.Timeline_older;
-        }
-
         private void RefreshClick(object sender, RoutedEventArgs e)
         {
             prsLoader.Visibility = Visibility.Visible;
             lnkRefresh.IsEnabled = false;
-            pnlPosts.IsEnabled = false;
+            scrollViewer.IsEnabled = false;
 
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
@@ -120,7 +59,7 @@ namespace DevNews.ToolWindows
                 {
                     prsLoader.Visibility = Visibility.Hidden;
                     lnkRefresh.IsEnabled = true;
-                    pnlPosts.IsEnabled = true;
+                    scrollViewer.IsEnabled = true;
                 }
             }).Task.Forget();
         }

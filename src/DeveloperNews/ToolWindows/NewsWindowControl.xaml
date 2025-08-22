@@ -9,12 +9,34 @@
              xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
              xmlns:catalog="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.ImageCatalog"
              xmlns:theming="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Imaging"
+             xmlns:colors="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.15.0"
              Background="{DynamicResource {x:Static vsshell:VsBrushes.WindowKey}}"
              Foreground="{DynamicResource {x:Static vsshell:VsBrushes.WindowTextKey}}"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              Name="MyToolWindow"
              local:VsTheme.UseVsTheme="True">
+    
+    <UserControl.Resources>
+        <!-- Data template for timeline headers -->
+        <DataTemplate x:Key="TimelineHeaderTemplate" DataType="{x:Type local:TimelineHeaderViewModel}">
+            <Label Content="{Binding Header}" 
+                   FontWeight="Bold" 
+                   Margin="6,3,0,0"
+                   Foreground="{DynamicResource {x:Static colors:EnvironmentColors.CommandBarMenuWatermarkTextBrushKey}}" />
+        </DataTemplate>
+
+        <!-- Data template for posts -->
+        <DataTemplate x:Key="PostTemplate" DataType="{x:Type local:PostViewModel}">
+            <local:PostControl DataContext="{Binding}" />
+        </DataTemplate>
+
+        <!-- Template selector -->
+        <local:NewsItemTemplateSelector x:Key="NewsItemTemplateSelector"
+                                        TimelineHeaderTemplate="{StaticResource TimelineHeaderTemplate}"
+                                        PostTemplate="{StaticResource PostTemplate}" />
+    </UserControl.Resources>
+    
     <Grid theming:ImageThemingUtilities.ImageBackgroundColor="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource BrushToColorConverter}}"
           Background="{DynamicResource {x:Static vsshell:VsBrushes.ToolWindowBackgroundKey}}">
         <Grid.RowDefinitions>
@@ -28,7 +50,7 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <Label Name="lblTotal" Grid.Row="0" Grid.Column="0" Content="6 total" Padding="10 6 0 0" />
+        <Label Name="lblTotal" Grid.Row="0" Grid.Column="0" Content="{Binding TotalCount}" Padding="10 6 0 0" />
 
         <StackPanel  Orientation="Horizontal" 
                      Grid.Row="0" 
@@ -97,8 +119,16 @@
                                Grid.Row="1"
                                Grid.ColumnSpan="2"/>
 
-        <ScrollViewer Grid.Row="2" IsDeferredScrollingEnabled="True" Grid.ColumnSpan="2" Padding="0 0 0 10">
-            <VirtualizingStackPanel x:Name="pnlPosts" VirtualizationMode="Recycling" />
+        <ScrollViewer x:Name="scrollViewer" Grid.Row="2" IsDeferredScrollingEnabled="True" Grid.ColumnSpan="2" Padding="0 0 0 10">
+            <ItemsControl ItemsSource="{Binding Items}"
+                          ItemTemplateSelector="{StaticResource NewsItemTemplateSelector}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel VirtualizationMode="Recycling" 
+                                                IsItemsHost="True" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
         </ScrollViewer>
     </Grid>
 </UserControl>

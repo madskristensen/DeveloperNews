@@ -15,6 +15,16 @@ namespace DevNews
     public class FeedDownloader
     {
         private readonly string _folder;
+        
+        // Shared HttpClient instance for better performance and socket reuse
+        private static readonly HttpClient _httpClient = new HttpClient();
+
+        static FeedDownloader()
+        {
+            // Configure the shared HttpClient with common settings
+            _httpClient.DefaultRequestHeaders.Add("User-Agent", "Developer News for Visual Studio");
+            _httpClient.Timeout = TimeSpan.FromSeconds(30); // Set a reasonable timeout
+        }
 
         public FeedDownloader(string folder)
         {
@@ -79,12 +89,12 @@ namespace DevNews
 
             try
             {
-                using (var client = new HttpClient())
+                // Create a new request message to set per-request headers
+                using (var request = new HttpRequestMessage(HttpMethod.Get, url))
                 {
-                    client.DefaultRequestHeaders.IfModifiedSince = lastModified;
-                    client.DefaultRequestHeaders.Add("User-Agent", "Developer News for Visual Studio");
+                    request.Headers.IfModifiedSince = lastModified;
 
-                    HttpResponseMessage result = await client.GetAsync(url);
+                    HttpResponseMessage result = await _httpClient.SendAsync(request);
 
                     if (result.IsSuccessStatusCode)
                     {

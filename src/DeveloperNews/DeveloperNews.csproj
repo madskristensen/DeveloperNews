@@ -69,9 +69,12 @@
       <DependentUpon>source.extension.vsixmanifest</DependentUpon>
     </Compile>
     <Compile Include="StatusBarInjector.cs" />
+    <Compile Include="ToolWindows\NewsItemTemplateSelector.cs" />
+    <Compile Include="ToolWindows\NewsViewModel.cs" />
     <Compile Include="ToolWindows\PostControl.xaml.cs">
       <DependentUpon>PostControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ToolWindows\PostViewModel.cs" />
     <Compile Include="ToolWindows\SettingsControl.xaml.cs">
       <DependentUpon>SettingsControl.xaml</DependentUpon>
     </Compile>

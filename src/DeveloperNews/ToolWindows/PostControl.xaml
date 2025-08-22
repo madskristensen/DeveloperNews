@@ -9,8 +9,10 @@
              xmlns:theming="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Imaging"
              xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
              xmlns:imaging="clr-namespace:Microsoft.VisualStudio.Imaging;assembly=Microsoft.VisualStudio.Imaging"
+             xmlns:local="clr-namespace:DevNews.ToolWindows"
              mc:Ignorable="d" 
-             d:DesignHeight="120" d:DesignWidth="300">
+             d:DesignHeight="120" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance Type=local:PostViewModel}">
     <UserControl.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -43,7 +45,17 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <!-- Style for summary text when there's no description -->
+        <Style x:Key="SummaryTextBlock" TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding HasDescription}" Value="False">
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static platformUI:EnvironmentColors.CommandBarMenuWatermarkTextBrushKey}}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
+    
     <Grid Name="grid" theming:ImageThemingUtilities.ImageBackgroundColor="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource BrushToColorConverter}}">
 
         <Grid.RowDefinitions>
@@ -63,22 +75,27 @@
                 Background="Transparent" 
                 Padding="7 5 2 0"
                 HorizontalAlignment="Stretch" 
-                HorizontalContentAlignment="Stretch">
+                HorizontalContentAlignment="Stretch"
+                ToolTip="{Binding ToolTip}"
+                AutomationProperties.Name="{Binding Title}">
             
             <StackPanel Orientation="Vertical" Margin="0 5">
                 <Label Padding="5 0 5 3" 
                        IsTabStop="False" 
                        FontWeight="DemiBold"
                        Foreground="{DynamicResource {x:Static platformUI:EnvironmentColors.ControlLinkTextBrushKey}}">
-                    <TextBlock Name="lblTitle" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
                 </Label>
-
 
                 <Label Padding="5 0">
-                    <TextBlock Name="lblSummary" TextWrapping="Wrap" TextTrimming="WordEllipsis" MaxHeight="75"/>
+                    <TextBlock Text="{Binding Summary}" 
+                               TextWrapping="Wrap" 
+                               TextTrimming="WordEllipsis" 
+                               MaxHeight="75"
+                               Style="{StaticResource SummaryTextBlock}"/>
                 </Label>
 
-                <Label Name="lblSource"
+                <Label Content="{Binding Source}"
                        HorizontalAlignment="Right"
                        Foreground="{DynamicResource {x:Static platformUI:EnvironmentColors.CommandBarMenuWatermarkTextBrushKey}}"
                        Padding="0 5 5 0"

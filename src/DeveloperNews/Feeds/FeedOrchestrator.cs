@@ -74,31 +74,43 @@ namespace DevNews
             var downloader = new FeedDownloader(_folder);
             var feed = new SyndicationFeed(_name, _description, null);
 
-            foreach (FeedInfo feedInfo in feedInfos)
+            // Download all feeds in parallel for better performance
+            var feedInfoList = feedInfos.ToList();
+            var downloadTasks = feedInfoList.Select(async feedInfo =>
             {
-                SyndicationFeed fetchedFeed = await downloader.DownloadAsync(feedInfo, force);
-
+                var fetchedFeed = await downloader.DownloadAsync(feedInfo, force);
                 if (fetchedFeed != null)
                 {
                     fetchedFeed.Title = new TextSyndicationContent(feedInfo.DisplayName);
-
+                    
+                    // Set source feed for all items
                     foreach (SyndicationItem item in fetchedFeed.Items)
                     {
                         item.SourceFeed = fetchedFeed;
                     }
-
-                    feed.Items = feed.Items.Union(fetchedFeed.Items);
                 }
+                return fetchedFeed;
+            });
+
+            // Wait for all downloads to complete
+            var fetchedFeeds = await Task.WhenAll(downloadTasks);
+
+            // Combine all successful feed items
+            var allItems = new List<SyndicationItem>();
+            foreach (var fetchedFeed in fetchedFeeds.Where(f => f != null))
+            {
+                allItems.AddRange(fetchedFeed.Items);
             }
 
             feed.LastUpdatedTime = DateTime.UtcNow;
 
-            // Dedupe and sort by date
-            feed.Items = feed.Items
-                            .GroupBy(i => i.Title.Text)
-                            .Select(i => i.First()) // dedupe
-                            .Where(i => !string.IsNullOrWhiteSpace(i.Title?.Text)) // validation
-                            .OrderByDescending(i => i.PublishDate.Date);
+            // Optimize LINQ operations by combining them and avoiding multiple enumerations
+            feed.Items = allItems
+                .Where(i => !string.IsNullOrWhiteSpace(i.Title?.Text)) // validation first
+                .GroupBy(i => i.Title.Text)
+                .Select(g => g.OrderByDescending(i => i.PublishDate).First()) // dedupe and keep latest
+                .OrderByDescending(i => i.PublishDate.Date)
+                .ToList(); // materialize to avoid multiple enumerations
 
             Directory.CreateDirectory(_folder);
 
